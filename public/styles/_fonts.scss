@@ -1,0 +1,40 @@
+@font-face {
+	font-family: 'EB Garamond';
+	font-style: normal;
+	font-weight: normal;
+	font-display: swap;
+	src:
+		local('EB Garamond'), local('EB-Garamond'),
+		local('EB Garamond Regular'), local('EB-Garamond-Regular'),
+		/* from https://fonts.gstatic.com/s/ebgaramond/v15/SlGDmQSNjdsmc35JDF1K5E55YMjF_7DPuGi-6_RkCo9_.woff2 */
+		url('/fonts/EB_Garamond.woff2') format('woff2'),
+		/* from https://fonts.gstatic.com/s/ebgaramond/v15/SlGDmQSNjdsmc35JDF1K5E55YMjF_7DPuGi-6_RkCo95.woff */
+		url('/fonts/EB_Garamond.woff') format('woff'),
+		/* from https://fonts.gstatic.com/s/ebgaramond/v15/SlGDmQSNjdsmc35JDF1K5E55YMjF_7DPuGi-6_RkCo97.eot */
+		url('/fonts/EB_Garamond.eot?#iefix') format('embedded-opentype'),
+		/* from https://fonts.gstatic.com/l/font?kit=SlGDmQSNjdsmc35JDF1K5E55YMjF_7DPuGi-6_RkCo94&skey=fde9b303600e495b&v=v15#EBGaramond */
+		url('/fonts/EB_Garamond.svg#EBGaramond') format('svg'),
+		/* from https://fonts.gstatic.com/s/ebgaramond/v15/SlGDmQSNjdsmc35JDF1K5E55YMjF_7DPuGi-6_RkCo96.ttf */
+		url('/fonts/EB_Garamond.ttf') format('truetype');
+}
+
+@font-face {
+	font-family: 'Roboto';
+	font-style: normal;
+	font-weight: normal;
+	font-display: swap;
+	src:
+		local('Roboto'),
+		local('Roboto Regular'), local('Roboto-Regular'),
+		/* from https://fonts.gstatic.com/s/roboto/v27/KFOmCnqEu92Fr1Mu7GxK.woff2 */
+		url('/fonts/Roboto.woff2') format('woff2'),
+		/* from https://fonts.gstatic.com/s/roboto/v27/KFOmCnqEu92Fr1Mu7GxM.woff */
+		url('/fonts/Roboto.woff') format('woff'),
+		/* from https://fonts.gstatic.com/s/roboto/v27/KFOmCnqEu92Fr1Mu7GxO.eot */
+		url('/fonts/Roboto.eot?#iefix') format('embedded-opentype'),
+		/* from https://fonts.gstatic.com/l/font?kit=KFOmCnqEu92Fr1Mu7GxN&skey=a0a0114a1dcab3ac&v=v27#Roboto */
+		url('/fonts/Roboto.svg#Roboto') format('svg'),
+		/* from https://fonts.gstatic.com/s/roboto/v27/KFOmCnqEu92Fr1Mu7GxP.ttf */
+		url('/fonts/Roboto.ttf') format('truetype');
+}
+
