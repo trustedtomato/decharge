@@ -1,7 +1,8 @@
 import { spawn } from 'child_process'
+import { tscBinPath } from '../config.js'
 
 export default function (outDir) {
-  spawn('tsc', ['--outDir', outDir, '--watch'], {
+  spawn(tscBinPath, ['--outDir', outDir, '--watch'], {
     stdio: 'inherit'
   })
 }

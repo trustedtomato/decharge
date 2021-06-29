@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "jsxImportSource": "preact",
+    "preserveWatchOutput": true,
+    "module": "ESNext",
+    "target": "ES2017",
+    "moduleResolution": "node",
+    "rootDir": ".",
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true
+  }
+}

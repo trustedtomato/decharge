@@ -38,8 +38,8 @@ parentPort.once('message', async ({ baseDir, path }) => {
       throw new Error(`Build error: ${path} wants to create a page which would be outside of the target directory.`)
     }
     const jsx = await route.default(props)
-    preactRenderer.init(jsx)
-    files.set(targetPath, preactRenderer.serialize())
+    const rendering = preactRenderer.startRender(jsx)
+    files.set(targetPath, `<!DOCTYPE html>${rendering.finalize()}`)
   }
 
   parentPort.postMessage(files)

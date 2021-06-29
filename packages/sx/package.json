@@ -1,0 +1,29 @@
+{
+  "name": "sx",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "author": "Tamás Halasi",
+  "bin": {
+    "sx": "sx.js"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "@babel/core": "^7.14.6",
+    "@babel/preset-env": "^7.14.7",
+    "@types/jsdom": "^16.2.12",
+    "@types/yargs": "^17.0.0",
+    "browser-sync": "^2.27.3",
+    "chokidar": "^3.5.2",
+    "hasha": "^5.2.2",
+    "html-minifier": "^4.0.0",
+    "jsdom": "^16.6.0",
+    "mkdirp": "^1.0.4",
+    "p-event": "^4.2.0",
+    "preact": "^10.5.13",
+    "precinct": "^8.1.0",
+    "readdirp": "^3.6.0",
+    "typescript": "^4.3.4",
+    "yargs": "^17.0.1"
+  }
+}

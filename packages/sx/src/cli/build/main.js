@@ -1,4 +1,4 @@
-import pathLib from 'path'
+
 import { renderAllRoutesToFiles } from './render-all-routes-to-files.js'
 import { minifyHtml } from './minify-html.js'
 import tsc from './tsc.js'

@@ -1,3 +1,2 @@
-dist/
 node_modules/
-public/generated/
+_temp-build/
