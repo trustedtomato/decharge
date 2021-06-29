@@ -4,9 +4,14 @@
   "description": "",
   "type": "module",
   "author": "Tamás Halasi",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc --watch"
+  },
   "bin": {
     "sx": "sx.js"
   },
+  "main": "./dist/runtime/index.js",
   "license": "ISC",
   "dependencies": {
     "@babel/core": "^7.14.6",

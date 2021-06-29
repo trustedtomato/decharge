@@ -6,9 +6,8 @@ import { tempDir, srcDir } from '../config.js'
 
 /**
  * Copies "srcPath" to the /_sx/_temp/ directory.
- * @param {string} srcPath 
  */
-export async function copyToTemp (srcPath) {
+export async function copyToTemp (srcPath: string): Promise<void> {
   const relativeSrcPath = pathLib.relative(srcDir, srcPath)
   const targetPath = pathLib.join(tempDir, relativeSrcPath)
   await mkdirp(pathLib.dirname(targetPath))

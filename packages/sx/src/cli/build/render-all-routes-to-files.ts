@@ -17,6 +17,7 @@ export async function renderAllRoutesToFiles ({
 }) {  
   const pathCreatorRoutePaths = new Map()
 
+  // TODO: parallelize!
   for await (const {
     // path will be relative to routesDir.
     path: routePath

@@ -17,14 +17,14 @@ export default async () => <>
         Tamás Halasi
       </h1>
       <div>
-        {await Image({
-          src: '/images/shocked.jpg',
-          alt: 'I am shocked',
-          widthConditions: [
+        <Image
+          src="/images/shocked.jpg"
+          alt="I am shocked"
+          widthConditions={[
             ['32rem']
-          ],
-          widthVersions: [512, 576]
-        })}
+          ]}
+          widthVersions={[512, 576]}
+        />
         <h3>
           What have I done?!
         </h3>

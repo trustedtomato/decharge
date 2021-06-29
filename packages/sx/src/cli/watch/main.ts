@@ -19,11 +19,9 @@ const dependencySets = new Map()
 
 /**
  * Get the dependents of a module according to dependencySets.
- * @param {string} module 
- * @returns {string[]}
  */
-function getDependents (module) {
-  const dependents = new Set()
+function getDependents (module: string): Set<string> {
+  const dependents: Set<string> = new Set()
 
   ;(function addDependents (module) {
     // The check is needed to prevent cycles. 
@@ -49,12 +47,9 @@ const lastWriteContentHash = new Map()
 
 /**
  * writeFile, but utilises lastWriteContentHash.
- * Also creates the containing directory if it doesn't exist yet. 
- * @param {string} absolutePath 
- * @param {string} content
- * @returns {Promise<boolean>} True if there was a write, false otherwise.
+ * Also creates the containing directory if it doesn't exist yet.
  */
-async function mightWriteFile (absolutePath, content) {
+async function mightWriteFile (absolutePath: string, content: string): Promise<boolean> {
   const contentHash = hasha(content)
   if (lastWriteContentHash.get(absolutePath) !== contentHash) {
     lastWriteContentHash.set(absolutePath, contentHash)
@@ -66,6 +61,7 @@ async function mightWriteFile (absolutePath, content) {
 }
 
 async function renderRoutesOnPathChanges (paths) {
+  // TODO: parallelize!
   for (const path of paths) {
     if (path.endsWith('.js')) {
       const content = await readFile(path, 'utf-8') 
@@ -89,7 +85,7 @@ async function renderRoutesOnPathChanges (paths) {
       return Array.from(dependencySets.keys())
         .filter(dependent => dependent.startsWith(tempRoutesDir))
     } else {
-      const dependents = new Set()
+      const dependents: Set<string> = new Set()
       for (const path of paths) {
         for (const dependent of getDependents(path)) {
           dependents.add(dependent)
@@ -100,6 +96,7 @@ async function renderRoutesOnPathChanges (paths) {
     }
   })()
 
+  // TODO: parallelize!
   for (const route of routes) {
     const relativeRoutePath = pathLib.relative(tempRoutesDir, route)
     const generatedFiles = await renderRoute(relativeRoutePath, tempRoutesDir)

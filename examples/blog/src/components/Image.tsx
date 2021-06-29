@@ -7,7 +7,7 @@ import parsePath from '../utils/parse-path.js'
 import { getGmSize, gmToBuffer } from '../utils/gm-promisified.js'
 import createBlurredImageAuto from '../utils/create-blurred-image/auto.js'
 import type { JSX } from 'preact/jsx-runtime'
-
+import { AsyncComponent } from 'sx'
 interface Props {
   src: string
   alt: string
@@ -18,7 +18,7 @@ interface Props {
 
 const maxHeight = 100
 
-export default async ({
+export default AsyncComponent(async ({
   src,
   alt,
   title,
@@ -94,5 +94,4 @@ export default async ({
       loading="lazy"
     />
   </div>
-
-}
+})

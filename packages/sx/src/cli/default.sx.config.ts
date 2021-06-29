@@ -1,5 +1,3 @@
-import { join } from 'path'
-
 // paths
 export const srcDir = 'src'
 export const routesDir = 'routes'

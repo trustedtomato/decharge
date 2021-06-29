@@ -6,8 +6,11 @@
     "module": "ESNext",
     "target": "ES2017",
     "moduleResolution": "node",
-    "rootDir": ".",
+    "rootDir": "src",
+    "outDir": "dist",
     "allowJs": true,
-    "allowSyntheticDefaultImports": true
-  }
+    "allowSyntheticDefaultImports": true,
+    "declaration": true
+  },
+  "include": ["src/**/*"]
 }

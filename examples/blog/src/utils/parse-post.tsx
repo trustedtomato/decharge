@@ -3,6 +3,7 @@ import markdownToHtml from '../patched-packages/marked/marked.js'
 import parseFrontmatter from 'gray-matter'
 import striptags from 'striptags'
 import Image from '../components/Image.js'
+import { render } from 'sx'
 
 export interface Post {
   metadata: Record<string, string>
@@ -16,11 +17,7 @@ export interface Post {
 markdownToHtml.use({
   renderer: {
     async image (src, title, alt) {
-      return await Image({
-        src,
-        title,
-        alt
-      })
+      return await render(<Image src={src} title={title} alt={alt} />)
     }
   }
 })
