@@ -1,7 +1,6 @@
 import pathLib from 'path'
 import { promisify } from 'util'
 import { writeFile, readFile } from 'fs/promises'
-const delay = promisify(setTimeout)
 import { watch } from 'chokidar'
 import mkdirp from 'mkdirp'
 import hasha from 'hasha'
@@ -12,6 +11,7 @@ import copyToTemp from '../utils/copy-to-temp.js'
 import parseDependencies from '../utils/parse-dependencies.js'
 import Debouncer from '../utils/debouncer.js'
 import { tempDir, srcDir, distDir, tempRoutesDir } from '../config.js'
+const delay = promisify(setTimeout)
 
 const tempJsGlob = pathLib.join(tempDir, '**/*.js')
 
@@ -24,7 +24,7 @@ function getDependents (module: string): Set<string> {
   const dependents: Set<string> = new Set()
 
   ;(function addDependents (module) {
-    // The check is needed to prevent cycles. 
+    // The check is needed to prevent cycles.
     if (dependents.has(module)) return
     dependents.add(module)
 
@@ -64,7 +64,7 @@ async function renderRoutesOnPathChanges (paths: string[]) {
   // TODO: parallelize!
   for (const path of paths) {
     if (path.endsWith('.js')) {
-      const content = await readFile(path, 'utf-8') 
+      const content = await readFile(path, 'utf-8')
 
       dependencySets.set(
         path,
@@ -84,16 +84,15 @@ async function renderRoutesOnPathChanges (paths: string[]) {
       // Just rerender all routes.
       return Array.from(dependencySets.keys())
         .filter(dependent => dependent.startsWith(tempRoutesDir))
-    } else {
-      const dependents: Set<string> = new Set()
-      for (const path of paths) {
-        for (const dependent of getDependents(path)) {
-          dependents.add(dependent)
-        }
-      }
-      return Array.from(dependents)
-        .filter(dependent => dependent.startsWith(tempRoutesDir))
     }
+    const dependents: Set<string> = new Set()
+    for (const path of paths) {
+      for (const dependent of getDependents(path)) {
+        dependents.add(dependent)
+      }
+    }
+    return Array.from(dependents)
+      .filter(dependent => dependent.startsWith(tempRoutesDir))
   })()
 
   // TODO: parallelize!

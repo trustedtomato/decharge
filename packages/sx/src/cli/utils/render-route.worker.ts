@@ -11,15 +11,14 @@ import render from '../../common/render.js'
 const jsPathToHtmlPath = (jsRoutePath: string): string => {
   if (jsRoutePath.endsWith('/index.js') || jsRoutePath === 'index.js') {
     return jsRoutePath.replace(/\.js$/, '.html')
-  } else {
-    return jsRoutePath.replace(/\.js$/, '/index.html')
   }
+  return jsRoutePath.replace(/\.js$/, '/index.html')
 }
 
 parentPort.once('message', async ({ baseDir, path }: { baseDir: string, path: string }) => {
   const files: Map<string, string> = new Map()
-  
-  let srcPath = pathLib.join(baseDir, path)
+
+  const srcPath = pathLib.join(baseDir, path)
   const route = await import(
     // The current working directory should be the project root.
     pathLib.resolve(process.cwd(), srcPath)

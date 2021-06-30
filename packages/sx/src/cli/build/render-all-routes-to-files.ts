@@ -1,4 +1,4 @@
-import { writeFile } from 'fs/promises';
+import { writeFile } from 'fs/promises'
 import mkdirp from 'mkdirp'
 import pathLib from 'path'
 import readdirp from 'readdirp'
@@ -7,7 +7,7 @@ import renderRoute from '../utils/render-route.js'
 const id = <T>(x: T): T => x
 
 /**
- * Renders all routes in the routesDir to targetDir. 
+ * Renders all routes in the routesDir to targetDir.
  */
 export async function renderAllRoutesToFiles ({
   routesDir,
@@ -17,7 +17,7 @@ export async function renderAllRoutesToFiles ({
   routesDir: string,
   targetDir: string,
   transform: (x: string) => string
-}) {  
+}) {
   const pathCreatorRoutePaths = new Map()
 
   // TODO: parallelize!

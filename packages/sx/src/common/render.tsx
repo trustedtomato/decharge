@@ -8,9 +8,9 @@ global.document = document
 export const RenderDelay = createContext<Set<Promise<unknown>>>(null)
 
 function startRender (jsx: JSX.Element) {
-  const root = document.createElement('x-root');
-  document.body.appendChild(root);
-  
+  const root = document.createElement('x-root')
+  document.body.appendChild(root)
+
   preactRender(jsx, root)
   return {
     finalize () {
@@ -29,7 +29,6 @@ export async function render (jsx: JSX.Element) {
   const rendering = startRender(
     <RenderDelay.Provider value={delayerPromises}>{jsx}</RenderDelay.Provider>
   )
-  // TODO: disable any types in TypeScript for type safety.
   do {
     const pendingDelayerPromises = [...delayerPromises]
     await Promise.all(pendingDelayerPromises)

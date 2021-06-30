@@ -19,4 +19,3 @@ since the routes directory (${routesDir}) doesn't exist \
   })
   .command(await import('./build/cli.js'))
   .command(await import('./watch/cli.js'))
-  .argv

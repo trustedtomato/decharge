@@ -2,10 +2,13 @@ export class Debouncer<T> {
   triggered = false
   debouncingPromises: Set<unknown> = new Set()
   paramsArray: T[] = []
+
   constructor (private readonly triggerable: (paramsArray: T[]) => void) {}
+
   addDebouncingPromise (promise: Promise<unknown>) {
     this.debouncingPromises.add(promise)
   }
+
   trigger (params: T) {
     this.paramsArray.push(params)
     if (this.triggered) {
