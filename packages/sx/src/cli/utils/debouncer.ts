@@ -12,7 +12,7 @@ export class Debouncer<T> {
       return
     }
     this.triggered = true
-    const debounce = async () => {
+    const debounce = async (): Promise<void> => {
       const pendingDebouncingPromises = [...this.debouncingPromises]
       await Promise.all(pendingDebouncingPromises)
       for (const resolvedDebouncingPromise of pendingDebouncingPromises) {

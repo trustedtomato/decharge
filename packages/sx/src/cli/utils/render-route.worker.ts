@@ -16,8 +16,8 @@ const jsPathToHtmlPath = (jsRoutePath: string): string => {
   }
 }
 
-parentPort.once('message', async ({ baseDir, path }) => {
-  const files = new Map()
+parentPort.once('message', async ({ baseDir, path }: { baseDir: string, path: string }) => {
+  const files: Map<string, string> = new Map()
   
   let srcPath = pathLib.join(baseDir, path)
   const route = await import(

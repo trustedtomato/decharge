@@ -1,4 +1,4 @@
-import { render as preactRender, createContext } from 'preact'
+import { render as preactRender, createContext, JSX } from 'preact'
 import { JSDOM } from 'jsdom'
 
 const jsdom = new JSDOM('<!DOCTYPE html>')
@@ -7,7 +7,7 @@ global.document = document
 
 export const RenderDelay = createContext<Set<Promise<unknown>>>(null)
 
-function startRender (jsx) {
+function startRender (jsx: JSX.Element) {
   const root = document.createElement('x-root');
   document.body.appendChild(root);
   
@@ -24,7 +24,7 @@ function startRender (jsx) {
 }
 
 /** Renders a JSX component to HTML. */
-export async function render (jsx) {
+export async function render (jsx: JSX.Element) {
   const delayerPromises: Set<Promise<unknown>> = new Set()
   const rendering = startRender(
     <RenderDelay.Provider value={delayerPromises}>{jsx}</RenderDelay.Provider>

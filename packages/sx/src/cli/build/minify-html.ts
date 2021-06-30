@@ -1,6 +1,6 @@
 import { minify } from 'html-minifier'
 
-export const minifyHtml = html => minify(html, {
+export const minifyHtml = (html: string) => minify(html, {
   caseSensitive: false,
   collapseBooleanAttributes: true,
   collapseInlineTagWhitespace: false,

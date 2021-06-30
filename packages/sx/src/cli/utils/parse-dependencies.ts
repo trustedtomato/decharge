@@ -1,7 +1,7 @@
 import { parseSync } from '@babel/core'
 import precinct from 'precinct'
 
-export function parseDependencies (jsFileString) {
+export function parseDependencies (jsFileString: string) {
   return precinct(
     parseSync(jsFileString, {
       presets: [

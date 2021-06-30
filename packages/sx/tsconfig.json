@@ -10,7 +10,8 @@
     "outDir": "dist",
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
-    "declaration": true
+    "declaration": true,
+    "noImplicitAny": true
   },
   "include": ["src/**/*"]
 }

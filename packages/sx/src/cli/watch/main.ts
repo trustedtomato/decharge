@@ -60,7 +60,7 @@ async function mightWriteFile (absolutePath: string, content: string): Promise<b
   return false
 }
 
-async function renderRoutesOnPathChanges (paths) {
+async function renderRoutesOnPathChanges (paths: string[]) {
   // TODO: parallelize!
   for (const path of paths) {
     if (path.endsWith('.js')) {
@@ -118,7 +118,7 @@ tsc(tempDir)
 // Continuously copy everything from src to _temp,
 // except the *.([jt]sx?) files
 // (since they are being taken care of by tsc).
-async function onCopyOperation (path) {
+async function onCopyOperation (path: string) {
   const copyOperation = copyToTemp(path)
   renderRoutesOnPathChangesDebouncer.addDebouncingPromise(copyOperation)
   renderRoutesOnPathChangesDebouncer.trigger(pathLib.resolve(process.cwd(), path))
@@ -135,7 +135,7 @@ renderRoutesOnPathChangesDebouncer.addDebouncingPromise(initialTempDirReady)
 
 initialTempDirReady.then(() => {
   // Continuously render routes in _temp to dist/.
-  async function onTempJsChange (path) {
+  async function onTempJsChange (path: string) {
     renderRoutesOnPathChangesDebouncer.addDebouncingPromise(delay(100))
     renderRoutesOnPathChangesDebouncer.trigger(pathLib.resolve(process.cwd(), path))
   }

@@ -4,16 +4,19 @@ import pathLib from 'path'
 import readdirp from 'readdirp'
 import renderRoute from '../utils/render-route.js'
 
-const id = x => x
+const id = <T>(x: T): T => x
 
 /**
  * Renders all routes in the routesDir to targetDir. 
- * @param {{ routesDir: string, targetDir: string, transform: (x: string) => string }} param0 
  */
 export async function renderAllRoutesToFiles ({
   routesDir,
   targetDir,
   transform = id
+}: {
+  routesDir: string,
+  targetDir: string,
+  transform: (x: string) => string
 }) {  
   const pathCreatorRoutePaths = new Map()
 
