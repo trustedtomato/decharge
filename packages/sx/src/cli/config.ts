@@ -26,6 +26,7 @@ export const routesDir = resolve(srcDir, config.routesDir)
 export const distDir = resolve(process.cwd(), config.distDir)
 export const tempDir = resolve(process.cwd(), config.tempDir)
 export const tempRoutesDir = resolve(tempDir, relative(srcDir, routesDir))
+export const publicDir = resolve(process.cwd(), config.publicDir)
 
 if (!routesDir.startsWith(srcDir)) {
   throw new Error(`Invalid sx config file: Routes directory (${routesDir}) must be inside src directory (${srcDir})!`)

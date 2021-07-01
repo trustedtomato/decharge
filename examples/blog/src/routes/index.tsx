@@ -11,36 +11,43 @@ for await (const { fullPath } of readdirp('src/posts', { fileFilter: '*.md' })) 
 }
 
 export default async () => <>
-  <Layout description="The portfolio and blog of Tamás Halasi. Some of his writings are pretty neat.">
+  <Layout description="The blog of Raskolnikov.">
+    <link rel="stylesheet" href="/styles/home.css" />
     <header>
       <h1>
-        Tamás Halasi
+        Raskolnikov's blog
       </h1>
-      <div>
+      <p>
+        Written in third person.
+      </p>
+    </header>
+    <div class="not-header">
+      <aside>
+        <p>
+          You can now grab a copy of <a href="https://www.gutenberg.org/files/2554/2554-h/2554-h.htm">his new
+          book</a>.
+        </p>
         <Image
-          src="/images/shocked.jpg"
-          alt="I am shocked"
+          src="/images/crime-and-punishment-cover.jpg"
+          alt="Cover of Crime and punishment."
           widthConditions={[
             ['32rem']
           ]}
-          widthVersions={[512, 576]}
+          widthVersions={[320]}
         />
-        <h3>
-          What have I done?!
-        </h3>
-        <a href="/projects/">Projects connected to programming</a>,<br />
-        <a href="/">writings about stuff</a> and <a href="/about/">an “About” page</a>.
-      </div>
-    </header>
-    <div>
-      {
-        posts.map(({ metadata, slug }) => <div class="post" key={slug}>
-          <h2 class="post__title"><a href={`/posts/${slug}`}>{metadata.title}</a></h2>
-          <div class="post__date">{metadata.date.toLocaleDateString('en-US', { dateStyle: 'full' })}</div>
-          <div class="post__excerpt">{metadata.excerpt}</div>
-          <a class="post__readmore" href={`/posts/${slug}`}>Read more…</a>
-        </div>)
-      }
+      </aside>
+      <main>
+        {
+          posts
+            .sort((a, b) => a.metadata.date - b.metadata.date)
+            .map(({ metadata, slug }) => <div class="post" key={slug}>
+              <h2 class="post__title"><a href={`/posts/${slug}`}>{metadata.title}</a></h2>
+              <div class="post__date">{metadata.date.toLocaleDateString('en-US', { dateStyle: 'full' })}</div>
+              <div class="post__excerpt">{metadata.excerpt}</div>
+              <a class="post__readmore" href={`/posts/${slug}`}>Read more…</a>
+            </div>)
+        }
+      </main>
     </div>
   </Layout>
 </>

@@ -34,6 +34,7 @@ export default createAsyncComponent(async ({
 
   const imageBuffer = await fs.readFile(srcToPath(src))
   const { width, height } = await getGmSize(gm(imageBuffer))
+  console.log(width)
   const downscaledWidths = widthVersions.filter(possibleDownscaledWidth =>
     possibleDownscaledWidth < width && possibleDownscaledWidth * (height / width) < maxHeight
   )
@@ -87,7 +88,6 @@ export default createAsyncComponent(async ({
   return <div class="image" style={`max-width:${width}px`}>
     <div dangerouslySetInnerHTML={{ __html: await createBlurredImageAuto(imageBuffer, 40) }} />
     <img
-      class="image"
       src={srcToUrl(src)}
       alt={alt}
       title={title}

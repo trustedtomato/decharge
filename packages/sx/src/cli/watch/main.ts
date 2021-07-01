@@ -10,7 +10,8 @@ import { renderRoute } from '../utils/render-route.js'
 import copyToTemp from '../utils/copy-to-temp.js'
 import parseDependencies from '../utils/parse-dependencies.js'
 import Debouncer from '../utils/debouncer.js'
-import { tempDir, srcDir, distDir, tempRoutesDir } from '../config.js'
+import { tempDir, srcDir, distDir, tempRoutesDir, publicDir } from '../config.js'
+import copyPublic from '../utils/copy-public.js'
 const delay = promisify(setTimeout)
 
 const tempJsGlob = pathLib.join(tempDir, '**/*.js')
@@ -123,13 +124,17 @@ async function onCopyOperation (path: string) {
   renderRoutesOnPathChangesDebouncer.trigger(pathLib.resolve(process.cwd(), path))
 }
 
-const copier = watch(srcDir, {
+watch(publicDir)
+  .on('add', copyPublic)
+  .on('change', copyPublic)
+
+const srcCopier = watch(srcDir, {
   ignored: /\.[jt]sx?$/
 })
   .on('add', onCopyOperation)
   .on('change', onCopyOperation)
 
-const initialTempDirReady = waitFor(copier, 'ready')
+const initialTempDirReady = waitFor(srcCopier, 'ready')
 renderRoutesOnPathChangesDebouncer.addDebouncingPromise(initialTempDirReady)
 
 initialTempDirReady.then(() => {

@@ -1,0 +1,57 @@
+body {
+  margin: 2rem auto 1.5rem auto;
+  font-family: Roboto;
+  line-height: 1.5;
+  background-color: #faebd0;
+  max-width: 50rem;
+  line-height: 1.5
+}
+
+.image {
+  position: relative;
+}
+
+.image img {
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+
+h1, h2, h3 {
+  margin: 0;
+  font-family: 'Times New Roman', serif;
+  line-height: 1;
+}
+
+a {
+  color: #a80000;
+}
+
+header {
+  margin: 1em 0 3em;
+}
+
+header h1 {
+  font-size: 3rem;
+}
+
+header p {
+  margin: 0;
+}
+
+.post__title {
+  font-size: 2rem;
+}
+
+.post__title a {
+  color: black;
+  text-decoration: none;
+}
+
+.post__date {
+  margin-bottom: 1em;
+}
+
+.post {
+  margin-bottom: 2em;
+}
