@@ -9,8 +9,8 @@ const template = fs.readFileSync(new URL('template.svg', import.meta.url), 'utf8
  * and applies a blur with the given stdDeviationX and stdDeviationY.
  */
 /**
- * 
- * @param {{ data: Buffer, dataFormat: string, width: number, height: number }} param0 
+ *
+ * @param {{ data: Buffer, dataFormat: string, width: number, height: number }} param0
  * @returns {string}
  */
 export function createBlurredImageBuffer ({ data, dataFormat, width, height }) {

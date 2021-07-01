@@ -6,6 +6,7 @@
     "module": "ESNext",
     "target": "ES2017",
     "moduleResolution": "node",
+    "outDir": "/dev/null",
     "rootDir": "src",
     "allowJs": true,
     "allowSyntheticDefaultImports": true

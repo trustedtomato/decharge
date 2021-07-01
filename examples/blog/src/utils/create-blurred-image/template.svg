@@ -5,5 +5,5 @@
       <feFuncA type="discrete" tableValues="1 1" />
     </feComponentTransfer>
   </filter>
-  <image filter="url(#blur)" xlink:href="{{dataUri}}" x="0" y="0" height="100%" width="100%"/>
+  <image filter="url(#blur)" xlink:href="{{dataUri}}" x="0" y="0" height="100%" width="100%" />
 </svg>

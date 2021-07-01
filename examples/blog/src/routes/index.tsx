@@ -28,17 +28,17 @@ export default async () => <>
         <h3>
           What have I done?!
         </h3>
-        <a href="/projects/">Projects connected to programming</a>,<br/>
+        <a href="/projects/">Projects connected to programming</a>,<br />
         <a href="/">writings about stuff</a> and <a href="/about/">an “About” page</a>.
       </div>
     </header>
     <div>
       {
-        posts.map(({ metadata, content, slug }) => <div class="post">
-            <h2 class="post__title"><a href={`/posts/${slug}`}>{metadata.title}</a></h2>
-            <div class="post__date">{metadata.date.toLocaleDateString('en-US', { dateStyle: 'full' })}</div>
-            <div class="post__excerpt">{metadata.excerpt}</div>
-            <a class="post__readmore" href={`/posts/${slug}`}>Read more…</a>
+        posts.map(({ metadata, content, slug }) => <div class="post" key={slug}>
+          <h2 class="post__title"><a href={`/posts/${slug}`}>{metadata.title}</a></h2>
+          <div class="post__date">{metadata.date.toLocaleDateString('en-US', { dateStyle: 'full' })}</div>
+          <div class="post__excerpt">{metadata.excerpt}</div>
+          <a class="post__readmore" href={`/posts/${slug}`}>Read more…</a>
         </div>)
       }
     </div>

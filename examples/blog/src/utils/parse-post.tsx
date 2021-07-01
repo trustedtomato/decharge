@@ -29,7 +29,7 @@ export async function getPost (slug: string) {
     excerpt_separator: '\n\n'
   })
   const content = await markdownToHtml(contentInMarkdown)
-  
+
   return {
     content,
     excerpt,
@@ -46,7 +46,7 @@ export async function parsePost (postText: string): Promise<Post> {
 
   const content = await markdownToHtml(contentInMarkdown)
   const excerpt = striptags(await markdownToHtml(rawExcerpt))
-  
+
   return {
     content,
     metadata: {

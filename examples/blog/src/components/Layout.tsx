@@ -1,4 +1,4 @@
-import type { Children } from '../types/Children';
+import type { Children } from '../types/Children'
 
 interface Props {
   extraTitle?: string
@@ -15,7 +15,7 @@ export default ({ extraTitle, description, children }: Props) =>
     {/* TODO: create separate stylesheets for different screen sizes using media="..." */}
     <link rel="stylesheet" href="/styles/global.css" />
     {/* TODO: deliver this js inline. */}
-    <script src="/scripts/global.js"></script>
+    <script src="/scripts/global.js" />
     <title>{ extraTitle ? `${extraTitle} - ` : ''}Tamás Halasi</title>
     {children}
   </html>

@@ -1,10 +1,10 @@
 
 /**
- * 
- * @param {string} filename 
+ *
+ * @param {string} filename
  * @returns {{ directoryPath: string, name: string, extension: string }}
  */
- export function parsePath (filename) {
+export function parsePath (filename) {
   const match = filename.match(/^(.*?\/)?([^/]*?)(\.[^/.]*)?$/)
   return {
     directoryPath: match[1],

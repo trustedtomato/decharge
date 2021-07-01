@@ -47,5 +47,3 @@ export function gmWrite (targetPath: string, gm: Gm): Promise<void> {
     })
   })
 }
-
-
