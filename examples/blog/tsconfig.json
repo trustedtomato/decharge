@@ -5,8 +5,8 @@
     "preserveWatchOutput": true,
     "module": "ESNext",
     "target": "ES2017",
-    "moduleResolution": "node",
     "outDir": "/dev/null",
+    "moduleResolution": "node",
     "rootDir": "src",
     "allowJs": true,
     "allowSyntheticDefaultImports": true

@@ -1,6 +1,5 @@
 import fs from 'fs/promises'
-import parsePost from './parse-post.js'
-import type { Post } from './parse-post.js'
+import parsePost, { Post } from './parse-post.js'
 import parsePath from './parse-path.js'
 
 interface SluggedPost extends Post {

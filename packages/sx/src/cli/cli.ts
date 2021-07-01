@@ -4,6 +4,7 @@ import { routesDir } from './config.js'
 import fs from 'fs/promises'
 import { constants as fsConstants } from 'fs'
 
+// eslint-disable-next-line no-unused-expressions
 yargs(hideBin(process.argv))
   .check(async () => {
     try {
@@ -19,3 +20,4 @@ since the routes directory (${routesDir}) doesn't exist \
   })
   .command(await import('./build/cli.js'))
   .command(await import('./watch/cli.js'))
+  .argv

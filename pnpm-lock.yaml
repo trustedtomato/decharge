@@ -6,6 +6,14 @@ importers:
     specifiers:
       '@types/gm': ^1.18.9
       '@types/node-fetch': ^2.5.10
+      '@typescript-eslint/eslint-plugin': ^4.28.1
+      '@typescript-eslint/parser': ^4.28.1
+      eslint: ^7.12.1
+      eslint-config-preact: ^1.1.4
+      eslint-config-standard: ^16.0.3
+      eslint-plugin-import: ^2.22.1
+      eslint-plugin-node: ^11.1.0
+      eslint-plugin-promise: ^4.2.1
       gm: ^1.23.1
       gray-matter: ^4.0.3
       mkdirp: ^1.0.4
@@ -31,6 +39,15 @@ importers:
       striptags: 3.2.0
       sx: link:../../packages/sx
       typescript: 4.3.4
+    devDependencies:
+      '@typescript-eslint/eslint-plugin': 4.28.1_20a3b80fca6a1319695de43eee7865f8
+      '@typescript-eslint/parser': 4.28.1_eslint@7.29.0+typescript@4.3.4
+      eslint: 7.29.0
+      eslint-config-preact: 1.1.4_eslint@7.29.0+typescript@4.3.4
+      eslint-config-standard: 16.0.3_485ba97d72774394ef1a34a7eb4340db
+      eslint-plugin-import: 2.23.4_eslint@7.29.0
+      eslint-plugin-node: 11.1.0_eslint@7.29.0
+      eslint-plugin-promise: 4.3.1
 
   packages/sx:
     specifiers:

@@ -34,7 +34,7 @@ export default async () => <>
     </header>
     <div>
       {
-        posts.map(({ metadata, content, slug }) => <div class="post" key={slug}>
+        posts.map(({ metadata, slug }) => <div class="post" key={slug}>
           <h2 class="post__title"><a href={`/posts/${slug}`}>{metadata.title}</a></h2>
           <div class="post__date">{metadata.date.toLocaleDateString('en-US', { dateStyle: 'full' })}</div>
           <div class="post__excerpt">{metadata.excerpt}</div>

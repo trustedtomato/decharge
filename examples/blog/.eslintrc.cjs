@@ -20,7 +20,7 @@ module.exports = {
   ],
   rules: {
     'no-useless-constructor': 1,
-    'react/display-name': [0],
-    'react/no-danger': 0
+    'react/no-danger': 0,
+    'react/display-name': [0]
   }
 }
