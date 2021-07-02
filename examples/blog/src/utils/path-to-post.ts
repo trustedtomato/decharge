@@ -2,7 +2,7 @@ import fs from 'fs/promises'
 import parsePost, { Post } from './parse-post.js'
 import parsePath from './parse-path.js'
 
-interface SluggedPost extends Post {
+export interface SluggedPost extends Post {
   slug: string
 }
 

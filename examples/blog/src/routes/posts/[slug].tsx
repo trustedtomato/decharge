@@ -1,19 +1,19 @@
 import readdirp from 'readdirp'
 import Layout from '../../components/Layout.js'
-import pathToPost from '../../utils/path-to-post.js'
+import pathToPost, { SluggedPost } from '../../utils/path-to-post.js'
 
-const posts = []
+const posts: SluggedPost[] = []
 for await (const { fullPath } of readdirp('src/posts', { fileFilter: '*.md' })) {
   posts.push(
     await pathToPost(fullPath)
   )
 }
 
-posts.sort((a, b) => a.metadata.date - b.metadata.date)
+posts.sort((a, b) => Number(a.metadata.date) - Number(b.metadata.date))
 
 export const propsList = posts
 
-function getPreviousPostLink (post) {
+function getPreviousPostLink (post: SluggedPost) {
   const index = posts.indexOf(post)
   if (index === -1) {
     throw new Error(`${JSON.stringify(post)} is not a real post! It's an impostor, haha.`)
@@ -25,7 +25,7 @@ function getPreviousPostLink (post) {
   </a>
 }
 
-function getNextPostLink (post) {
+function getNextPostLink (post: SluggedPost) {
   const index = posts.indexOf(post)
   if (index === -1) {
     throw new Error(`${JSON.stringify(post)} is not a real post! It's an impostor, haha.`)
@@ -37,11 +37,11 @@ function getNextPostLink (post) {
   </a>
 }
 
-export default (post) => <Layout description={post.metadata.excerpt} extraTitle={post.metadata.title}>
+export default (post: SluggedPost) => <Layout description={post.metadata.excerpt} extraTitle={post.metadata.title}>
   <link rel="stylesheet" href="/styles/post.css" />
   <header>
     <h1>{post.metadata.title}</h1>
-    <p>{post.metadata.date.toLocaleDateString('en-US', { dateStyle: 'full' })}</p>
+    <p>{new Date(post.metadata.date).toLocaleDateString('en-US', { dateStyle: 'full' })}</p>
   </header>
   <main dangerouslySetInnerHTML={{ __html: post.content }} />
   <nav>

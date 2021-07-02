@@ -3,13 +3,15 @@
     "jsx": "react-jsx",
     "jsxImportSource": "preact",
     "preserveWatchOutput": true,
+    "lib": ["ESNext"],
     "module": "ESNext",
     "target": "ES2017",
     "outDir": "/dev/null",
     "moduleResolution": "node",
     "rootDir": "src",
     "allowJs": true,
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "noImplicitAny": true
   },
   "include": ["src/routes/**/*"]
 }

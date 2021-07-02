@@ -2,12 +2,7 @@ import { createBlurredImageBuffer } from './index.js'
 import gm from 'gm'
 import { gmToBuffer, getGmSize, getGmFormat } from '../gm-promisified.js'
 
-/**
- *
- * @param {Buffer} buffer
- * @returns {Promise<string>}
- */
-export const createBlurredImageBufferAuto = async (buffer, placeholderMaxSize) => {
+export const createBlurredImageBufferAuto = async (buffer: Buffer, placeholderMaxSize: number) => {
   const data = await gmToBuffer(
     gm(buffer)
       .resize(placeholderMaxSize, placeholderMaxSize)
