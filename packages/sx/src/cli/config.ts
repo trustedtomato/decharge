@@ -1,13 +1,13 @@
 import { fileURLToPath } from 'url'
 import { resolve, relative, join, dirname } from 'path'
-import * as defaultConfig from './default.sx.config.js'
+import * as defaultConfig from './default.jlessx.config.js'
 
 const config = await (async () => {
   try {
     const userConfig = await import(
       resolve(
         process.cwd(),
-        'sx.config.js'
+        'jlessx.config.js'
       )
     )
     return {
@@ -29,7 +29,7 @@ export const tempRoutesDir = resolve(tempDir, relative(srcDir, routesDir))
 export const publicDir = resolve(process.cwd(), config.publicDir)
 
 if (!routesDir.startsWith(srcDir)) {
-  throw new Error(`Invalid sx config file: Routes directory (${routesDir}) must be inside src directory (${srcDir})!`)
+  throw new Error(`Invalid JLessX config file: Routes directory (${routesDir}) must be inside src directory (${srcDir})!`)
 }
 
 // Local paths.

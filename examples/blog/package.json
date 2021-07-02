@@ -1,12 +1,12 @@
 {
-  "name": "sx-blog",
+  "name": "jlessx-blog",
   "version": "1.0.0",
   "description": "",
   "type": "module",
   "author": "Tamás Halasi",
   "scripts": {
-    "build": "sx build",
-    "watch": "sx watch",
+    "build": "jlessx build",
+    "watch": "jlessx watch",
     "dev-serve": "browser-sync dist/ --config browser-sync.config.cjs --watch"
   },
   "license": "ISC",
@@ -23,7 +23,7 @@
     "readdirp": "^3.6.0",
     "striptags": "^3.2.0",
     "typescript": "^4.3.4",
-    "sx": "workspace:*"
+    "jlessx": "workspace:*"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^4.28.1",

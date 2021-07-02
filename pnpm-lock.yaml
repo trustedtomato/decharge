@@ -16,6 +16,7 @@ importers:
       eslint-plugin-promise: ^4.2.1
       gm: ^1.23.1
       gray-matter: ^4.0.3
+      jlessx: workspace:*
       mkdirp: ^1.0.4
       node-fetch: ^2.6.1
       p-event: ^4.2.0
@@ -23,13 +24,13 @@ importers:
       precinct: ^8.1.0
       readdirp: ^3.6.0
       striptags: ^3.2.0
-      sx: workspace:*
       typescript: ^4.3.4
     dependencies:
       '@types/gm': 1.18.9
       '@types/node-fetch': 2.5.10
       gm: 1.23.1
       gray-matter: 4.0.3
+      jlessx: link:../../packages/sx
       mkdirp: 1.0.4
       node-fetch: 2.6.1
       p-event: 4.2.0
@@ -37,7 +38,6 @@ importers:
       precinct: 8.1.0
       readdirp: 3.6.0
       striptags: 3.2.0
-      sx: link:../../packages/sx
       typescript: 4.3.4
     devDependencies:
       '@typescript-eslint/eslint-plugin': 4.28.1_20a3b80fca6a1319695de43eee7865f8

@@ -12,7 +12,7 @@ yargs(hideBin(process.argv))
       return true
     } catch (err) {
       return new Error(
-`Can only run sx commands from sx projects! This isn't an sx project, \
+`Can only run JLessX commands from JLessX projects! This isn't a JLessX project, \
 since the routes directory (${routesDir}) doesn't exist \
 (or at least it isn't readable).`
       )

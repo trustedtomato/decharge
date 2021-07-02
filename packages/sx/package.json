@@ -1,5 +1,5 @@
 {
-  "name": "sx",
+  "name": "jlessx",
   "version": "1.0.0",
   "description": "",
   "type": "module",
@@ -9,7 +9,7 @@
     "watch": "tsc --watch"
   },
   "bin": {
-    "sx": "sx.js"
+    "jlessx": "jlessx.js"
   },
   "main": "./dist/runtime/index.js",
   "license": "ISC",

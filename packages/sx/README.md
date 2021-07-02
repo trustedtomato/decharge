@@ -1,8 +1,8 @@
-# SX
+# JLessX
 
-SX is a very-static site generator.
+JLessX is a very-static site generator.
 It doesn't emit JavaScript by default but is built on JSX,
-so the result is just SX I guess.
+so the result is JLessX I guess.
 
 ## Why?
 I tried out Astro, but the IDE support was really bad on my computer,
@@ -107,13 +107,13 @@ export default () => <>
 </>
 ```
 
-To fix this issue, there is a built-in function in SX called `createAsyncComponent`.
+To fix this issue, there is a built-in function in JLessX called `createAsyncComponent`.
 
 ```tsx
 // Valid route.
 
 import fetch from 'node-fetch'
-import { createAsyncComponent } from 'sx'
+import { createAsyncComponent } from 'jlessx'
 
 const AsyncComponent = createAsyncComponent(async ({ url }) =>
   <div>
