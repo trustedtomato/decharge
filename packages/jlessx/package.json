@@ -24,7 +24,6 @@
     "browser-sync": "^2.27.3",
     "chokidar": "^3.5.2",
     "hasha": "^5.2.2",
-    "html-minifier": "^4.0.0",
     "jsdom": "^16.6.0",
     "mkdirp": "^1.0.4",
     "p-event": "^4.2.0",
