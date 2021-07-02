@@ -30,7 +30,7 @@ importers:
       '@types/node-fetch': 2.5.10
       gm: 1.23.1
       gray-matter: 4.0.3
-      jlessx: link:../../packages/sx
+      jlessx: link:../../packages/jlessx
       mkdirp: 1.0.4
       node-fetch: 2.6.1
       p-event: 4.2.0
@@ -49,7 +49,7 @@ importers:
       eslint-plugin-node: 11.1.0_eslint@7.29.0
       eslint-plugin-promise: 4.3.1
 
-  packages/sx:
+  packages/jlessx:
     specifiers:
       '@babel/core': ^7.14.6
       '@babel/preset-env': ^7.14.7
@@ -3093,7 +3093,7 @@ packages:
       depd: 1.1.2
       inherits: 2.0.3
       setprototypeof: 1.1.0
-      statuses: 1.4.0
+      statuses: 1.5.0
     dev: false
 
   /http-errors/1.7.3:

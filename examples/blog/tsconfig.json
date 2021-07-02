@@ -1,17 +1,22 @@
 {
   "compilerOptions": {
+    "allowJs": true,
+    "noImplicitAny": true,
+    "lib": ["ESNext"],
+    "rootDir": "src",
+    "preserveWatchOutput": true,
+    
+    // Only change this to a higher target
+    // (top level await is only supported from ES2017)
+    "target": "ES2017",
+    
+    // Don't change these compiler options!
     "jsx": "react-jsx",
     "jsxImportSource": "preact",
-    "preserveWatchOutput": true,
-    "lib": ["ESNext"],
     "module": "ESNext",
-    "target": "ES2017",
     "outDir": "/dev/null",
     "moduleResolution": "node",
-    "rootDir": "src",
-    "allowJs": true,
-    "allowSyntheticDefaultImports": true,
-    "noImplicitAny": true
+    "esModuleInterop": true,
   },
   "include": ["src/routes/**/*"]
 }
