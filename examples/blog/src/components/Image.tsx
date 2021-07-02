@@ -34,7 +34,6 @@ export default createAsyncComponent(async ({
 
   const imageBuffer = await fs.readFile(srcToPath(src))
   const { width, height } = await getGmSize(gm(imageBuffer))
-  console.log(width)
   const downscaledWidths = widthVersions.filter(possibleDownscaledWidth =>
     possibleDownscaledWidth < width && possibleDownscaledWidth * (height / width) < maxHeight
   )
