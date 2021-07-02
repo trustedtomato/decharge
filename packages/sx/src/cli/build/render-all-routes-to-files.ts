@@ -16,7 +16,7 @@ export async function renderAllRoutesToFiles ({
 }: {
   routesDir: string,
   targetDir: string,
-  transform: (x: string) => string
+  transform?: (x: string) => string
 }) {
   const pathCreatorRoutePaths = new Map()
 

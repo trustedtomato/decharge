@@ -1,6 +1,5 @@
 
 import { renderAllRoutesToFiles } from './render-all-routes-to-files.js'
-import { minifyHtml } from './minify-html.js'
 import tsc from './tsc.js'
 import readdirp from 'readdirp'
 import copyToTemp from '../utils/copy-to-temp.js'
@@ -25,6 +24,5 @@ for await (const { fullPath } of readdirp(publicDir)) {
 await tsc(tempDir)
 await renderAllRoutesToFiles({
   routesDir: tempRoutesDir,
-  targetDir: distDir,
-  transform: minifyHtml
+  targetDir: distDir
 })
