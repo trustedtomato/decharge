@@ -1,8 +1,8 @@
-# JLessX
+# JlessX
 
-JLessX is a very-static site generator.
+JlessX is a very-static site generator.
 It doesn't emit JavaScript by default but is built on JSX,
-so the result is JLessX I guess.
+so the result is JlessX I guess.
 
 ## Why?
 I tried out Astro, but the IDE support was really bad on my computer,
@@ -107,7 +107,7 @@ export default () => <>
 </>
 ```
 
-To fix this issue, there is a built-in function in JLessX called `createAsyncComponent`.
+To fix this issue, there is a built-in function in JlessX called `createAsyncComponent`.
 
 ```tsx
 // Valid route.
