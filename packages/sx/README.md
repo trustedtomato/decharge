@@ -5,7 +5,7 @@ It doesn't emit JavaScript by default but is built on JSX,
 so the result is just SX I guess.
 
 ## Why?
-I tried out Astro, but the IDE support was real bad on my computer,
+I tried out Astro, but the IDE support was really bad on my computer,
 dynamic routes were not the way I'd like and (in my opinion) it had a
 lot of unneccessary bloat going on.
 I tried to fix these issues with this project.
@@ -38,6 +38,9 @@ export default async () => <html>
   </body>
 </html>
 ```
+You can use any "export default"-ed Preact component as route
+(because the route will be rendered using Preact),
+but using tsx is the easiest way to define one.
 
 #### Dynamic routing = routes outputting multiple pages
 You can have route paths like `about/[author].tsx` or even
@@ -75,5 +78,54 @@ Pushkin burnt most of the tenth chapter. Very little of it survived in Pushkin's
 
 export default ({ authorSlug, postSlug, footnoteNumber, content }) => <>
   Here, footnote number {footnoteNumber} refers to: {content}
+</>
+```
+
+### Components
+A component can be any Preact component as you might have guessed.
+
+#### Async components
+Async components are trickier, though.
+You can't simply use a `(params) => Promise<JSX.Element>` instead of a `(params) => JSX.Element`,
+so this is route's code is invalid:
+
+```tsx
+// INVALID ROUTE!
+
+import fetch from 'node-fetch'
+
+const AsyncComponent = async ({ url }) => <div>
+  The length of {url}'s source code is {
+    await fetch(url)
+      .then(res => res.text())
+      .then(text => text.length)
+  }
+</div>
+
+export default () => <>
+  <AsyncComponent url="https://google.com" />
+</>
+```
+
+To fix this issue, there is a built-in function in SX called `createAsyncComponent`.
+
+```tsx
+// Valid route.
+
+import fetch from 'node-fetch'
+import { createAsyncComponent } from 'sx'
+
+const AsyncComponent = createAsyncComponent(async ({ url }) =>
+  <div>
+    The length of {url}'s source code is {
+      await fetch(url)
+        .then(res => res.text())
+        .then(text => text.length)
+    }
+  </div>
+)
+
+export default () => <>
+  <AsyncComponent url="https://google.com" />
 </>
 ```
