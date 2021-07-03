@@ -1,3 +1,4 @@
+import { Scripts, Styles } from 'jlessx'
 import type { Children } from '../types/Children'
 
 interface Props {
@@ -13,8 +14,8 @@ export default ({ extraTitle, description, children }: Props) =>
     <meta name="description" content={description} />
     {/* TODO: create separate stylesheets for different screen sizes using media="..." */}
     <link rel="stylesheet" href="/styles/global.css" />
-    {/* TODO: deliver this js inline. */}
-    <script src="/scripts/global.js" />
+    <Styles />
     <title>{ extraTitle ? `${extraTitle} — ` : ''}Raskolnikov's blog</title>
     {children}
+    <Scripts />
   </html>

@@ -25,6 +25,7 @@ export async function renderAllRoutesToFiles ({
     // path will be relative to routesDir.
     path: routePath
   } of readdirp(routesDir, { fileFilter: '*.js' })) {
+    console.log(routePath)
     const newFiles = await renderRoute(routePath, routesDir)
 
     for (const [path, content] of newFiles) {
