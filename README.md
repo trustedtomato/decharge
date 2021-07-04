@@ -83,9 +83,55 @@ export default ({ authorSlug, postSlug, footnoteNumber, content }) => <>
 
 ### Components
 A component can be any Preact component as you might have guessed.
+The thing is that you can't really use `styled-jsx` or a similar library,
+because they are bloaty or don't work in a purely SSR enviroment
+(if you find anything that works, please open an issue), so JlessX
+provides a way to add styles and client-side scripts
+(preferably just for progressive enhancement) to a component.
+
+```tsx
+import { createComplexComponent, css } from 'jlessx'
+
+interface Props {}
+
+export default createComplexComponent<Props>({
+  // Required.
+  // This should be an ID unique to the component.
+  // If you have only one component in one file, which you probably should,
+  // using import.meta.url is perfect.
+  id: import.meta.url,
+  // Required.
+  // The "Props" gets extended here with a className property,
+  // which can be used to target the component for styling + scripting.
+  // The generated className is unique to the component.
+  Component: ({ className }) => <div className={className}>I am red and if you click me, I will make an alert.</div>,
+  // Optional.
+  // ".this" will be replaced with the generated className.
+  style: css`
+    .this {
+      color: red;
+    }
+  `,
+  // Optional.
+  // Using script is very quirky.
+  // 1. Try to use legacy syntax if possible, the user of the component
+  // might want to target older browsers and transpiling modern code sometimes
+  // results in a big chunk of unnecessary code.
+  // 2. Using the method syntax (script () {}) would result in
+  // erroneous code, see https://github.com/trustedtomato/JlessX/issues/6.
+  // 3. This function will be executed in a different context,
+  // so don't reference any variable which you declared earlier in this file.
+  script: function (className) {
+    document.querySelector(`.${className}`).onclick = function () {
+      alert('Bonjour!')
+    }
+  }
+})
+```
+
+See <https://github.com/vercel/styled-jsx/#syntax-highlighting> for CSS syntax highlighting.
 
 #### Async components
-Async components are trickier, though.
 You can't simply use a `(params) => Promise<JSX.Element>` instead of a `(params) => JSX.Element`,
 so this is route's code is invalid:
 
