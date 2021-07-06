@@ -9,6 +9,7 @@ importers:
       '@typescript-eslint/eslint-plugin': ^4.28.1
       '@typescript-eslint/parser': ^4.28.1
       clean-css: ^5.1.3
+      decharge: workspace:*
       eslint: ^7.12.1
       eslint-config-preact: ^1.1.4
       eslint-config-standard: ^16.0.3
@@ -18,7 +19,6 @@ importers:
       gm: ^1.23.1
       gray-matter: ^4.0.3
       html-minifier-terser: ^5.1.1
-      jlessx: workspace:*
       mkdirp: ^1.0.4
       node-fetch: ^2.6.1
       p-event: ^4.2.0
@@ -32,10 +32,10 @@ importers:
       '@types/gm': 1.18.9
       '@types/node-fetch': 2.5.10
       clean-css: 5.1.3
+      decharge: link:../../packages/decharge
       gm: 1.23.1
       gray-matter: 4.0.3
       html-minifier-terser: 5.1.1
-      jlessx: link:../../packages/jlessx
       mkdirp: 1.0.4
       node-fetch: 2.6.1
       p-event: 4.2.0
@@ -55,7 +55,60 @@ importers:
       eslint-plugin-node: 11.1.0_eslint@7.29.0
       eslint-plugin-promise: 4.3.1
 
-  packages/jlessx:
+  examples/project-website:
+    specifiers:
+      '@types/gm': ^1.18.9
+      '@types/node-fetch': ^2.5.10
+      '@typescript-eslint/eslint-plugin': ^4.28.1
+      '@typescript-eslint/parser': ^4.28.1
+      clean-css: ^5.1.3
+      decharge: workspace:*
+      eslint: ^7.12.1
+      eslint-config-preact: ^1.1.4
+      eslint-config-standard: ^16.0.3
+      eslint-plugin-import: ^2.22.1
+      eslint-plugin-node: ^11.1.0
+      eslint-plugin-promise: ^4.2.1
+      gm: ^1.23.1
+      gray-matter: ^4.0.3
+      html-minifier-terser: ^5.1.1
+      mkdirp: ^1.0.4
+      node-fetch: ^2.6.1
+      p-event: ^4.2.0
+      preact: ^10.5.13
+      precinct: ^8.1.0
+      readdirp: ^3.6.0
+      striptags: ^3.2.0
+      typescript: ^4.3.4
+      uglify-js: ^3.13.10
+    dependencies:
+      '@types/gm': 1.18.9
+      '@types/node-fetch': 2.5.10
+      clean-css: 5.1.3
+      decharge: link:../../packages/decharge
+      gm: 1.23.1
+      gray-matter: 4.0.3
+      html-minifier-terser: 5.1.1
+      mkdirp: 1.0.4
+      node-fetch: 2.6.1
+      p-event: 4.2.0
+      preact: 10.5.13
+      precinct: 8.1.0
+      readdirp: 3.6.0
+      striptags: 3.2.0
+      typescript: 4.3.4
+      uglify-js: 3.13.10
+    devDependencies:
+      '@typescript-eslint/eslint-plugin': 4.28.1_20a3b80fca6a1319695de43eee7865f8
+      '@typescript-eslint/parser': 4.28.1_eslint@7.29.0+typescript@4.3.4
+      eslint: 7.29.0
+      eslint-config-preact: 1.1.4_eslint@7.29.0+typescript@4.3.4
+      eslint-config-standard: 16.0.3_485ba97d72774394ef1a34a7eb4340db
+      eslint-plugin-import: 2.23.4_eslint@7.29.0
+      eslint-plugin-node: 11.1.0_eslint@7.29.0
+      eslint-plugin-promise: 4.3.1
+
+  packages/decharge:
     specifiers:
       '@babel/core': ^7.14.6
       '@babel/preset-env': ^7.14.7

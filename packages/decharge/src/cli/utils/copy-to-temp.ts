@@ -5,7 +5,7 @@ import { copyFile } from 'fs/promises'
 import { tempDir, srcDir } from '../config.js'
 
 /**
- * Copies "srcPath" to the /.jlessx directory.
+ * Copies "srcPath" to the /.decharge directory.
  */
 export async function copyToTemp (srcPath: string): Promise<void> {
   const relativeSrcPath = pathLib.relative(srcDir, srcPath)

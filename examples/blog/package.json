@@ -1,12 +1,12 @@
 {
-  "name": "jlessx-blog",
+  "name": "decharge-blog",
   "version": "1.0.0",
   "description": "",
   "type": "module",
   "author": "Tamás Halasi",
   "scripts": {
-    "build": "jlessx build && node minify-dist.js",
-    "watch": "jlessx watch",
+    "build": "decharge build && node minify-dist.js",
+    "watch": "decharge watch",
     "dev-serve": "browser-sync dist/ --config browser-sync.config.cjs --watch"
   },
   "license": "ISC",
@@ -17,7 +17,7 @@
     "gm": "^1.23.1",
     "gray-matter": "^4.0.3",
     "html-minifier-terser": "^5.1.1",
-    "jlessx": "workspace:*",
+    "decharge": "workspace:*",
     "mkdirp": "^1.0.4",
     "node-fetch": "^2.6.1",
     "p-event": "^4.2.0",

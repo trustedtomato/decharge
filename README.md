@@ -1,8 +1,8 @@
-# JlessX
+# decharge
 
-JlessX is a very-static site generator.
+decharge is a very-static site generator.
 It doesn't emit JavaScript by default but is built on JSX,
-so the result is JlessX I guess.
+so the result is decharge I guess.
 
 ## Why?
 I tried out Astro, but the IDE support was really bad on my computer,
@@ -85,12 +85,12 @@ export default ({ authorSlug, postSlug, footnoteNumber, content }) => <>
 A component can be any Preact component as you might have guessed.
 The thing is that you can't really use `styled-jsx` or a similar library,
 because they are bloaty or don't work in a purely SSR enviroment
-(if you find anything that works, please open an issue), so JlessX
+(if you find anything that works, please open an issue), so decharge
 provides a way to add styles and client-side scripts
 (preferably just for progressive enhancement) to a component.
 
 ```tsx
-import { createComplexComponent, css } from 'jlessx'
+import { createComplexComponent, css } from 'decharge'
 
 interface Props {}
 
@@ -118,7 +118,7 @@ export default createComplexComponent<Props>({
   // might want to target older browsers and transpiling modern code sometimes
   // results in a big chunk of unnecessary code.
   // 2. Using the method syntax (script () {}) would result in
-  // erroneous code, see https://github.com/trustedtomato/JlessX/issues/6.
+  // erroneous code, see https://github.com/trustedtomato/decharge/issues/6.
   // 3. This function will be executed in a different context,
   // so don't reference any variable which you declared earlier in this file.
   script: function (className) {
@@ -153,13 +153,13 @@ export default () => <>
 </>
 ```
 
-To fix this issue, there is a built-in function in JlessX called `createAsyncComponent`.
+To fix this issue, there is a built-in function in decharge called `createAsyncComponent`.
 
 ```tsx
 // Valid route.
 
 import fetch from 'node-fetch'
-import { createAsyncComponent } from 'jlessx'
+import { createAsyncComponent } from 'decharge'
 
 const AsyncComponent = createAsyncComponent(async ({ url }) =>
   <div>

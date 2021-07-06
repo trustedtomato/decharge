@@ -3,7 +3,7 @@ import markdownToHtml from '../patched-packages/marked/marked.js'
 import parseFrontmatter from 'gray-matter'
 import striptags from 'striptags'
 import Image from '../components/Image.js'
-import { render } from 'jlessx'
+import { render } from 'decharge'
 
 export interface Post {
   metadata: Record<string, string>

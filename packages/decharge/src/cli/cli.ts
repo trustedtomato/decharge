@@ -12,7 +12,7 @@ yargs(hideBin(process.argv))
       return true
     } catch (err) {
       return new Error(
-`Can only run JlessX commands from JlessX projects! This isn't a JlessX project, \
+`Can only run decharge commands from decharge projects! This isn't a decharge project, \
 since the routes directory (${routesDir}) doesn't exist \
 (or at least it isn't readable).`
       )

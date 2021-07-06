@@ -7,7 +7,7 @@ import { publicDir, distDir } from '../config.js'
 // TODO: unify this and copy-to-temp.ts
 
 /**
- * Copies "srcPath" to the /.jlessx directory.
+ * Copies "srcPath" to the /.decharge directory.
  */
 export async function copyPublic (srcPath: string): Promise<void> {
   const relativeSrcPath = pathLib.relative(publicDir, srcPath)

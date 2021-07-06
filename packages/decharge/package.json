@@ -1,5 +1,5 @@
 {
-  "name": "jlessx",
+  "name": "decharge",
   "version": "1.0.0",
   "description": "",
   "type": "module",
@@ -9,7 +9,7 @@
     "watch": "tsc --watch"
   },
   "bin": {
-    "jlessx": "jlessx.js"
+    "decharge": "decharge.js"
   },
   "main": "./dist/runtime/index.js",
   "license": "ISC",

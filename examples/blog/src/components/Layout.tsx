@@ -1,4 +1,4 @@
-import { Scripts, Styles } from 'jlessx'
+import { Scripts, Styles } from 'decharge'
 import type { Children } from '../types/Children'
 
 interface Props {
