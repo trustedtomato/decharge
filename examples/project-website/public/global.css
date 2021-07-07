@@ -1,0 +1,106 @@
+@font-face {
+  font-family: 'Courier Prime';
+  src: url("/Courier Prime/Courier Prime.ttf");
+  font-display: swap;
+}
+
+html {
+  font-size: 10px;
+}
+
+body {
+  font-size: 1.8rem;
+  background: #D5E1E3;
+  font-family: Roboto;
+  margin: 0;
+  line-height: 3rem;
+}
+
+header h1, code {
+  font-family: 'Courier Prime', 'Courier New', Courier, monospace;
+}
+
+code {
+  padding-left: .5em;
+  padding-right: .5em;
+  line-height: 0;
+  padding-top: .7rem;
+  padding-bottom: .4rem;
+  background: #fff;
+}
+
+header h1 {
+  margin-top: 23.8rem;
+  font-weight: normal;
+  font-size: 9rem;
+  text-align: center;
+  margin-bottom: 0;
+  line-height: 1;
+}
+
+header p {
+  margin: 1rem 0 0 0;
+  text-align: center;
+}
+
+.introduction {
+  max-width: 84rem;
+  margin: 21rem auto 0 auto;
+}
+
+.introduction p {
+  margin: 3rem 0;
+  max-width: 57rem;
+}
+
+a {
+  color: #5E5146;
+}
+
+.sidenote__sup {
+  vertical-align: super;
+  font-size: .6em;
+  line-height: 0;
+}
+
+.sidenote {
+  float: right;
+  clear: right;
+  margin-right: -27rem;
+  margin-top: 0.6rem;
+  width: 24rem;
+  line-height: 2rem;
+  font-size: 1.4rem;
+}
+
+.arrow {
+  margin: auto;
+  display: block;
+  height: 12.2rem;
+  margin-top: 17.2rem
+}
+
+.docs {
+  margin: auto;
+  margin-top: 15.2rem;
+  max-width: 108rem;
+}
+
+h2, h3, h4 {
+  margin: 0;
+  font-weight: 500;
+}
+
+h2 {
+  border-bottom: 1px solid #5E5146;
+  padding-bottom: 2.5rem;
+  margin-bottom: 1.8rem;
+}
+
+.docs__content {
+  max-width: 57rem;
+}
+
+.docs p {
+  margin: 0;
+}

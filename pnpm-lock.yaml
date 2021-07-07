@@ -75,7 +75,7 @@ importers:
       mkdirp: ^1.0.4
       node-fetch: ^2.6.1
       p-event: ^4.2.0
-      preact: ^10.5.13
+      preact: ^10.5.14
       precinct: ^8.1.0
       readdirp: ^3.6.0
       striptags: ^3.2.0
@@ -92,7 +92,7 @@ importers:
       mkdirp: 1.0.4
       node-fetch: 2.6.1
       p-event: 4.2.0
-      preact: 10.5.13
+      preact: 10.5.14
       precinct: 8.1.0
       readdirp: 3.6.0
       striptags: 3.2.0
@@ -153,7 +153,7 @@ importers:
       jsdom: 16.6.0
       mkdirp: 1.0.4
       p-event: 4.2.0
-      preact: 10.5.13
+      preact: 10.5.14
       precinct: 8.1.0
       readdirp: 3.6.0
       stylis: 4.0.10
@@ -4036,6 +4036,10 @@ packages:
 
   /preact/10.5.13:
     resolution: {integrity: sha512-q/vlKIGNwzTLu+jCcvywgGrt+H/1P/oIRSD6mV4ln3hmlC+Aa34C7yfPI4+5bzW8pONyVXYS7SvXosy2dKKtWQ==}
+    dev: false
+
+  /preact/10.5.14:
+    resolution: {integrity: sha512-KojoltCrshZ099ksUZ2OQKfbH66uquFoxHSbnwKbTJHeQNvx42EmC7wQVWNuDt6vC5s3nudRHFtKbpY4ijKlaQ==}
     dev: false
 
   /precinct/8.1.0:

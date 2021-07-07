@@ -8,9 +8,9 @@ const jsdom = new JSDOM('<!DOCTYPE html>')
 const document = jsdom.window.document
 global.document = document
 
-export const RenderingDelayContext = createContext<Set<Promise<unknown>>>(null)
-export const ScriptsContext = createContext<string[]>(null)
-export const StylesContext = createContext<string[]>(null)
+export const RenderingDelayContext = createContext<Set<Promise<unknown>> | null>(null)
+export const ScriptsContext = createContext<string[] | null>(null)
+export const StylesContext = createContext<string[] | null>(null)
 
 interface SetupComplexComponentOptions {
   id: string
@@ -18,7 +18,7 @@ interface SetupComplexComponentOptions {
   style?: string
 }
 
-export const SetupComplexComponentContext = createContext<(options: SetupComplexComponentOptions) => string>(null)
+export const SetupComplexComponentContext = createContext<((options: SetupComplexComponentOptions) => string) | null>(null)
 
 function startRender (jsx: JSX.Element) {
   const root = document.createElement('x-root')
@@ -52,6 +52,7 @@ export async function render (jsx: JSX.Element) {
       script
     }: SetupComplexComponentOptions): string {
       if (classNames.has(id)) {
+        // @ts-ignore
         return classNames.get(id)
       }
       const className = classNameIterator.next().value

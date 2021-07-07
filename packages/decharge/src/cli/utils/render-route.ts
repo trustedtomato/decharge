@@ -10,9 +10,27 @@ export async function renderRoute (path: string, baseDir: string): Promise<Map<s
   // end of imports, but that would cause a memory leak.
   const worker = new Worker(new URL('./render-route.worker.js', import.meta.url))
   worker.postMessage({ path, baseDir })
-  const files = await waitForEvent(worker, 'message')
-  await worker.terminate()
-  return files
+  worker.on('message', ({ type, value }) => {
+    if (type === 'console-log') {
+      console.log(...value)
+    } else if (type === 'console-error') {
+      console.error(...value)
+    } else if (type === 'error') {
+      console.error(value)
+      worker.terminate()
+    }
+  })
+
+  try {
+    const files = await waitForEvent(worker, 'message', {
+      filter: event => event.type === 'result',
+      rejectionEvents: ['error', 'exit']
+    })
+    await worker.terminate()
+    return files.value
+  } catch (err) {
+    return new Map()
+  }
 }
 
 export default renderRoute

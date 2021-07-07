@@ -12,6 +12,15 @@
     "decharge": "decharge.js"
   },
   "main": "./dist/runtime/index.js",
+  "exports": {
+    ".": "./dist/runtime/index.js",
+    "./hooks": "./dist/runtime/hooks.js"
+  },
+  "typesVersions": {
+    "*": {
+      "hooks": ["dist/runtime/hooks.d.ts"]
+    }
+  },
   "license": "ISC",
   "dependencies": {
     "@babel/core": "^7.14.6",

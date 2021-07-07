@@ -1,5 +1,5 @@
 import { Scripts, Styles } from 'decharge'
-import { ComponentChildren } from 'preact'
+import type { ComponentChildren } from 'preact'
 
 interface Props {
   extraTitle?: string
@@ -13,9 +13,9 @@ export default ({ extraTitle, description, children }: Props) =>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
     {/* TODO: create separate stylesheets for different screen sizes using media="..." */}
-    <link rel="stylesheet" href="/styles/global.css" />
+    <link rel="stylesheet" href="/global.css" />
     <Styles />
-    <title>{ extraTitle ? `${extraTitle} — ` : ''}Raskolnikov's blog</title>
+    <title>{ extraTitle ? `${extraTitle} — ` : ''}decharge</title>
     {children}
     <Scripts />
   </html>

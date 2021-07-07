@@ -15,7 +15,38 @@ const jsPathToHtmlPath = (jsRoutePath: string): string => {
   return jsRoutePath.replace(/\.js$/, '/index.html')
 }
 
-parentPort.once('message', async ({ baseDir, path }: { baseDir: string, path: string }) => {
+// Have to override console methods because of this bug: https://github.com/nodejs/node/issues/30491
+console.log = (...args: any[]) => {
+  parentPort!!.postMessage({
+    type: 'console-log',
+    value: args
+  })
+}
+
+console.error = (...args: any[]) => {
+  parentPort!!.postMessage({
+    type: 'console-error',
+    value: args
+  })
+}
+
+// By default, unhandled promises are silently ignored.
+// Let's forward them instead.
+process.on('unhandledRejection', (error) => {
+  parentPort!!.postMessage({
+    type: 'error',
+    value: error
+  })
+})
+
+process.on('uncaughtExceptionMonitor', (error) => {
+  parentPort!!.postMessage({
+    type: 'error',
+    value: error
+  })
+})
+
+parentPort!!.once('message', async ({ baseDir, path }: { baseDir: string, path: string }) => {
   const files: Map<string, string> = new Map()
 
   const srcPath = pathLib.join(baseDir, path)
@@ -39,5 +70,8 @@ parentPort.once('message', async ({ baseDir, path }: { baseDir: string, path: st
     files.set(targetPath, `<!DOCTYPE html>${await render(jsx)}`)
   }
 
-  parentPort.postMessage(files)
+  parentPort!!.postMessage({
+    type: 'result',
+    value: files
+  })
 })

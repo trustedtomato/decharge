@@ -5,5 +5,7 @@ import { StylesContext } from '../common/render.js'
 export const Styles = () => {
   const styles = useContext(StylesContext)
 
-  return styles.length === 0 ? null : <style>{styles.join('')}</style>
+  return styles === null || styles.length === 0
+    ? null
+    : <style>{styles.join('')}</style>
 }

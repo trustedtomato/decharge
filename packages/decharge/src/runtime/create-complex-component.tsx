@@ -23,6 +23,9 @@ export function createComplexComponent<T> ({
 }) {
   const ComplexComponent = (props: T): JSX.Element => {
     const setupComplexComponent = useContext(SetupComplexComponentContext)
+    if (setupComplexComponent === null) {
+      throw new Error('Cannot setup complex component in a non-rendering context!')
+    }
     const className = setupComplexComponent({
       id,
       style,

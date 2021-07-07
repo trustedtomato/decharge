@@ -5,5 +5,7 @@ import { ScriptsContext } from '../common/render.js'
 export const Scripts = () => {
   const scripts = useContext(ScriptsContext)
 
-  return scripts.length === 0 ? null : <script>{scripts.join('')}</script>
+  return scripts === null || scripts.length === 0
+    ? null
+    : <script>{scripts.join('')}</script>
 }
