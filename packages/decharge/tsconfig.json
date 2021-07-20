@@ -4,7 +4,7 @@
     "jsxImportSource": "preact",
     "preserveWatchOutput": true,
     "module": "ESNext",
-    "target": "ES2017",
+    "target": "ESNext",
     "moduleResolution": "node",
     "rootDir": "src",
     "outDir": "dist",

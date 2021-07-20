@@ -8,6 +8,7 @@ import { getGmSize, gmToBuffer } from '../utils/gm-promisified.js'
 import createBlurredImageAuto from '../utils/create-blurred-image/auto.js'
 import type { JSX } from 'preact/jsx-runtime'
 import { createAsyncComponent, createComplexComponent } from 'decharge'
+import { useConst } from 'decharge/hooks'
 interface Props {
   src: string
   alt: string
@@ -24,7 +25,7 @@ export default createComplexComponent<Props>({
     src,
     alt,
     title,
-    className,
+    generatedClassName,
     widthConditions,
     widthVersions = [375, 720, 800, 900, 1366, 1600, 1920, 4100]
   }): Promise<JSX.Element> => {
@@ -87,7 +88,7 @@ export default createComplexComponent<Props>({
       })
       .join(',')
 
-    return <div class={`image ${className}`} style={`max-width:${width}px`}>
+    return <div class={`image ${generatedClassName}`} style={`max-width:${width}px`}>
       <div dangerouslySetInnerHTML={{ __html: await createBlurredImageAuto(imageBuffer, 40) }} />
       <img
         src={srcToUrl(src)}

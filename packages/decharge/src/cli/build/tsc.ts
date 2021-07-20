@@ -1,6 +1,6 @@
 import { promisify } from 'util'
 import childProcess from 'child_process'
-import { tscBinPath } from '../config.js'
+import { tscBinPath } from '../../common/config.js'
 const execFile = promisify(childProcess.execFile)
 
 export default async function (outDir: string) {

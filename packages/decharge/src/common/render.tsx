@@ -1,25 +1,33 @@
-import { render as preactRender, createContext, JSX } from 'preact'
+import { render as preactRender, createContext, JSX, ComponentChildren } from 'preact'
 import { JSDOM } from 'jsdom'
 import { useState } from 'preact/hooks'
+import { useConst } from '../runtime/hooks.js'
 import { makeClassNameIterator } from './make-class-name-iterator.js'
 import transformStyle from './transform-style.js'
+import { generatedClassNamePrefix } from './config.js'
 
 const jsdom = new JSDOM('<!DOCTYPE html>')
 const document = jsdom.window.document
 global.document = document
 
-export const RenderingDelayContext = createContext<Set<Promise<unknown>> | null>(null)
-export const ScriptsContext = createContext<string[] | null>(null)
-export const StylesContext = createContext<string[] | null>(null)
-
-interface SetupComplexComponentOptions {
-  id: string
-  script?: string
-  style?: string
+export interface PageContextType {
+  scripts: string[],
+  styles: string[],
+  setupComplexComponent: (options: {
+    id: string
+    script?: string
+    style?: string
+  }) => string
 }
 
-export const SetupComplexComponentContext = createContext<((options: SetupComplexComponentOptions) => string) | null>(null)
+export interface RenderingContextType {
+  delayerPromises: Set<Promise<unknown>>,
+}
 
+export const RenderingContext = createContext<RenderingContextType | null>(null)
+export const PageContext = createContext<PageContextType | null>(null)
+
+/** Renders a JSX component to HTML. */
 function startRender (jsx: JSX.Element) {
   const root = document.createElement('x-root')
   document.body.appendChild(root)
@@ -36,50 +44,55 @@ function startRender (jsx: JSX.Element) {
   }
 }
 
-/** Renders a JSX component to HTML. */
-export async function render (jsx: JSX.Element) {
+/**
+ * Renders a decharge component to HTML.
+ * If pageContextToUse is not used, Component will be treated as a page.
+ */
+export async function render (component: JSX.Element, pageContextToUse?: PageContextType) {
   const delayerPromises: Set<Promise<unknown>> = new Set()
-  const classNames: Map<string, string> = new Map()
-  const classNameIterator = makeClassNameIterator()
 
-  const ToRender = () => {
+  const RenderWrapper = ({ children }: { children: ComponentChildren }) => {
     const [scripts, setScripts] = useState([] as string[])
     const [styles, setStyles] = useState([] as string[])
+    const classNames = useConst<Map<string, string>>(() => new Map())
+    const classNameIterator = useConst(() => makeClassNameIterator())
 
-    function setupComplexComponent ({
-      id,
-      style,
-      script
-    }: SetupComplexComponentOptions): string {
-      if (classNames.has(id)) {
-        // @ts-ignore
-        return classNames.get(id)
+    const pageContext: PageContextType = pageContextToUse ?? {
+      scripts,
+      styles,
+      setupComplexComponent: ({
+        id,
+        style,
+        script
+      }): string => {
+        if (classNames.has(id)) {
+          // @ts-ignore
+          return classNames.get(id)
+        }
+        const className = `${generatedClassNamePrefix}${classNameIterator.next().value}`
+        classNames.set(id, className)
+        if (style) {
+          setStyles([...styles, transformStyle(style, className)])
+        }
+        if (script) {
+          setScripts([...scripts, `(${script})(${JSON.stringify(className)});`])
+        }
+        return className
       }
-      const className = classNameIterator.next().value
-      classNames.set(id, className)
-      if (style) {
-        setStyles([...styles, transformStyle(style, className)])
-      }
-      if (script) {
-        setScripts([...scripts, `(${script})(${JSON.stringify(className)});`])
-      }
-      return className
     }
 
     return (
-      <RenderingDelayContext.Provider value={delayerPromises}>
-      <ScriptsContext.Provider value={scripts}>
-      <StylesContext.Provider value={styles}>
-      <SetupComplexComponentContext.Provider value={setupComplexComponent}>
-        {jsx}
-      </SetupComplexComponentContext.Provider>
-      </StylesContext.Provider>
-      </ScriptsContext.Provider>
-      </RenderingDelayContext.Provider>
+      <PageContext.Provider value={pageContext}>
+      <RenderingContext.Provider value={{
+        delayerPromises
+      }}>
+        {children}
+      </RenderingContext.Provider>
+      </PageContext.Provider>
     )
   }
 
-  const rendering = startRender(<ToRender />)
+  const rendering = startRender(<RenderWrapper>{component}</RenderWrapper>)
   do {
     const pendingDelayerPromises = [...delayerPromises]
     await Promise.all(pendingDelayerPromises)

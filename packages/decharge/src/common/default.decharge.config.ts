@@ -1,4 +1,5 @@
 // paths
+export const generatedClassNamePrefix = 'd-'
 export const srcDir = 'src'
 export const routesDir = 'routes'
 export const tempDir = '.decharge'

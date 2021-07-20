@@ -1,6 +1,5 @@
-import { useContext } from 'preact/hooks'
 import type { JSX } from 'preact/jsx-runtime'
-import { SetupComplexComponentContext } from '../common/render.js'
+import { usePageContext } from './hooks.js'
 
 export function css ([startString, ...restString]: TemplateStringsArray, ...vars: unknown[]) {
   const result: string[] = [startString]
@@ -17,21 +16,21 @@ export function createComplexComponent<T> ({
   script
 }: {
   id: string,
-  Component: (props: T & { className: string }) => JSX.Element,
+  Component: (props: T & { generatedClassName: string }) => JSX.Element,
   style?: string,
   script?: string | Function
 }) {
   const ComplexComponent = (props: T): JSX.Element => {
-    const setupComplexComponent = useContext(SetupComplexComponentContext)
-    if (setupComplexComponent === null) {
-      throw new Error('Cannot setup complex component in a non-rendering context!')
+    const pageContext = usePageContext()
+    if (pageContext === null) {
+      throw new Error('Cannot setup complex component without a page context!')
     }
-    const className = setupComplexComponent({
+    const generatedClassName = pageContext.setupComplexComponent({
       id,
       style,
       script: String(script)
     })
-    return <Component {...({ ...props, className })} />
+    return <Component {...({ ...props, generatedClassName })} />
   }
   return ComplexComponent
 }

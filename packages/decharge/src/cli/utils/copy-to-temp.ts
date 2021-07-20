@@ -2,7 +2,7 @@ import pathLib from 'path'
 import mkdirp from 'mkdirp'
 import { copyFile } from 'fs/promises'
 
-import { tempDir, srcDir } from '../config.js'
+import { tempDir, srcDir } from '../../common/config.js'
 
 /**
  * Copies "srcPath" to the /.decharge directory.

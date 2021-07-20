@@ -1,11 +1,10 @@
-import { useContext } from 'preact/hooks'
-import { ScriptsContext } from '../common/render.js'
+import { usePageContext } from './hooks.js'
 
 // TODO: only enable adding this once to a page.
-export const Scripts = () => {
-  const scripts = useContext(ScriptsContext)
+export const Scripts = ({ type }: { type: 'end-of-body' }) => {
+  const { scripts } = usePageContext()!!
 
-  return scripts === null || scripts.length === 0
+  return scripts.length === 0
     ? null
     : <script>{scripts.join('')}</script>
 }

@@ -3,7 +3,7 @@ import { renderAllRoutesToFiles } from './render-all-routes-to-files.js'
 import tsc from './tsc.js'
 import readdirp from 'readdirp'
 import copyToTemp from '../utils/copy-to-temp.js'
-import { tempDir, srcDir, distDir, tempRoutesDir, publicDir } from '../config.js'
+import { tempDir, srcDir, distDir, tempRoutesDir, publicDir } from '../../common/config.js'
 import copyPublic from '../utils/copy-public.js'
 
 // Copy not ts/js/tsx/jsx files to _temp,

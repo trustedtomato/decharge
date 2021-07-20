@@ -1,8 +1,8 @@
 # decharge
 
 decharge is a very-static site generator.
-It doesn't emit JavaScript by default but is built on JSX,
-so the result is decharge I guess.
+It doesn't emit any JavaScript by default but is built on JSX,
+so one might say it removes the charge from your code.
 
 ## Why?
 I tried out Astro, but the IDE support was really bad on my computer,
@@ -11,7 +11,7 @@ lot of unneccessary bloat going on.
 I tried to fix these issues with this project.
 
 ## Goals
-- Keep the core package bloatless.
+- The bloaty things should be opt-in.
 - Don't add anything to the core which would result in an unwanted chunk of output when building.
 - Don't add any feature which hasn't got neat IDE support (syntax highlighting, autocompletion and linting).
 
@@ -88,8 +88,11 @@ because they are bloaty or don't work in a purely SSR enviroment
 (if you find anything that works, please open an issue), so decharge
 provides a way to add styles and client-side scripts
 (preferably just for progressive enhancement) to a component.
+Firstly, you have to make the component:
 
 ```tsx
+// src/components/MyComplexComponent.tsx
+
 import { createComplexComponent, css } from 'decharge'
 
 interface Props {}
@@ -101,10 +104,10 @@ export default createComplexComponent<Props>({
   // using import.meta.url is perfect.
   id: import.meta.url,
   // Required.
-  // The "Props" gets extended here with a className property,
+  // The "Props" gets extended here with a generatedClassName property,
   // which can be used to target the component for styling + scripting.
   // The generated className is unique to the component.
-  Component: ({ className }) => <div className={className}>I am red and if you click me, I will make an alert.</div>,
+  Component: ({ generatedClassName }) => <div className={generatedClassName}>I am red and if you click me, I will make an alert.</div>,
   // Optional.
   // ".this" will be replaced with the generated className.
   style: css`
@@ -121,12 +124,35 @@ export default createComplexComponent<Props>({
   // erroneous code, see https://github.com/trustedtomato/decharge/issues/6.
   // 3. This function will be executed in a different context,
   // so don't reference any variable which you declared earlier in this file.
-  script: function (className) {
-    document.querySelector(`.${className}`).onclick = function () {
-      alert('Bonjour!')
+  script: function (generatedClassName) {
+    var els = document.querySelectorAll(`.${generatedClassName}`)
+    for (var i = els.length - 1, el; el = els[i]; i--) {
+      el.onclick = function () {
+        alert('Bonjour!')
+      }
     }
   }
 })
+```
+
+Secondly, you have to place some special elements into your route:
+
+```tsx
+// src/routes/foo.tsx
+
+import { Scripts, Styles } from 'decharge'
+import MyComplexComponent from '../components/MyComplexComponent.js'
+
+export default () => <html>
+  <head>
+    <Styles />
+  </head>
+  <body>
+    <MyComplexComponent />
+    <Scripts type="end-of-body" />
+  </body>
+</html>
+
 ```
 
 See <https://github.com/vercel/styled-jsx/#syntax-highlighting> for CSS syntax highlighting.

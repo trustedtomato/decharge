@@ -17,5 +17,5 @@ export default ({ extraTitle, description, children }: Props) =>
     <Styles />
     <title>{ extraTitle ? `${extraTitle} — ` : ''}Raskolnikov's blog</title>
     {children}
-    <Scripts />
+    <Scripts type="end-of-body" />
   </html>

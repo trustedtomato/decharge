@@ -2,7 +2,7 @@ import pathLib from 'path'
 import mkdirp from 'mkdirp'
 import { copyFile } from 'fs/promises'
 
-import { publicDir, distDir } from '../config.js'
+import { publicDir, distDir } from '../../common/config.js'
 
 // TODO: unify this and copy-to-temp.ts
 

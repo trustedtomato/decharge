@@ -1,11 +1,10 @@
-import { useContext } from 'preact/hooks'
-import { StylesContext } from '../common/render.js'
+import { usePageContext } from './hooks.js'
 
 // TODO: only enable adding this once to a page.
 export const Styles = () => {
-  const styles = useContext(StylesContext)
+  const { styles } = usePageContext()!!
 
-  return styles === null || styles.length === 0
+  return styles.length === 0
     ? null
     : <style>{styles.join('')}</style>
 }

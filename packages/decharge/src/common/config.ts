@@ -20,6 +20,8 @@ const config = await (async () => {
   }
 })()
 
+export const generatedClassNamePrefix = config.generatedClassNamePrefix
+
 // Make paths absolute.
 export const srcDir = resolve(process.cwd(), config.srcDir)
 export const routesDir = resolve(srcDir, config.routesDir)
