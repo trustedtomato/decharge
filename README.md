@@ -1,4 +1,4 @@
-# decharge
+![Decharge's banner](./banner.svg)
 
 decharge is a very-static site generator.
 It doesn't emit any JavaScript by default but is built on JSX,
