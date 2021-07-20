@@ -159,7 +159,7 @@ See <https://github.com/vercel/styled-jsx/#syntax-highlighting> for CSS syntax h
 
 #### Async components
 You can't simply use a `(params) => Promise<JSX.Element>` instead of a `(params) => JSX.Element`,
-so this is route's code is invalid:
+so this route's code is invalid:
 
 ```tsx
 // INVALID ROUTE!
