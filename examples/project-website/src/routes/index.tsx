@@ -2,6 +2,8 @@ import Layout from '../components/Layout.js'
 import Sidenote from '../components/Sidenote.js'
 import Arrow from '../components/DownArrow.js'
 import TableOfContents from '../components/TableOfContents.js'
+import DechargeBanner from '../components/DechargeBanner.js'
+
 import { useRerenderingRef } from 'decharge/hooks'
 import MarkdownIt from 'markdown-it'
 import MarkdownItAnchor from 'markdown-it-anchor'
@@ -58,7 +60,9 @@ function Index () {
 
   return <Layout description="Documentation and project website of decharge, the completely disappearing TSX framework.">
     <header>
-      <h1>decharge</h1>
+      <h1>
+        <DechargeBanner />
+      </h1>
       <p>A TSX based framework which disappears <em>completely.</em></p>
     </header>
     <section class="introduction full-text">

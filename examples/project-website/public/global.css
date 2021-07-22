@@ -1,10 +1,4 @@
 /* general rules */
-@font-face {
-  font-family: 'Courier Prime';
-  src: url("/Courier Prime/Courier Prime.ttf");
-  font-display: swap;
-}
-
 html {
   font-size: 10px;
 }
@@ -47,13 +41,11 @@ a {
 
 /* welcome screen, introduction */
 header h1 {
-  font-family: "Courier Prime";
   margin-top: 23.8rem;
-  font-weight: normal;
   font-size: 9rem;
+  line-height: 9rem;
   text-align: center;
   margin-bottom: 0;
-  line-height: 1;
 }
 
 header p {
@@ -99,7 +91,7 @@ section {
   font-size: 1.4rem;
   padding-left: 2rem;
   line-height: 2rem;
-  list-style-type: '– ';
+  list-style-type: disc;
 }
 
 .docs p {
