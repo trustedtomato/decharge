@@ -4,6 +4,8 @@ import Arrow from '../components/DownArrow.js'
 import TableOfContents from '../components/TableOfContents.js'
 import { useRerenderingRef } from 'decharge/hooks'
 import MarkdownIt from 'markdown-it'
+import MarkdownItAnchor from 'markdown-it-anchor'
+import slugify from '@sindresorhus/slugify'
 import { URL } from 'url'
 import fs from 'fs/promises'
 import hljs from 'highlight.js/lib/core'
@@ -40,6 +42,10 @@ const markdownIt = new MarkdownIt({
     return ''
   }
 })
+  .use(MarkdownItAnchor, {
+    slugify: (s) => `docs-${slugify(s)}`,
+    permalink: MarkdownItAnchor.permalink.headerLink()
+  })
 
 async function renderMarkdown (src: string): Promise<string> {
   return markdownIt.render(src)

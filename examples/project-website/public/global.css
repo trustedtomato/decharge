@@ -90,6 +90,20 @@ h2, h3, h4 {
   font-weight: 500;
 }
 
+h2 a, h3 a, h4 a {
+  color: inherit;
+  text-decoration: none;
+}
+
+h2 a:hover,
+h3 a:hover,
+h4 a:hover,
+h2 a:focus,
+h3 a:focus,
+h4 a:focus {
+  text-decoration: underline;
+}
+
 h2 {
   border-bottom: 1px solid #5E5146;
   padding-bottom: 3.5rem;
