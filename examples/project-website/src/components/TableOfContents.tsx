@@ -17,6 +17,7 @@ function walkDomTree (el: Element, func: (el: Element) => void) {
 interface ListOfContentsItem {
   level: number
   text: string
+  href: string
 }
 
 type ListOfContents = ListOfContentsItem[]
@@ -37,7 +38,10 @@ class ContentNode {
     return level
   }
 
-  constructor (readonly text: string | null = null) {}
+  constructor (
+    readonly text: string,
+    readonly href: string
+  ) {}
 
   pushChild (child: ContentNode) {
     child.parent = this
@@ -46,9 +50,9 @@ class ContentNode {
 }
 
 function parseListOfContents (listOfContents: ListOfContents): ContentNode[] {
-  const root = new ContentNode('root-node')
+  const root = new ContentNode('root-node', '')
   let currentParent = root
-  for (const { level, text } of listOfContents) {
+  for (const { level, text, href } of listOfContents) {
     while (currentParent.level > level - 1) {
       currentParent = currentParent.parent
     }
@@ -62,7 +66,7 @@ function parseListOfContents (listOfContents: ListOfContents): ContentNode[] {
       }
     }
     if (currentParent.level === level - 1) {
-      currentParent.pushChild(new ContentNode(text))
+      currentParent.pushChild(new ContentNode(text, href))
     }
   }
   return root.children
@@ -70,9 +74,9 @@ function parseListOfContents (listOfContents: ListOfContents): ContentNode[] {
 
 function generateListElement (contentArray: ContentNode[]) {
   return <ul> {
-    contentArray.map(({ text, children }) =>
+    contentArray.map(({ text, href, children }) =>
       <li key={text}>
-        { text }
+        <a href={href}>{ text }</a>
         {
           children.length === 0
             ? null
@@ -94,7 +98,12 @@ export default ({ basedOn }: Props): JSX.Element => {
     if (headingMatch) {
       listOfContents.push({
         level: Number(headingMatch[1]),
-        text: el.textContent.trim()
+        text: el.textContent.trim(),
+        href: el.querySelector('a').href
+          // JSDOM doesn't know the current URL,
+          // so it defaults to about:blank, but that is wrong,
+          // so lets replace the link it with a relative one.
+          .replace('about:blank#', '#')
       })
     }
   })
@@ -107,5 +116,5 @@ export default ({ basedOn }: Props): JSX.Element => {
       }))
   )
 
-  return <div>{generateListElement(contentArray)}</div>
+  return <>{generateListElement(contentArray)}</>
 }

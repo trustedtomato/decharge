@@ -37,6 +37,14 @@ a {
   font-size: 1.4rem;
 }
 
+.full-text {
+  width: 84rem;
+}
+
+.body-text {
+  width: 57rem;
+}
+
 /* welcome screen, introduction */
 header h1 {
   font-family: "Courier Prime";
@@ -53,14 +61,16 @@ header p {
   text-align: center;
 }
 
+section {
+  margin: 0 auto 0 auto;
+}
+
 .introduction {
-  max-width: 84rem;
   margin: 21rem auto 0 auto;
 }
 
 .introduction p {
   margin: 3rem 0;
-  max-width: 57rem;
 }
 
 .arrow {
@@ -74,11 +84,22 @@ header p {
 .docs {
   margin: auto;
   margin-top: 15.2rem;
-  max-width: 108rem;
+  width: 114rem;
 }
 
-.docs__content {
-  max-width: 57rem;
+.docs__table-of-contents {
+  position: sticky;
+  top: 1.4rem;
+  float: right;
+  width: 27rem;
+}
+
+.docs__table-of-contents ul {
+  margin: 0;
+  font-size: 1.4rem;
+  padding-left: 2rem;
+  line-height: 2rem;
+  list-style-type: '– ';
 }
 
 .docs p {
@@ -139,6 +160,7 @@ code {
   line-height: 0;
   background: #fff;
   font-size: 1.4rem;
+  box-sizing: border-box;
 }
 
 pre {

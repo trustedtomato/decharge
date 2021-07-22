@@ -61,39 +61,44 @@ function Index () {
       <h1>decharge</h1>
       <p>A TSX based framework which disappears <em>completely.</em></p>
     </header>
-    <section class="introduction">
-      <p>
-        Blogs, documentation and similar software often don’t need a lot of
-        client-side JavaScript and are only consisting of static files.
-        This framework aims to make the best out of this scenario.
-        It features a <em>routing system similar to Next.js’</em> and uses
-        <em><a href="https://www.typescriptlang.org/docs/handbook/jsx.html">TSX</a> as
-        its templating system</em> so the framework can leverage <em>the amazing
-        IDE support of React</em><Sidenote index={1}>
-          decharge uses Preact under the hood though, but that shouldn’t really matter.
-        </Sidenote>.
-      </p>
-      <p>
-        It has a component system and a rendering engine
-        which was designed to <em>output as little code as possible</em> on build<Sidenote index={2}>
-          except for trivial minifaction, which should be done
-          using html-minifier or similar after building the project.
-        </Sidenote>.
-        As an example, the size of this page’s HTML-CSS-JS code is 2.32 kB combined
-        (1.5 kB if gzipped).
-      </p>
-      <p>
-        If you found these two paragraphs interesting,
-        consider checking out the <a href="#getting-started">Getting started</a> guide below
-        or the <a href="https://github.com/trustedtomato/decharge">GitHub page</a> of
-        the project.
-      </p>
+    <section class="introduction full-text">
+      <div class="body-text">
+        <p>
+          Blogs, documentation and similar software often don’t need a lot of
+          client-side JavaScript and are only consisting of static files.
+          This framework aims to make the best out of this scenario.
+          It features a <em>routing system similar to Next.js’</em> and uses
+          <em><a href="https://www.typescriptlang.org/docs/handbook/jsx.html">TSX</a> as
+          its templating system</em> so the framework can leverage <em>the amazing
+          IDE support of React</em><Sidenote index={1}>
+            decharge uses Preact under the hood though, but that shouldn’t really matter.
+          </Sidenote>.
+        </p>
+        <p>
+          It has a component system and a rendering engine
+          which was designed to <em>output as little code as possible</em> on build<Sidenote index={2}>
+            except for trivial minifaction, which should be done
+            using html-minifier or similar after building the project.
+          </Sidenote>.
+          As an example, the size of this page’s HTML-CSS-JS code is 2.32 kB combined
+          (1.5 kB if gzipped).
+        </p>
+        <p>
+          If you found these two paragraphs interesting,
+          consider checking out the <a href="#getting-started">Getting started</a> guide below
+          or the <a href="https://github.com/trustedtomato/decharge">GitHub page</a> of
+          the project.
+        </p>
+      </div>
     </section>
     <Arrow length={7} />
     <section class="docs">
-      <div class="docs__content" ref={docsContentRef} dangerouslySetInnerHTML={{ __html: docs }} />
       <div class="docs__table-of-contents">
+        <h2>Table of contents</h2>
         <TableOfContents basedOn={docsContentRef.current} />
+      </div>
+      <div class="docs__content full-text" ref={docsContentRef}>
+        <div class="body-text" dangerouslySetInnerHTML={{ __html: docs }} />
       </div>
     </section>
   </Layout>
