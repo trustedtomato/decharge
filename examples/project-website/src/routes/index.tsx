@@ -3,6 +3,49 @@ import Sidenote from '../components/Sidenote.js'
 import Arrow from '../components/DownArrow.js'
 import TableOfContents from '../components/TableOfContents.js'
 import { useRerenderingRef } from 'decharge/hooks'
+import MarkdownIt from 'markdown-it'
+import { URL } from 'url'
+import fs from 'fs/promises'
+import hljs from 'highlight.js/lib/core'
+import tsHljs from 'highlight.js/lib/languages/typescript'
+import xmlHljs from 'highlight.js/lib/languages/xml'
+
+hljs.registerLanguage('xml', xmlHljs)
+hljs.registerAliases([
+  'html',
+  'xhtml',
+  'rss',
+  'atom',
+  'xjb',
+  'xsd',
+  'xsl',
+  'plist',
+  'wsf',
+  'svg'
+], { languageName: 'xml' })
+hljs.registerLanguage('ts', tsHljs)
+hljs.registerAliases(['tsx', 'typescript', 'jsx', 'js'], { languageName: 'ts' })
+
+const markdownIt = new MarkdownIt({
+  typographer: true,
+  linkify: true,
+  highlight: (src, lang) => {
+    if (lang && hljs.getLanguage(lang)) {
+      try {
+        const highlighted = hljs.highlight(src, { language: lang }).value
+        return `<pre><code class="block">${highlighted}</code></pre>`
+      } catch (__) {}
+    }
+    // use external default escaping
+    return ''
+  }
+})
+
+async function renderMarkdown (src: string): Promise<string> {
+  return markdownIt.render(src)
+}
+
+const docs = await renderMarkdown(await fs.readFile(new URL('../documentation.md', import.meta.url), 'utf-8'))
 
 function Index () {
   const docsContentRef = useRerenderingRef<HTMLDivElement>()
@@ -42,23 +85,8 @@ function Index () {
     </section>
     <Arrow length={7} />
     <section class="docs">
-      <div class="docs__content" ref={docsContentRef}>
-        <h2>Getting started</h2>
-        <h2>Test</h2>
-        <h3>Blabla</h3>
-        <h4>Coconut</h4>
-        <p>
-          To make a basic project, run <code>pnpm init decharge .</code><Sidenote index={3}>
-            You can also use npm or yarn if you’d like, it’s just that pnpm is used for decharge development.
-          </Sidenote>.
-          This will initalize the current directory.
-          Then use <code>pnpm install</code><Sidenote index={3} /> to install the dependencies,
-          <code>pnpm run watch</code><Sidenote index={3} /> to start continuously compiling the project
-          and <code>pnpm run dev-server</code><Sidenote index={3} /> to run a browser-sync on the dist/ directory.
-        </p>
-      </div>
+      <div class="docs__content" ref={docsContentRef} dangerouslySetInnerHTML={{ __html: docs }} />
       <div class="docs__table-of-contents">
-        {docsContentRef.current?.textContent}
         <TableOfContents basedOn={docsContentRef.current} />
       </div>
     </section>

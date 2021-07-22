@@ -1,3 +1,4 @@
+/* general rules */
 @font-face {
   font-family: 'Courier Prime';
   src: url("/Courier Prime/Courier Prime.ttf");
@@ -16,20 +17,29 @@ body {
   line-height: 3rem;
 }
 
-header h1, code {
-  font-family: 'Courier Prime', 'Courier New', Courier, monospace;
+a {
+  color: #5E5146;
 }
 
-code {
-  padding-left: .5em;
-  padding-right: .5em;
+.sidenote__sup {
+  vertical-align: super;
+  font-size: .6em;
   line-height: 0;
-  padding-top: .7rem;
-  padding-bottom: .4rem;
-  background: #fff;
 }
 
+.sidenote {
+  float: right;
+  clear: right;
+  margin-right: -27rem;
+  margin-top: 0.6rem;
+  width: 24rem;
+  line-height: 2rem;
+  font-size: 1.4rem;
+}
+
+/* welcome screen, introduction */
 header h1 {
+  font-family: "Courier Prime";
   margin-top: 23.8rem;
   font-weight: normal;
   font-size: 9rem;
@@ -53,26 +63,6 @@ header p {
   max-width: 57rem;
 }
 
-a {
-  color: #5E5146;
-}
-
-.sidenote__sup {
-  vertical-align: super;
-  font-size: .6em;
-  line-height: 0;
-}
-
-.sidenote {
-  float: right;
-  clear: right;
-  margin-right: -27rem;
-  margin-top: 0.6rem;
-  width: 24rem;
-  line-height: 2rem;
-  font-size: 1.4rem;
-}
-
 .arrow {
   margin: auto;
   display: block;
@@ -80,10 +70,19 @@ a {
   margin-top: 17.2rem
 }
 
+/* documentation */
 .docs {
   margin: auto;
   margin-top: 15.2rem;
   max-width: 108rem;
+}
+
+.docs__content {
+  max-width: 57rem;
+}
+
+.docs p {
+  margin: 0;
 }
 
 h2, h3, h4 {
@@ -93,14 +92,176 @@ h2, h3, h4 {
 
 h2 {
   border-bottom: 1px solid #5E5146;
-  padding-bottom: 2.5rem;
-  margin-bottom: 1.8rem;
+  padding-bottom: 3.5rem;
+  margin-bottom: 2.8rem;
 }
 
-.docs__content {
-  max-width: 57rem;
+h3 {
+  margin-top: 3.9rem;
+  margin-bottom: 3.1rem;
 }
 
-.docs p {
-  margin: 0;
+h4 {
+  margin-top: 3rem;
+  margin-bottom: 2rem;
+}
+
+code {
+  font-family: ui-monospace, 
+               Menlo, Monaco, 
+               "Cascadia Mono", "Segoe UI Mono", 
+               "Roboto Mono", 
+               "Oxygen Mono", 
+               "Ubuntu Monospace", 
+               "Source Code Pro",
+               "Fira Mono", 
+               "Droid Sans Mono", 
+               "Courier New",
+               monospace;
+  padding-left: .5em;
+  padding-right: .5em;
+  padding-top: .2em;
+  padding-bottom: .2em;
+  line-height: 0;
+  background: #fff;
+  font-size: 1.4rem;
+}
+
+pre {
+  padding-bottom: .8rem;
+  margin: 2.2rem 0 2rem;
+}
+
+code.block {
+  display: block;
+  line-height: 2rem;
+  padding-top: .35em;
+  padding-bottom: .35em;
+  overflow-x: auto;
+  width: 84rem;
+}
+
+/*!
+  Theme: GitHub
+  Description: Light theme as seen on github.com
+  Author: github.com
+  Maintainer: @Hirse
+  Updated: 2021-05-15
+  Outdated base version: https://github.com/primer/github-syntax-light
+  Current colors taken from GitHub's CSS
+*/
+
+.hljs {
+  color: #24292e;
+  background: #ffffff;
+}
+
+.hljs-doctag,
+.hljs-keyword,
+.hljs-meta .hljs-keyword,
+.hljs-template-tag,
+.hljs-template-variable,
+.hljs-type,
+.hljs-variable.language_ {
+  /* prettylights-syntax-keyword */
+  color: #d73a49;
+}
+
+.hljs-title,
+.hljs-title.class_,
+.hljs-title.class_.inherited__,
+.hljs-title.function_ {
+  /* prettylights-syntax-entity */
+  color: #6f42c1;
+}
+
+.hljs-attr,
+.hljs-attribute,
+.hljs-literal,
+.hljs-meta,
+.hljs-number,
+.hljs-operator,
+.hljs-variable,
+.hljs-selector-attr,
+.hljs-selector-class,
+.hljs-selector-id {
+  /* prettylights-syntax-constant */
+  color: #005cc5;
+}
+
+.hljs-regexp,
+.hljs-string,
+.hljs-meta .hljs-string {
+  /* prettylights-syntax-string */
+  color: #032f62;
+}
+
+.hljs-built_in,
+.hljs-symbol {
+  /* prettylights-syntax-variable */
+  color: #e36209;
+}
+
+.hljs-comment,
+.hljs-code,
+.hljs-formula {
+  /* prettylights-syntax-comment */
+  color: #6a737d;
+}
+
+.hljs-name,
+.hljs-quote,
+.hljs-selector-tag,
+.hljs-selector-pseudo {
+  /* prettylights-syntax-entity-tag */
+  color: #22863a;
+}
+
+.hljs-subst {
+  /* prettylights-syntax-storage-modifier-import */
+  color: #24292e;
+}
+
+.hljs-section {
+  /* prettylights-syntax-markup-heading */
+  color: #005cc5;
+  font-weight: bold;
+}
+
+.hljs-bullet {
+  /* prettylights-syntax-markup-list */
+  color: #735c0f;
+}
+
+.hljs-emphasis {
+  /* prettylights-syntax-markup-italic */
+  color: #24292e;
+  font-style: italic;
+}
+
+.hljs-strong {
+  /* prettylights-syntax-markup-bold */
+  color: #24292e;
+  font-weight: bold;
+}
+
+.hljs-addition {
+  /* prettylights-syntax-markup-inserted */
+  color: #22863a;
+  background-color: #f0fff4;
+}
+
+.hljs-deletion {
+  /* prettylights-syntax-markup-deleted */
+  color: #b31d28;
+  background-color: #ffeef0;
+}
+
+.hljs-char.escape_,
+.hljs-link,
+.hljs-params,
+.hljs-property,
+.hljs-punctuation,
+.hljs-tag {
+  /* purposely ignored */
 }
