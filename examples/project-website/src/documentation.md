@@ -107,7 +107,7 @@ export default createComplexComponent<Props>({
   // might want to target older browsers and transpiling modern code sometimes
   // results in a big chunk of unnecessary code.
   // 2. Using the method syntax (script () {}) would result in
-  // erroneous code, see https://github.com/trustedtomato/decharge/issues/6.
+  // erroneous code, see https://github.com/trustedtomato/decharge/issues/6
   // 3. This function will be executed in a different context,
   // so don't reference any variable which you declared earlier in this file.
   script: function (generatedClassName) {

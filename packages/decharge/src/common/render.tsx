@@ -1,14 +1,16 @@
 import { render as preactRender, createContext, JSX, ComponentChildren } from 'preact'
-import { JSDOM } from 'jsdom'
+import globalJsdom from 'global-jsdom'
 import { useState } from 'preact/hooks'
 import { useConst } from '../runtime/hooks.js'
 import { makeClassNameIterator } from './make-class-name-iterator.js'
 import transformStyle from './transform-style.js'
 import { generatedClassNamePrefix } from './config.js'
 
-const jsdom = new JSDOM('<!DOCTYPE html>')
-const document = jsdom.window.document
-global.document = document
+// TODO: make this configurable and document it!
+// (flooding the global object and not just the document property, see previous version)
+globalJsdom('<!DOCTYPE html>', {
+  url: 'https://example.com'
+})
 
 export interface PageContextType {
   scripts: string[],

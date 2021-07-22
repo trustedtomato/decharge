@@ -103,7 +103,7 @@ export default ({ basedOn }: Props): JSX.Element => {
           // JSDOM doesn't know the current URL,
           // so it defaults to about:blank, but that is wrong,
           // so lets replace the link it with a relative one.
-          .replace('about:blank#', '#')
+          .replace(/https:\/\/example\.com\/?#/, '#')
       })
     }
   })

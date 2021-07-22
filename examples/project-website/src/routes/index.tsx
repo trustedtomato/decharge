@@ -10,34 +10,37 @@ import MarkdownItAnchor from 'markdown-it-anchor'
 import slugify from '@sindresorhus/slugify'
 import { URL } from 'url'
 import fs from 'fs/promises'
-import hljs from 'highlight.js/lib/core'
-import tsHljs from 'highlight.js/lib/languages/typescript'
-import xmlHljs from 'highlight.js/lib/languages/xml'
+import prism from 'prismjs'
+import 'prismjs/plugins/autolinker/prism-autolinker.js'
+import prismLoadLanguages from 'prismjs/components/index.js'
 
-hljs.registerLanguage('xml', xmlHljs)
-hljs.registerAliases([
+prismLoadLanguages(['tsx'])
+
+const languages = new Set([
+  'tsx',
+  // In prism, these are loaded by default.
+  'markup',
   'html',
-  'xhtml',
-  'rss',
+  'svg',
   'atom',
-  'xjb',
-  'xsd',
-  'xsl',
-  'plist',
-  'wsf',
-  'svg'
-], { languageName: 'xml' })
-hljs.registerLanguage('ts', tsHljs)
-hljs.registerAliases(['tsx', 'typescript', 'jsx', 'js'], { languageName: 'ts' })
+  'rss',
+  'css',
+  'clike',
+  'javascript'
+])
 
 const markdownIt = new MarkdownIt({
   typographer: true,
   linkify: true,
   highlight: (src, lang) => {
-    if (lang && hljs.getLanguage(lang)) {
+    if (lang && languages.has(lang)) {
       try {
-        const highlighted = hljs.highlight(src, { language: lang }).value
-        return `<pre><code class="block">${highlighted}</code></pre>`
+        // Have to use this workaround due to:
+        // https://github.com/PrismJS/prism/issues/1171
+        const grammar = prism.languages[lang]
+        prism.hooks.run('before-highlight', { grammar })
+        const highlighted = prism.highlight(src, grammar, lang)
+        return `<pre><code class="block language-${lang}">${highlighted}</code></pre>`
       } catch (__) {}
     }
     // use external default escaping
