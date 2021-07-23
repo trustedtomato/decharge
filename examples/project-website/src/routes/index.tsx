@@ -74,8 +74,8 @@ function Index () {
           Blogs, documentation and similar software often don’t need a lot of
           client-side JavaScript and are only consisting of static files.
           This framework aims to make the best out of this scenario.
-          It features a <em>routing system similar to Next.js’</em> and uses
-          <em><a href="https://www.typescriptlang.org/docs/handbook/jsx.html">TSX</a> as
+          It features a <em>routing system similar to Next.js’</em> and
+          uses <em><a href="https://www.typescriptlang.org/docs/handbook/jsx.html">TSX</a> as
           its templating system</em> so the framework can leverage <em>the amazing
           IDE support of React</em><Sidenote index={1}>
             decharge uses Preact under the hood though, but that shouldn’t really matter.

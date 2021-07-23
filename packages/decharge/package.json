@@ -3,7 +3,23 @@
   "version": "1.0.0",
   "description": "",
   "type": "module",
-  "author": "Tamás Halasi",
+  "author": {
+    "name": "Tamás Halasi",
+    "email": "trusted.tomato@gmail.com",
+    "url": "https://github.com/trustedtomato"
+  },
+  "bugs": {
+    "url": "https://github.com/trustedtomato/decharge/issues"
+  },
+  "homepage": "https://github.com/trustedtomato/decharge#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/trustedtomato/decharge.git"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=16"
+  },
   "scripts": {
     "build": "tsc",
     "watch": "tsc --watch"
@@ -23,7 +39,6 @@
       ]
     }
   },
-  "license": "ISC",
   "dependencies": {
     "@babel/core": "^7.14.6",
     "@babel/preset-env": "^7.14.7",
@@ -33,7 +48,6 @@
     "@types/mkdirp": "^1.0.1",
     "@types/stylis": "^4.0.1",
     "@types/yargs": "^17.0.0",
-    "browser-sync": "^2.27.3",
     "chokidar": "^3.5.2",
     "global-jsdom": "^8.1.0",
     "hasha": "^5.2.2",

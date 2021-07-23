@@ -12,6 +12,7 @@ export default ({ extraTitle, description, children }: Props) =>
     <meta charSet="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
+    <link rel="shortcut icon" href="favicon.svg" />
     {/* TODO: create separate stylesheets for different screen sizes using media="..." */}
     <link rel="stylesheet" href="/global.css" />
     <Styles />

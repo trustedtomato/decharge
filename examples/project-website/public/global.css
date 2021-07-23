@@ -41,7 +41,7 @@ a {
 
 /* welcome screen, introduction */
 header h1 {
-  margin-top: 23.8rem;
+  margin-top: 23.38rem;
   font-size: 9rem;
   line-height: 9rem;
   text-align: center;
@@ -49,7 +49,7 @@ header h1 {
 }
 
 header p {
-  margin: 1rem 0 0 0;
+  margin: .9rem 0 0 0;
   text-align: center;
 }
 
