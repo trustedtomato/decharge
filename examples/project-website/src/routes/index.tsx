@@ -7,6 +7,7 @@ import DechargeBanner from '../components/DechargeBanner.js'
 import { useRerenderingRef } from 'decharge/hooks'
 import MarkdownIt from 'markdown-it'
 import MarkdownItAnchor from 'markdown-it-anchor'
+import MarkdownItSidenote from '../utils/markdown-it-plugin-sidenote.js'
 import slugify from '@sindresorhus/slugify'
 import { URL } from 'url'
 import fs from 'fs/promises'
@@ -51,6 +52,7 @@ const markdownIt = new MarkdownIt({
     slugify: (s) => `docs-${slugify(s)}`,
     permalink: MarkdownItAnchor.permalink.headerLink()
   })
+  .use(MarkdownItSidenote)
 
 async function renderMarkdown (src: string): Promise<string> {
   return markdownIt.render(src)

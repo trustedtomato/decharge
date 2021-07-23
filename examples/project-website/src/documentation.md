@@ -1,7 +1,7 @@
 ## Usage
 By default, your static files live in `public/`
 and everything else in `src/`. Your routes should
-be in `src/routes/`.[^1](These can be configured, see [Configuration](#docs-configuration))
+be in `src/routes/`.^[These can be configured, see [Configuration](#docs-configuration)]
 
 ### Routing
 Every route should be a `.tsx` file, containing something like this:
