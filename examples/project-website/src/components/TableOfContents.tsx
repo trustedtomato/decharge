@@ -1,7 +1,7 @@
 import type { JSX } from 'preact/jsx-runtime'
 
 interface Props {
-  basedOn: Element
+  basedOn?: Element | null
 }
 
 function walkDomTree (el: Element, func: (el: Element) => void) {
@@ -51,10 +51,13 @@ class ContentNode {
 
 function parseListOfContents (listOfContents: ListOfContents): ContentNode[] {
   const root = new ContentNode('root-node', '')
-  let currentParent = root
+  let currentParent: ContentNode | null = root
   for (const { level, text, href } of listOfContents) {
     while (currentParent.level > level - 1) {
       currentParent = currentParent.parent
+      if (!currentParent) {
+        throw new Error('undefined currentParent!')
+      }
     }
     if (currentParent.level === level - 3) {
       throw new Error('There can\'t be a skipped heading!')
@@ -89,7 +92,7 @@ function generateListElement (contentArray: ContentNode[]) {
 
 export default ({ basedOn }: Props): JSX.Element => {
   if (!basedOn) {
-    return null
+    return <>{null}</>
   }
 
   const listOfContents: ListOfContents = []
@@ -98,8 +101,8 @@ export default ({ basedOn }: Props): JSX.Element => {
     if (headingMatch) {
       listOfContents.push({
         level: Number(headingMatch[1]),
-        text: el.textContent.trim(),
-        href: el.querySelector('a').href
+        text: el.textContent!!.trim(),
+        href: el.querySelector('a')!!.href
           // JSDOM doesn't know the current URL,
           // so it defaults to about:blank, but that is wrong,
           // so lets replace the link it with a relative one.

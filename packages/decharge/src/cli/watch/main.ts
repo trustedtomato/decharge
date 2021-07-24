@@ -99,13 +99,18 @@ async function renderRoutesOnPathChanges (paths: string[]) {
   // TODO: parallelize!
   for (const route of routes) {
     const relativeRoutePath = pathLib.relative(tempRoutesDir, route)
-    const generatedFiles = await renderRoute(relativeRoutePath, tempRoutesDir)
-    for (const [path, content] of generatedFiles) {
-      const targetPath = pathLib.join(distDir, path)
-      const changedFile = await mightWriteFile(targetPath, content)
-      if (changedFile) {
-        console.log(`Modified ${path}!`)
+    try {
+      const generatedFiles = await renderRoute(relativeRoutePath, tempRoutesDir)
+      for (const [path, content] of generatedFiles) {
+        const targetPath = pathLib.join(distDir, path)
+        const changedFile = await mightWriteFile(targetPath, content)
+        if (changedFile) {
+          console.log(`Modified ${path}!`)
+        }
       }
+    } catch (err) {
+      console.error(`Error occured when executing this route: ${route}`)
+      console.error(err)
     }
   }
 }

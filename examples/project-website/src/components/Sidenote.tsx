@@ -1,23 +1,19 @@
-import { ComponentChildren } from 'preact'
+import type { ComponentChildren, JSX } from 'preact'
 
 interface Props {
   index: number
-  children?: ComponentChildren
+  id: string
+  children: ComponentChildren
 }
 
-export default ({ index, children }: Props) => <>
-  <label class="sidenote__sup">
-    { index }
-  </label>
-  {
-    !children
-      ? null
-      : (
-        <span class="sidenote">
-          <label class="sidenote__sup">{index}</label>
-          { ' ' }
-          { children }
-        </span>
-        )
-  }
-</>
+export default ({ index, children, id }: Props): JSX.Element => <>{
+  !children
+    ? null
+    : (
+      <span class="sidenote" id={id}>
+        <label class="sidenote__sup">{index}</label>
+        { ' ' }
+        { children }
+      </span>
+      )
+}</>

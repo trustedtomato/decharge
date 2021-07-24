@@ -29,6 +29,8 @@ export async function renderRoute (path: string, baseDir: string): Promise<Map<s
     await worker.terminate()
     return files.value
   } catch (err) {
+    console.error(`Problem with route: ${path}`)
+    console.error(err)
     return new Map()
   }
 }

@@ -50,7 +50,7 @@ function startRender (jsx: JSX.Element) {
  * Renders a decharge component to HTML.
  * If pageContextToUse is not used, Component will be treated as a page.
  */
-export async function render (component: JSX.Element, pageContextToUse?: PageContextType) {
+export async function render (Component: () => JSX.Element, pageContextToUse?: PageContextType) {
   const delayerPromises: Set<Promise<unknown>> = new Set()
 
   const RenderWrapper = ({ children }: { children: ComponentChildren }) => {
@@ -94,7 +94,7 @@ export async function render (component: JSX.Element, pageContextToUse?: PageCon
     )
   }
 
-  const rendering = startRender(<RenderWrapper>{component}</RenderWrapper>)
+  const rendering = startRender(<RenderWrapper><Component /></RenderWrapper>)
   do {
     const pendingDelayerPromises = [...delayerPromises]
     await Promise.all(pendingDelayerPromises)

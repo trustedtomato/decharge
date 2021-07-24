@@ -23,9 +23,9 @@ a {
 
 .sidenote {
   float: right;
-  clear: right;
+  clear: both;
   margin-right: -27rem;
-  margin-top: 0.6rem;
+  margin-top: 0.7rem;
   width: 24rem;
   line-height: 2rem;
   font-size: 1.4rem;
@@ -61,10 +61,6 @@ section {
   margin: 21rem auto 0 auto;
 }
 
-.introduction p {
-  margin: 3rem 0;
-}
-
 .arrow {
   margin: auto;
   display: block;
@@ -75,15 +71,18 @@ section {
 /* documentation */
 .docs {
   margin: auto;
-  margin-top: 15.2rem;
+  margin-top: 13.2rem;
   width: 114rem;
+  display: flex;
+  flex-direction: row-reverse;
 }
 
 .docs__table-of-contents {
   position: sticky;
   top: 1.4rem;
-  float: right;
   width: 27rem;
+  margin-left: 3rem;
+  height: 100vh;
 }
 
 .docs__table-of-contents ul {
@@ -93,9 +92,14 @@ section {
   line-height: 2rem;
   list-style-type: disc;
 }
+}
 
-.docs p {
+p {
   margin: 0;
+}
+
+p + p {
+  margin-top: 3rem;
 }
 
 h2, h3, h4 {
@@ -118,19 +122,23 @@ h4 a:focus {
 }
 
 h2 {
+  margin-top: 2rem;
+  font-size: 2.7rem;
   border-bottom: 1px solid #5E5146;
   padding-bottom: 3.5rem;
-  margin-bottom: 2.8rem;
+  margin-bottom: 3.8rem;
 }
 
 h3 {
+  font-size: 2.1rem;
   margin-top: 3.9rem;
   margin-bottom: 3.1rem;
 }
 
 h4 {
+  font-size: 1.8rem;
   margin-top: 3rem;
-  margin-bottom: 2rem;
+  margin-bottom: 3rem;
 }
 
 code {

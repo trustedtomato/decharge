@@ -1,13 +1,17 @@
 import Layout from '../components/Layout.js'
 import Sidenote from '../components/Sidenote.js'
+import SidenoteRef from '../components/SidenoteRef.js'
+import SidenoteFull from '../components/SidenoteFull.js'
 import Arrow from '../components/DownArrow.js'
 import TableOfContents from '../components/TableOfContents.js'
 import DechargeBanner from '../components/DechargeBanner.js'
 
-import { useRerenderingRef } from 'decharge/hooks'
+import { useConstAsync, useRerenderingRef } from 'decharge/hooks'
+import { render } from 'decharge'
 import MarkdownIt from 'markdown-it'
 import MarkdownItAnchor from 'markdown-it-anchor'
-import MarkdownItSidenote from '../utils/markdown-it-plugin-sidenote.js'
+import MarkdownItSidenote from '../utils/markdown-it-plugin-sidenote-parser.js'
+import asyncRenderMarkdown from '../utils/async-render-markdown.js'
 import slugify from '@sindresorhus/slugify'
 import { URL } from 'url'
 import fs from 'fs/promises'
@@ -54,63 +58,108 @@ const markdownIt = new MarkdownIt({
   })
   .use(MarkdownItSidenote)
 
-async function renderMarkdown (src: string): Promise<string> {
-  return markdownIt.render(src)
+const getSidenoteHtmlId = (index: string, options: MarkdownIt.Options, env: any): string => {
+  return `docs-sn${index}`
 }
 
-const docs = await renderMarkdown(await fs.readFile(new URL('../documentation.md', import.meta.url), 'utf-8'))
+export default function Index () {
+  const docs = useConstAsync(async () => {
+    return await asyncRenderMarkdown({
+      src: await fs.readFile(new URL('../documentation.md', import.meta.url), 'utf-8'),
+      markdownIt,
+      asyncRenderers: {
+        sidenote_ref: async (tokens, idx, options, env) => {
+          const targetIndex = tokens[idx].meta.targetIndex.toString()
+          const targetHtmlId = getSidenoteHtmlId(
+            targetIndex,
+            options,
+            env
+          )
+          return render(() => <SidenoteRef
+            targetId={targetHtmlId}
+            targetIndex={targetIndex}
+          />)
+        },
+        sidenote_start: async (tokens, idx, options, env) => {
+          const index = tokens[idx].meta.index
+          const htmlId = getSidenoteHtmlId(
+            index,
+            options,
+            env
+          )
+          const rendered = await render(() => <Sidenote
+            id={htmlId}
+            index={index}
+          >?children-placeholder?</Sidenote>)
+          return rendered.replace(/\?children-placeholder\?[\s\S]*$/, '')
+        },
+        sidenote_end: async (tokens, idx, options, env) => {
+          const index = tokens[idx].meta.index
+          const htmlId = getSidenoteHtmlId(
+            index,
+            options,
+            env
+          )
+          const rendered = await render(() => <Sidenote
+            id={htmlId}
+            index={index}
+          >?children-placeholder?</Sidenote>)
+          return rendered.replace(/^[\s\S]*\?children-placeholder\?/, '')
+        }
+      }
+    })
+  })
 
-function Index () {
   const docsContentRef = useRerenderingRef<HTMLDivElement>()
 
-  return <Layout description="Documentation and project website of decharge, the completely disappearing TSX framework.">
-    <header>
-      <h1>
-        <DechargeBanner />
-      </h1>
-      <p>A TSX based framework which disappears <em>completely.</em></p>
-    </header>
-    <section class="introduction full-text">
-      <div class="body-text">
-        <p>
-          Blogs, documentation and similar software often don’t need a lot of
-          client-side JavaScript and are only consisting of static files.
-          This framework aims to make the best out of this scenario.
-          It features a <em>routing system similar to Next.js’</em> and
-          uses <em><a href="https://www.typescriptlang.org/docs/handbook/jsx.html">TSX</a> as
-          its templating system</em> so the framework can leverage <em>the amazing
-          IDE support of React</em><Sidenote index={1}>
-            decharge uses Preact under the hood though, but that shouldn’t really matter.
-          </Sidenote>.
-        </p>
-        <p>
-          It has a component system and a rendering engine
-          which was designed to <em>output as little code as possible</em> on build<Sidenote index={2}>
-            except for trivial minifaction, which should be done
-            using html-minifier or similar after building the project.
-          </Sidenote>.
-          As an example, the size of this page’s HTML-CSS-JS code is 2.32 kB combined
-          (1.5 kB if gzipped).
-        </p>
-        <p>
-          If you found these two paragraphs interesting,
-          consider checking out the <a href="#getting-started">Getting started</a> guide below
-          or the <a href="https://github.com/trustedtomato/decharge">GitHub page</a> of
-          the project.
-        </p>
-      </div>
-    </section>
-    <Arrow length={7} />
-    <section class="docs">
-      <div class="docs__table-of-contents">
-        <h2>Table of contents</h2>
-        <TableOfContents basedOn={docsContentRef.current} />
-      </div>
-      <div class="docs__content full-text" ref={docsContentRef}>
-        <div class="body-text" dangerouslySetInnerHTML={{ __html: docs }} />
-      </div>
-    </section>
-  </Layout>
+  return !docs
+    ? <>{null}</>
+    : <Layout description="Documentation and project website of decharge, the completely disappearing TSX framework.">
+      <header>
+        <h1>
+          <DechargeBanner />
+        </h1>
+        <p>A TSX based framework which disappears <em>completely.</em></p>
+      </header>
+      <section class="introduction full-text">
+        <div class="body-text">
+          <p>
+            Blogs, documentation and similar software often don’t need a lot of
+            client-side JavaScript and are only consisting of static files.
+            This framework aims to make the best out of this scenario.
+            It features a <em>routing system similar to Next.js’</em> and
+            uses <em><a href="https://www.typescriptlang.org/docs/handbook/jsx.html">TSX</a> as
+            its templating system</em> so the framework can leverage <em>the amazing
+            IDE support of React</em><SidenoteFull index={1} id="int-sn1">
+              decharge uses Preact under the hood though, but that shouldn’t really matter.
+            </SidenoteFull>.
+          </p>
+          <p>
+            It has a component system and a rendering engine
+            which was designed to <em>output as little code as possible</em> on build<SidenoteFull index={2} id="int-sn2">
+              except for trivial minifaction, which should be done
+              using html-minifier or similar after building the project.
+            </SidenoteFull>.
+            As an example, the size of this page’s HTML-CSS-JS code is 2.32 kB combined
+            (1.5 kB if gzipped).
+          </p>
+          <p>
+            If you found these two paragraphs interesting,
+            consider checking out the <a href="#getting-started">Getting started</a> guide below
+            or the <a href="https://github.com/trustedtomato/decharge">GitHub page</a> of
+            the project.
+          </p>
+        </div>
+      </section>
+      <Arrow length={7} />
+      <section class="docs">
+        <div class="docs__table-of-contents">
+          <h2>Table of contents</h2>
+          <TableOfContents basedOn={docsContentRef.current} />
+        </div>
+        <div class="docs__content full-text" ref={docsContentRef}>
+          <div class="body-text" dangerouslySetInnerHTML={{ __html: docs }} />
+        </div>
+      </section>
+    </Layout>
 }
-
-export default () => <Index />

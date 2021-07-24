@@ -66,8 +66,7 @@ parentPort!!.once('message', async ({ baseDir, path }: { baseDir: string, path: 
     if (!pathLib.join(baseDir, targetPath).startsWith(baseDir)) {
       throw new Error(`Build error: ${path} wants to create a page which would be outside of the target directory.`)
     }
-    const jsx = await route.default(props)
-    files.set(targetPath, `<!DOCTYPE html>${await render(jsx)}`)
+    files.set(targetPath, `<!DOCTYPE html>${await render(() => <route.default {...props} />)}`)
   }
 
   parentPort!!.postMessage({
