@@ -17,7 +17,7 @@ export interface Post {
 markdownToHtml.use({
   renderer: {
     async image (src: string, title: string, alt: string) {
-      return await render(<Image src={src} title={title} alt={alt} />)
+      return await render(() => <Image src={src} title={title} alt={alt} />)
     }
   }
 })

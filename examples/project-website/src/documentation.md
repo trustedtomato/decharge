@@ -11,8 +11,7 @@ Every route should be a `.tsx` file, containing something like this:
 import Head from '../components/Head.tsx'
 
 // The route should be "export default"-ed.
-// Note that this can be async like this if you'd like.
-export default async () => <html>
+export default () => <html>
   <head>
     <Head title="Welcome">
   </head>
@@ -165,6 +164,8 @@ export default () => <>
 ```
 
 To fix this issue, there is a built-in function in decharge called `createAsyncComponent`.
+^[Note that you can't use hooks inside the function. If you do want to use them,
+you should use the `useConstAsync` hook.]
 
 ```tsx
 // Valid route.

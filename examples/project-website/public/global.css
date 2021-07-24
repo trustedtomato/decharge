@@ -29,6 +29,7 @@ a {
   width: 24rem;
   line-height: 2rem;
   font-size: 1.4rem;
+  margin-bottom: 2.5rem;
 }
 
 .full-text {
@@ -175,14 +176,15 @@ code {
 pre {
   padding-bottom: .8rem;
   margin: 2.2rem 0 2rem;
+  width: 84rem;
 }
 
-code.block {
+pre code {
   display: block;
   line-height: 2rem;
   padding: 1.5rem 1.5rem;
   overflow-x: auto;
-  width: 84rem;
+  clear: both;
 }
  
 /**

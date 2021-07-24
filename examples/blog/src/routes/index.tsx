@@ -10,7 +10,7 @@ for await (const { fullPath } of readdirp('src/posts', { fileFilter: '*.md' })) 
   )
 }
 
-export default async () => <>
+export default () => <>
   <Layout description="The blog of Raskolnikov.">
     <link rel="stylesheet" href="/styles/home.css" />
     <header>
