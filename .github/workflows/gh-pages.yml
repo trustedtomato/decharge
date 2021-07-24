@@ -23,7 +23,7 @@ jobs:
       run: pnpm run build
     - name: Build examples/project-website
       working-directory: ./examples/project-website
-      run: pnpm run build
+      run: BASE=decharge/ pnpm run build
     - name: Deploy website
       uses: peaceiris/actions-gh-pages@v3
       with:

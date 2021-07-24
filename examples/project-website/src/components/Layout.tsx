@@ -1,6 +1,9 @@
 import { Scripts, Styles } from 'decharge'
 import type { ComponentChildren } from 'preact'
 
+const BASE = process.env.BASE ?? ''
+console.log(`Building with base: ${BASE}`)
+
 interface Props {
   extraTitle?: string
   description: string
@@ -14,7 +17,7 @@ export default ({ extraTitle, description, children }: Props) =>
     <meta name="description" content={description} />
     <link rel="shortcut icon" href="favicon.svg" />
     {/* TODO: create separate stylesheets for different screen sizes using media="..." */}
-    <link rel="stylesheet" href="/global.css" />
+    <link rel="stylesheet" href={`/${BASE}global.css`} />
     <Styles />
     <title>{ extraTitle ? `${extraTitle} — ` : ''}decharge</title>
     {children}
