@@ -16,4 +16,4 @@ I tried to fix these issues with this project.
 - Don't add any feature which hasn't got neat IDE support (syntax highlighting, autocompletion and linting).
 
 ## Documentation
-...
+See [the project's website](https://trustedtomato.github.io/decharge/).
