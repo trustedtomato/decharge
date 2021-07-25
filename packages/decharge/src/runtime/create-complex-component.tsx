@@ -28,10 +28,16 @@ export function createComplexComponent<T> ({
     }
 
     const stringScript = script && String(script)
+
+    // Not all stringified functions can be executed without transformation.
+    // For example, method syntaxed ones can't, try:
+    // eval("script () { alert('hello') }")
+    // For this reason, only those kinds of definitions are allowed
+    // which don't require any transformation.
     if (
       stringScript && !(
         // enable this syntax: function () {
-        stringScript.startsWith('f') ||
+        /^function\s*\(/.test(stringScript) ||
         // enable this syntax: () => {
         stringScript.startsWith('(')
       )
