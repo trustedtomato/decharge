@@ -65,7 +65,6 @@ importers:
       '@typescript-eslint/eslint-plugin': ^4.28.1
       '@typescript-eslint/parser': ^4.28.1
       clean-css: ^5.1.3
-      common-tags: ^1.8.0
       decharge: workspace:*
       eslint: ^7.12.1
       eslint-config-preact: ^1.1.4
@@ -96,7 +95,6 @@ importers:
       '@types/node-fetch': 2.5.10
       '@types/prismjs': 1.16.6
       clean-css: 5.1.3
-      common-tags: 1.8.0
       decharge: link:../../packages/decharge
       gm: 1.23.1
       gray-matter: 4.0.3
