@@ -22,7 +22,8 @@
   },
   "scripts": {
     "build": "tsc",
-    "watch": "tsc --watch"
+    "watch": "tsc --watch",
+    "test": "node dist/test/run.js"
   },
   "bin": {
     "decharge": "decharge.js"
@@ -43,12 +44,16 @@
     "@babel/core": "^7.14.6",
     "@babel/preset-env": "^7.14.7",
     "@types/babel__core": "^7.1.14",
+    "@types/chai": "^4.2.21",
     "@types/common-tags": "^1.8.1",
     "@types/html-minifier": "^4.0.0",
     "@types/jsdom": "^16.2.12",
     "@types/mkdirp": "^1.0.1",
     "@types/stylis": "^4.0.1",
+    "@types/wrap-ansi": "^8.0.1",
     "@types/yargs": "^17.0.0",
+    "chai": "^4.3.4",
+    "chalk": "^4.1.1",
     "chokidar": "^3.5.2",
     "common-tags": "^1.8.0",
     "global-jsdom": "^8.1.0",
@@ -61,6 +66,7 @@
     "readdirp": "^3.6.0",
     "stylis": "^4.0.10",
     "typescript": "^4.3.4",
+    "wrap-ansi": "^8.0.0",
     "yargs": "^17.0.1"
   },
   "devDependencies": {
