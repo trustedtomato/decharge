@@ -11,35 +11,48 @@
     Hello World!
   </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>body</span><span class="token punctuation">></span></span><span class="token plain-text">
 </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>html</span><span class="token punctuation">></span></span><span class="token plain-text">
-</span></code></pre><p>You can use any “export default”-ed Preact component as route (because the route will be rendered using Preact), but using tsx is the easiest way to define one.<h4 id=docs-dynamic-routing-routes-outputting-multiple-pages tabindex=-1><a href=#docs-dynamic-routing-routes-outputting-multiple-pages class=header-anchor>Dynamic routing = routes outputting multiple pages</a></h4><p>You can have route paths like <code>about/[author].tsx</code> or even <code>about/[author]/posts/[postSlug]/appendix-[appendixNumber].tsx</code> (this should be familiar to Next.js users). So, when there are [square bracketed] parts in the route’s path (relative to the routes directory), you can replace those using an additional export called <code>paramsList</code>.<pre><code class="block language-tsx"><span class="token comment">// src/routes/about/[authorSlug]/posts/[postSlug]/footnotes-[footnoteNumber].tsx</span>
+</span></code></pre><p>You can use any “export default”-ed Preact component as route (because the route will be rendered using Preact), but using tsx is the easiest way to define one. For absolute type safety, you can annotate your route with <code>SimpleRoute</code>, which can imported from the decharge package.<h4 id=docs-dynamic-routing-routes-outputting-multiple-pages tabindex=-1><a href=#docs-dynamic-routing-routes-outputting-multiple-pages class=header-anchor>Dynamic routing = routes outputting multiple pages</a></h4><p>You can have route paths like <code>about/[author].tsx</code> or even <code>about/[author]/posts/[postSlug]/appendix-[appendixNumber].tsx</code> (this should be familiar to Next.js users). So, when there are [square bracketed] parts in the route’s path (relative to the routes directory), you can replace those by default exporting a dataList along with your page component like this:<pre><code class="block language-tsx"><span class="token comment">// src/routes/about/[authorSlug]/posts/[postSlug]/footnotes-[footnoteNumber].tsx</span>
 
-<span class="token keyword">export</span> paramsList <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">{</span>
-  <span class="token comment">// This "params" generates:</span>
-  <span class="token comment">// dist/about/alexander-pushkin/posts/eugene-onegin/footnotes-21/index.html</span>
-  authorSlug<span class="token operator">:</span> <span class="token string">'alexander-pushkin'</span><span class="token punctuation">,</span>
-  postSlug<span class="token operator">:</span> <span class="token string">'eugene-onegin'</span><span class="token punctuation">,</span>
-  footnoteNumber<span class="token operator">:</span> <span class="token number">21</span><span class="token punctuation">,</span>
-  <span class="token comment">// Note that this could be any other, arbitary attribute.</span>
-  <span class="token comment">// The point is that the whole params object gets passed</span>
-  <span class="token comment">// to the "export default"-ed function.</span>
-  content<span class="token operator">:</span> <span class="token template-string"><span class="token string template-punctuation">`</span><span class="token string">Pushkin wrote at least 18 stanzas of a never-completed tenth chapter. \
+<span class="token keyword">import</span> <span class="token keyword">type</span> <span class="token punctuation">{</span> DynamicRoute <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'decharge'</span>
+
+<span class="token keyword">interface</span> <span class="token class-name">Data</span> <span class="token punctuation">{</span>
+  authorSlug<span class="token operator">:</span> <span class="token builtin">string</span>
+  postSlug<span class="token operator">:</span> <span class="token builtin">string</span>
+  footnoteNumber<span class="token operator">:</span> <span class="token builtin">number</span>
+  content<span class="token operator">:</span> <span class="token builtin">string</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">const</span> route<span class="token operator">:</span> DynamicRoute<span class="token operator">&lt;</span>Data<span class="token operator">></span> <span class="token operator">=</span> <span class="token punctuation">{</span>
+  dataList<span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">{</span>
+    <span class="token comment">// This "data" generates:</span>
+    <span class="token comment">// dist/about/alexander-pushkin/posts/eugene-onegin/footnotes-21/index.html</span>
+    authorSlug<span class="token operator">:</span> <span class="token string">'alexander-pushkin'</span><span class="token punctuation">,</span>
+    postSlug<span class="token operator">:</span> <span class="token string">'eugene-onegin'</span><span class="token punctuation">,</span>
+    footnoteNumber<span class="token operator">:</span> <span class="token number">21</span><span class="token punctuation">,</span>
+    <span class="token comment">// Note that this could be any other, arbitary attribute.</span>
+    <span class="token comment">// The point is that the whole data object gets passed</span>
+    <span class="token comment">// to the "export default"-ed function.</span>
+    content<span class="token operator">:</span> <span class="token template-string"><span class="token string template-punctuation">`</span><span class="token string">Pushkin wrote at least 18 stanzas of a never-completed tenth chapter. \
 It contained many satires and even direct criticism on contemporary Russian rulers, \
 including the Emperor himself. Afraid of being prosecuted for dissidence, \
 Pushkin burnt most of the tenth chapter. Very little of it survived in Pushkin's notebooks.</span><span class="token string template-punctuation">`</span></span>
-<span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
-  <span class="token comment">// This "params" generates: dist/about/queen/posts/bohemian/rhapsody/footnotes-13/index.html</span>
-  authorSlug<span class="token operator">:</span> <span class="token string">'queen'</span><span class="token punctuation">,</span>
-  <span class="token comment">// Note that you can even put slashes here.</span>
-  <span class="token comment">// Plus, in the final path multiple adjacent slashes will be</span>
-  <span class="token comment">// merged into one, so having 'bohemian//rhapsody' would have the same effect.</span>
-  postSlug<span class="token operator">:</span> <span class="token string">'bohemian/rhapsody'</span><span class="token punctuation">,</span>
-  footnoteNumber<span class="token operator">:</span> <span class="token number">13</span><span class="token punctuation">,</span>
-  content<span class="token operator">:</span> <span class="token template-string"><span class="token string template-punctuation">`</span><span class="token string">He played the beginning on the piano, then stopped and said, \
-  'And this is where the opera section comes in!' Then we went out to eat dinner.</span><span class="token string template-punctuation">`</span></span>
-<span class="token punctuation">}</span><span class="token punctuation">]</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
+    <span class="token comment">// This "data" generates: dist/about/queen/posts/bohemian/rhapsody/footnotes-13/index.html</span>
+    authorSlug<span class="token operator">:</span> <span class="token string">'queen'</span><span class="token punctuation">,</span>
+    <span class="token comment">// Note that you can even put slashes here.</span>
+    <span class="token comment">// Plus, in the final path multiple adjacent slashes will be</span>
+    <span class="token comment">// merged into one, so having 'bohemian//rhapsody' would have the same effect.</span>
+    postSlug<span class="token operator">:</span> <span class="token string">'bohemian/rhapsody'</span><span class="token punctuation">,</span>
+    footnoteNumber<span class="token operator">:</span> <span class="token number">13</span><span class="token punctuation">,</span>
+    content<span class="token operator">:</span> <span class="token template-string"><span class="token string template-punctuation">`</span><span class="token string">He played the beginning on the piano, then stopped and said, \
+'And this is where the opera section comes in!' Then we went out to eat dinner.</span><span class="token string template-punctuation">`</span></span>
+  <span class="token punctuation">}</span><span class="token punctuation">]</span>
+<span class="token punctuation">}</span>
 
-<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">(</span><span class="token parameter"><span class="token punctuation">{</span> authorSlug<span class="token punctuation">,</span> postSlug<span class="token punctuation">,</span> footnoteNumber<span class="token punctuation">,</span> content <span class="token punctuation">}</span></span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span></span><span class="token punctuation">></span></span><span class="token plain-text">
-  Here, footnote number </span><span class="token punctuation">{</span>footnoteNumber<span class="token punctuation">}</span><span class="token plain-text"> refers to: </span><span class="token punctuation">{</span>content<span class="token punctuation">}</span><span class="token plain-text">
+<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">(</span><span class="token parameter"><span class="token punctuation">{</span> data<span class="token operator">:</span> <span class="token punctuation">{</span> authorSlug<span class="token punctuation">,</span> postSlug<span class="token punctuation">,</span> footnoteNumber<span class="token punctuation">,</span> content <span class="token punctuation">}</span><span class="token punctuation">,</span> index <span class="token punctuation">}</span></span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span></span><span class="token punctuation">></span></span><span class="token plain-text">
+  The index of this data object in the dataList array is </span><span class="token punctuation">{</span>index<span class="token punctuation">}</span><span class="token plain-text">.
+  In </span><span class="token punctuation">{</span>authorSlug<span class="token punctuation">}</span><span class="token plain-text">'s post called </span><span class="token punctuation">{</span>postSlug<span class="token punctuation">}</span><span class="token plain-text">,
+  footnote number </span><span class="token punctuation">{</span>footnoteNumber<span class="token punctuation">}</span><span class="token plain-text"> refers to: </span><span class="token punctuation">{</span>content<span class="token punctuation">}</span><span class="token plain-text">
 </span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span></span><span class="token punctuation">></span></span>
 </code></pre><h3 id=docs-components tabindex=-1><a href=#docs-components class=header-anchor>Components</a></h3><p>A component can be any Preact component as you might have guessed. The thing is that you can’t really use <code>styled-jsx</code> or a similar library, because they are bloaty or don’t work in a purely SSR enviroment (if you find anything that works, please <a href=https://github.com/trustedtomato/decharge/issues>open an issue</a>), so decharge provides a way to add styles and client-side scripts (preferably just for progressive enhancement) to a component. Firstly, you have to make the component:<pre><code class="block language-tsx"><span class="token comment">// src/components/MyComplexComponent.tsx</span>
 
