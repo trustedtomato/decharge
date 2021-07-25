@@ -1,6 +1,7 @@
 import pathLib from 'path'
 import { parentPort } from 'worker_threads'
 import render from '../../common/render.js'
+import { DynamicRoute, SimpleRoute } from '../../types/Route.js'
 
 /**
  * Returns the path where the compiled JS route file should be put.
@@ -50,23 +51,35 @@ parentPort!!.once('message', async ({ baseDir, path }: { baseDir: string, path: 
   const files: Map<string, string> = new Map()
 
   const srcPath = pathLib.join(baseDir, path)
-  const route = await import(
+  const route = (await import(
     // The current working directory should be the project root.
     pathLib.resolve(process.cwd(), srcPath)
-  )
-  const propsList = route.propsList ?? [{}]
+  )).default as (DynamicRoute<unknown> | SimpleRoute)
+
+  const dataList = typeof route === 'function'
+    // simple route
+    ? [{}]
+    // dynamic route
+    : route.dataList
+
+  const Page = typeof route === 'function'
+    // simple route
+    ? route
+    // dynamic route
+    : route.Page
 
   // TODO: generate all of the pages at once with Promise.all
-  for (const props of propsList) {
+  for (const [index, data] of dataList.entries()) {
     const targetPath = jsPathToHtmlPath(
       path
         // Expand the [square-bracketed] parts in the path.
-        .replace(/\[(.*?)\]/g, (_, name) => props[name] ?? '')
+        // @ts-ignore
+        .replace(/\[(.*?)\]/g, (_, name) => data?.[name] ?? '')
     )
     if (!pathLib.join(baseDir, targetPath).startsWith(baseDir)) {
       throw new Error(`Build error: ${path} wants to create a page which would be outside of the target directory.`)
     }
-    files.set(targetPath, `<!DOCTYPE html>${await render(() => <route.default {...props} />)}`)
+    files.set(targetPath, `<!DOCTYPE html>${await render(() => <Page data={data} index={index} />)}`)
   }
 
   parentPort!!.postMessage({

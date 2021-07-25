@@ -23,6 +23,8 @@ export default () => <html>
 You can use any "export default"-ed Preact component as route
 (because the route will be rendered using Preact),
 but using tsx is the easiest way to define one.
+For absolute type safety, you can annotate your route with
+`SimpleRoute`, which can imported from the decharge package.
 
 #### Dynamic routing = routes outputting multiple pages
 You can have route paths like `about/[author].tsx` or even
@@ -30,37 +32,51 @@ You can have route paths like `about/[author].tsx` or even
 (this should be familiar to Next.js users).
 So, when there are [square bracketed] parts in the route's path
 (relative to the routes directory), you can replace those
-using an additional export called `paramsList`.
+by default exporting a dataList along with your page component
+like this:
 ```tsx
 // src/routes/about/[authorSlug]/posts/[postSlug]/footnotes-[footnoteNumber].tsx
 
-export paramsList = [{
-  // This "params" generates:
-  // dist/about/alexander-pushkin/posts/eugene-onegin/footnotes-21/index.html
-  authorSlug: 'alexander-pushkin',
-  postSlug: 'eugene-onegin',
-  footnoteNumber: 21,
-  // Note that this could be any other, arbitary attribute.
-  // The point is that the whole params object gets passed
-  // to the "export default"-ed function.
-  content: `Pushkin wrote at least 18 stanzas of a never-completed tenth chapter. \
+import type { DynamicRoute } from 'decharge'
+
+interface Data {
+  authorSlug: string
+  postSlug: string
+  footnoteNumber: number
+  content: string
+}
+
+const route: DynamicRoute<Data> = {
+  dataList: [{
+    // This "data" generates:
+    // dist/about/alexander-pushkin/posts/eugene-onegin/footnotes-21/index.html
+    authorSlug: 'alexander-pushkin',
+    postSlug: 'eugene-onegin',
+    footnoteNumber: 21,
+    // Note that this could be any other, arbitary attribute.
+    // The point is that the whole data object gets passed
+    // to the "export default"-ed function.
+    content: `Pushkin wrote at least 18 stanzas of a never-completed tenth chapter. \
 It contained many satires and even direct criticism on contemporary Russian rulers, \
 including the Emperor himself. Afraid of being prosecuted for dissidence, \
 Pushkin burnt most of the tenth chapter. Very little of it survived in Pushkin's notebooks.`
-}, {
-  // This "params" generates: dist/about/queen/posts/bohemian/rhapsody/footnotes-13/index.html
-  authorSlug: 'queen',
-  // Note that you can even put slashes here.
-  // Plus, in the final path multiple adjacent slashes will be
-  // merged into one, so having 'bohemian//rhapsody' would have the same effect.
-  postSlug: 'bohemian/rhapsody',
-  footnoteNumber: 13,
-  content: `He played the beginning on the piano, then stopped and said, \
-  'And this is where the opera section comes in!' Then we went out to eat dinner.`
-}]
+  }, {
+    // This "data" generates: dist/about/queen/posts/bohemian/rhapsody/footnotes-13/index.html
+    authorSlug: 'queen',
+    // Note that you can even put slashes here.
+    // Plus, in the final path multiple adjacent slashes will be
+    // merged into one, so having 'bohemian//rhapsody' would have the same effect.
+    postSlug: 'bohemian/rhapsody',
+    footnoteNumber: 13,
+    content: `He played the beginning on the piano, then stopped and said, \
+'And this is where the opera section comes in!' Then we went out to eat dinner.`
+  }]
+}
 
-export default ({ authorSlug, postSlug, footnoteNumber, content }) => <>
-  Here, footnote number {footnoteNumber} refers to: {content}
+export default ({ data: { authorSlug, postSlug, footnoteNumber, content }, index }) => <>
+  The index of this data object in the dataList array is {index}.
+  In {authorSlug}'s post called {postSlug},
+  footnote number {footnoteNumber} refers to: {content}
 </>
 ```
 
