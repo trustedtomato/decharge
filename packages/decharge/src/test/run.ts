@@ -3,7 +3,6 @@ import readdirp from 'readdirp'
 import config from './config.js'
 import waitForEvent from 'p-event'
 import chalk from 'chalk'
-import { inspect } from 'util'
 import wrapAnsi from 'wrap-ansi'
 
 const formatAnsi = (text: string, { wrap, extraIndent, firstIndent }: { wrap: number, extraIndent: number, firstIndent: number }) => {
@@ -18,6 +17,8 @@ const formatAnsi = (text: string, { wrap, extraIndent, firstIndent }: { wrap: nu
     }).replace(/\n/g, `\n${indentStr}`)
   )
 }
+
+let failed = false
 
 const testFile = async (fullPath: string, name: string) => {
   console.log(`Testing ${name}...`)
@@ -40,9 +41,7 @@ const testFile = async (fullPath: string, name: string) => {
       : chalk.gray
     )(type.padEnd(subLogTypeMaxLength))
 
-    const dataStr = data.map(datum => inspect(datum, {
-      breakLength: subLogMaxLineLength - 10
-    })).join(' ')
+    const dataStr = data.join(' ')
 
     const log = formatAnsi(
       typeStr + dataStr, {
@@ -63,9 +62,11 @@ const testFile = async (fullPath: string, name: string) => {
     } else if (type === 'console-error') {
       subLog({ type: 'console.error', data: value })
     } else if (type === 'log-failed-test') {
-      subLog({ type: 'failed-test', data: [value.name, value.error], isError: true })
+      failed = true
+      subLog({ type: 'failed-test', data: [`${value.name}\n${value.error}`], isError: true })
     } else if (type === 'error') {
-      subLog({ type: 'error!', data: value, isError: true })
+      failed = true
+      subLog({ type: 'error!', data: [value], isError: true })
     }
   })
   try {
@@ -77,7 +78,8 @@ const testFile = async (fullPath: string, name: string) => {
     await worker.terminate()
     return { passed, failed }
   } catch (err) {
-    subLog({ type: 'fatal error!', data: [err] })
+    failed = true
+    subLog({ type: 'fatal error!', data: [err], isError: true })
     await worker.terminate()
     return { passed: 0, failed: 1 }
   }
@@ -131,8 +133,4 @@ if (failedTestResults > 0) {
   )
 }
 
-process.exitCode = testResults.some(({ result }) => result.failed > 0)
-  // failure
-  ? 1
-  // success
-  : 0
+process.exitCode = failed ? 1 : 0

@@ -180,8 +180,6 @@ export default () => <>
 ```
 
 To fix this issue, there is a built-in function in decharge called `createAsyncComponent`.
-^[Note that you can't use hooks inside the function. If you do want to use them,
-you should use the `useConstAsync` hook.]
 
 ```tsx
 // Valid route.
@@ -189,15 +187,17 @@ you should use the `useConstAsync` hook.]
 import fetch from 'node-fetch'
 import { createAsyncComponent } from 'decharge'
 
-const AsyncComponent = createAsyncComponent(async ({ url }) =>
-  <div>
-    The length of {url}'s source code is {
-      await fetch(url)
-        .then(res => res.text())
-        .then(text => text.length)
-    }
-  </div>
-)
+const AsyncComponent = createAsyncComponent(async ({ url }) => {
+  const length = await fetch(url)
+    .then(res => res.text())
+    .then(text => text.length)
+  return () => {
+    // You can use [hooks](#docs-hooks) here.
+    return <div>
+      The length of {url}'s source code is {length}
+    </div>
+  }
+})
 
 export default () => <>
   <AsyncComponent url="https://google.com" />

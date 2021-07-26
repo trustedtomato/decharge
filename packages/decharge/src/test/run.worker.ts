@@ -1,18 +1,23 @@
 import { test } from './lib.js'
 import pathLib from 'path'
 import { parentPort } from 'worker_threads'
+import util from 'util'
+
+const inspect = (msg: unknown) => util.inspect(msg, {
+  breakLength: 40
+})
 
 global.console.log = (...args: any[]) => {
   parentPort!!.postMessage({
     type: 'console-log',
-    value: args
+    value: args.map(arg => inspect(arg))
   })
 }
 
 global.console.error = (...args: any[]) => {
   parentPort!!.postMessage({
     type: 'console-error',
-    value: args
+    value: args.map(arg => inspect(arg))
   })
 }
 
@@ -21,14 +26,14 @@ global.console.error = (...args: any[]) => {
 process.on('unhandledRejection', (error) => {
   parentPort!!.postMessage({
     type: 'error',
-    value: error
+    value: inspect(error)
   })
 })
 
 process.on('uncaughtExceptionMonitor', (error) => {
   parentPort!!.postMessage({
     type: 'error',
-    value: error
+    value: inspect(error)
   })
 })
 
@@ -38,7 +43,7 @@ parentPort!!.once('message', async (filePath) => {
       type: 'log-failed-test',
       value: {
         name,
-        error
+        error: inspect(error)
       }
     })
   }
@@ -46,11 +51,11 @@ parentPort!!.once('message', async (filePath) => {
     await import(
       pathLib.resolve(process.cwd(), filePath)
     )
-    await Promise.all(test.pending)
+    await Promise.allSettled(test.pending)
   } catch (error) {
     parentPort!!.postMessage({
       type: 'error',
-      value: error
+      value: inspect(error)
     })
   }
   parentPort!!.postMessage({

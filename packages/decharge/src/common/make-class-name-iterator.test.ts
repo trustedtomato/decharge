@@ -28,7 +28,3 @@ test('iterates over classNames correctly', (assert) => {
     previous = current
   }
 })
-
-test('blablabla', (assert) => {
-  assert.equal(1, 1)
-})

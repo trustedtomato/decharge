@@ -26,7 +26,7 @@ export const usePageContext = () => pUseContext(PageContext)
  * Basically React's useState, except that it blocks the SSR
  * between each setState call and the rerender caused by it.
  */
-export const useState = <T>(defaultValue: T) => {
+export const useState = <T>(defaultValue: T): [T, (value: T) => void] => {
   const [state, pSetState] = pUseState(defaultValue)
   const renderBlocker = useRenderBlocker()
   const setState = useConst(() =>

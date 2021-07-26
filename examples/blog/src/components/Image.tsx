@@ -6,9 +6,8 @@ import mkdirp from 'mkdirp'
 import parsePath from '../utils/parse-path.js'
 import { getGmSize, gmToBuffer } from '../utils/gm-promisified.js'
 import createBlurredImageAuto from '../utils/create-blurred-image/auto.js'
-import type { JSX } from 'preact/jsx-runtime'
 import { createAsyncComponent, createComplexComponent } from 'decharge'
-import { useConst } from 'decharge/hooks'
+
 interface Props {
   src: string
   alt: string
@@ -28,7 +27,7 @@ export default createComplexComponent<Props>({
     generatedClassName,
     widthConditions,
     widthVersions = [375, 720, 800, 900, 1366, 1600, 1920, 4100]
-  }): Promise<JSX.Element> => {
+  }) => {
     if (!src.startsWith('/')) {
       throw new Error('Only local images are supported, Image src should begin with a / (a slash).')
     }
@@ -88,8 +87,10 @@ export default createComplexComponent<Props>({
       })
       .join(',')
 
-    return <div class={`image ${generatedClassName}`} style={`max-width:${width}px`}>
-      <div dangerouslySetInnerHTML={{ __html: await createBlurredImageAuto(imageBuffer, 40) }} />
+    const placeholderSvg = await createBlurredImageAuto(imageBuffer, 40)
+
+    return () => <div class={`image ${generatedClassName}`} style={`max-width:${width}px`}>
+      <div dangerouslySetInnerHTML={{ __html: placeholderSvg }} />
       <img
         src={srcToUrl(src)}
         alt={alt}
