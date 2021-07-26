@@ -1,5 +1,5 @@
 import { makeClassNameIterator } from './make-class-name-iterator.js'
-import { test } from '../test/lib.js'
+import { test } from 'protester'
 
 test('iterates over classNames correctly', (assert) => {
   assert.expectedAssertionCount = 7

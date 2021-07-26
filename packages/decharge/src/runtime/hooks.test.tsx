@@ -1,4 +1,4 @@
-import { test } from '../test/lib.js'
+import { test } from 'protester'
 import { render } from '../common/render.js'
 import { useConst, useState, useRenderBlocker, useRerenderingRef, useConstAsync } from './hooks.js'
 import { setTimeout } from 'timers/promises'

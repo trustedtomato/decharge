@@ -1,8 +1,10 @@
 import chai from 'chai'
 
+const assertionCount = Symbol('assertion-count')
+
 const baseAssertExtraProps = {
   expectedAssertionCount: null as number | null,
-  assertionCount: 0
+  [assertionCount]: 0
 }
 
 const baseAssert = {
@@ -17,7 +19,7 @@ export const test = Object.assign(
     const proxy = new Proxy(assert, {
       get (target, property, receiver) {
         if (!Object.prototype.hasOwnProperty.call(baseAssertExtraProps, property)) {
-          target.assertionCount += 1
+          target[assertionCount] += 1
         }
         return Reflect.get(target, property, receiver)
       }
@@ -33,10 +35,10 @@ export const test = Object.assign(
       return
     }
 
-    if (typeof assert.expectedAssertionCount === 'number' && assert.expectedAssertionCount !== assert.assertionCount) {
+    if (typeof assert.expectedAssertionCount === 'number' && assert.expectedAssertionCount !== assert[assertionCount]) {
       test.logFailedTest!!(
         name,
-        new Error(`Expected ${assert.expectedAssertionCount} number of assertions, got ${assert.assertionCount}`)
+        new Error(`Expected ${assert.expectedAssertionCount} number of assertions, got ${assert[assertionCount]}`)
       )
       test.failed++
       return

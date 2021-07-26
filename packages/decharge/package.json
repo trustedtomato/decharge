@@ -1,6 +1,6 @@
 {
   "name": "decharge",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "",
   "type": "module",
   "author": {
@@ -23,7 +23,7 @@
   "scripts": {
     "build": "tsc",
     "watch": "tsc --watch",
-    "test": "node --enable-source-maps dist/test/run.js"
+    "test": "cross-env NODE_OPTIONS=--enable-source-maps protester"
   },
   "bin": {
     "decharge": "decharge.js"
@@ -73,10 +73,12 @@
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^4.28.1",
     "@typescript-eslint/parser": "^4.28.1",
+    "cross-env": "^7.0.3",
     "eslint": "^7.12.1",
     "eslint-config-standard": "^16.0.3",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^4.2.1"
+    "eslint-plugin-promise": "^4.2.1",
+    "protester": "workspace:*"
   }
 }

@@ -1,5 +1,5 @@
 import render from '../common/render.js'
-import { test } from '../test/lib.js'
+import { test } from 'protester'
 import { createComplexComponent, css } from './create-complex-component.js'
 import type { ComponentChildren } from 'preact'
 import { Scripts } from './Scripts.js'

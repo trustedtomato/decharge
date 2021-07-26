@@ -1,6 +1,6 @@
 import type { ComponentChildren } from 'preact'
 import render from '../common/render.js'
-import { test } from '../test/lib.js'
+import { test } from 'protester'
 import { createAsyncComponent } from './create-async-component.js'
 import { setTimeout } from 'timers/promises'
 

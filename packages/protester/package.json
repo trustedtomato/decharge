@@ -1,0 +1,50 @@
+{
+  "name": "protester",
+  "version": "0.0.1",
+  "description": "A library + binary for testing Node.js programs using ES modules.",
+  "type": "module",
+  "main": "dist/lib.js",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc --watch"
+  },
+  "bin": {
+    "protester": "protester.js"
+  },
+  "keywords": [
+    "test",
+    "node.js",
+    "esm",
+    "es-modules",
+    "import",
+    "export",
+    "library",
+    "javascript",
+    "typescript",
+    "js",
+    "ts"
+  ],
+  "author": "Tamás Halasi",
+  "license": "MIT",
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.28.4",
+    "@typescript-eslint/parser": "^4.28.4",
+    "eslint": "^7.12.1",
+    "eslint-config-standard": "^16.0.3",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^5.1.0",
+    "typescript": "^4.3.5"
+  },
+  "dependencies": {
+    "@types/minimist": "^1.2.2",
+    "chai": "^4.3.4",
+    "chalk": "^4.1.1",
+    "common-tags": "^1.8.0",
+    "minimist": "^1.2.5",
+    "p-event": "^4.2.0",
+    "readdirp": "^3.6.0",
+    "wrap-ansi": "^8.0.0",
+    "yargs": "^17.0.1"
+  }
+}

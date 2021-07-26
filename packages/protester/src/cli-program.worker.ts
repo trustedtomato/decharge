@@ -4,20 +4,21 @@ import { parentPort } from 'worker_threads'
 import util from 'util'
 
 const inspect = (msg: unknown) => util.inspect(msg, {
-  breakLength: 40
+  breakLength: 40,
+  colors: true
 })
 
 global.console.log = (...args: any[]) => {
   parentPort!!.postMessage({
     type: 'console-log',
-    value: args.map(arg => inspect(arg))
+    value: args.map(arg => inspect(arg)).join(' ')
   })
 }
 
 global.console.error = (...args: any[]) => {
   parentPort!!.postMessage({
     type: 'console-error',
-    value: args.map(arg => inspect(arg))
+    value: args.map(arg => inspect(arg)).join(' ')
   })
 }
 

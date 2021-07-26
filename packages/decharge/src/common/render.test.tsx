@@ -1,5 +1,5 @@
 import { render } from './render.js'
-import { test } from '../test/lib.js'
+import { test } from 'protester'
 
 test('renders sync component properly', async (assert) => {
   const tru = true
