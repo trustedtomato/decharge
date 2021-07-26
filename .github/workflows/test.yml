@@ -1,0 +1,26 @@
+name: GitHub Pages
+
+on: [push, pull_request]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install Node.js 16
+      uses: actions/setup-node@v1
+      with:
+        node-version: 16
+    - name: Install pnpm
+      run: npm install -g pnpm
+    - name: Install dependencies
+      run: pnpm install
+    - name: Build packages/protester
+      working-directory: ./packages/protester
+      run: pnpm run build
+    - name: Build packages/decharge
+      working-directory: ./packages/decharge
+      run: pnpm run build
+    - name: Run decharge tests
+      working-directory: ./packages/decharge
+      run: pnpm run test
