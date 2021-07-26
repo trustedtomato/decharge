@@ -4,6 +4,7 @@
 export const timeout = 5000
 /**
  * The root directory of your test files.
+ * Might be 'dist/' for example.
  */
 export const rootDir = ''
 /**

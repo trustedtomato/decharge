@@ -57,4 +57,4 @@ Use `protester --help` for the complete set of options.
 
 Create a `protester.config.js` in your project's root directory.
 You can both export your options one-by-one or in a huge object with export default.
-Check `src/default.protester.config.ts` for all the options, the default values and the descriptions.
+Check [`src/default.protester.config.ts`](https://github.com/trustedtomato/decharge/blob/master/packages/protester/src/default.protester.config.ts) for all the options, the default values and the descriptions.
