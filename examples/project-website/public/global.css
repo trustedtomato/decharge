@@ -284,7 +284,7 @@ pre code {
 	background: hsla(0, 0%, 100%, .5);
 }
 
-.token.url-link {
+.token.url-link, .token.md-link {
   color: inherit;
 }
 
