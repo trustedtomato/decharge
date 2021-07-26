@@ -18,6 +18,9 @@ jobs:
       run: npm install -g pnpm
     - name: Install dependencies
       run: pnpm install
+    - name: Build packages/protester
+      working-directory: ./packages/protester
+      run: pnpm run build
     - name: Build packages/decharge
       working-directory: ./packages/decharge
       run: pnpm run build
