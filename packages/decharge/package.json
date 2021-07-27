@@ -20,11 +20,19 @@
   "engines": {
     "node": ">=16"
   },
+  "files": [
+    "dist/",
+    "decharge.js",
+    "!**/*.test.js",
+    "!**/*.test.d.ts",
+    "!**/*.test.js.map"
+  ],
   "scripts": {
-    "build": "tsc",
+    "build": "rm -R dist/ && tsc",
     "watch": "tsc --watch",
     "test": "cross-env NODE_OPTIONS=--enable-source-maps protester",
-    "semantic-release": "semantic-release"
+    "semantic-release": "semantic-release",
+    "prepare": "cd ../.. && husky install packages/decharge/.husky"
   },
   "bin": {
     "decharge": "decharge.js"
@@ -72,6 +80,8 @@
     "yargs": "^17.0.1"
   },
   "devDependencies": {
+    "@commitlint/cli": "^13.1.0",
+    "@commitlint/config-conventional": "^13.1.0",
     "@typescript-eslint/eslint-plugin": "^4.28.1",
     "@typescript-eslint/parser": "^4.28.1",
     "cross-env": "^7.0.3",
@@ -80,6 +90,7 @@
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.2.1",
+    "husky": "^7.0.1",
     "protester": "workspace:*",
     "semantic-release": "^17.4.4"
   }
