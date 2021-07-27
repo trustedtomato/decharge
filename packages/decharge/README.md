@@ -1,4 +1,4 @@
-![Decharge's banner](./banner.svg)
+![Decharge's banner](https://raw.githubusercontent.com/trustedtomato/decharge/master/packages/decharge/banner.svg)
 
 decharge is a very-static site generator.
 It doesn't emit any JavaScript by default but is built on JSX,
