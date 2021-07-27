@@ -39,4 +39,4 @@ jobs:
         publish_dir: ./examples/project-website/dist
     - name: Semantic versioning
       working-directory: ./packages/decharge
-      run: pnpm run semantic-version
+      run: pnpm run semantic-release
