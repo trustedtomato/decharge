@@ -28,7 +28,7 @@
     "!**/*.test.js.map"
   ],
   "scripts": {
-    "build": "rm -R dist/ && tsc",
+    "build": "rm -fR dist/ && tsc",
     "watch": "tsc --watch",
     "test": "cross-env NODE_OPTIONS=--enable-source-maps protester",
     "semantic-release": "semantic-release",
