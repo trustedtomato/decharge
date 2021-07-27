@@ -40,3 +40,6 @@ jobs:
     - name: Semantic versioning
       working-directory: ./packages/decharge
       run: pnpm run semantic-release
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
