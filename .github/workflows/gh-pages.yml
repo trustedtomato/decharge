@@ -1,13 +1,18 @@
 name: GitHub Pages
 
 on:
-  push:
+  workflow_run:
+    workflows:
+      - Test
+    types:
+      - completed
     branches:
       - master
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
     - uses: actions/checkout@v2
     - name: Install Node.js 16
@@ -32,3 +37,6 @@ jobs:
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: ./examples/project-website/dist
+    - name: Semantic versioning
+      working-directory: ./packages/decharge
+      run: pnpm run semantic-version

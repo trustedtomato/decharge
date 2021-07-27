@@ -1,6 +1,6 @@
 {
   "name": "decharge",
-  "version": "0.0.1",
+  "version": "0.0.0-development",
   "description": "",
   "type": "module",
   "author": {
@@ -14,7 +14,7 @@
   "homepage": "https://github.com/trustedtomato/decharge#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/trustedtomato/decharge.git"
+    "url": "https://github.com/trustedtomato/decharge.git"
   },
   "license": "MIT",
   "engines": {
@@ -23,7 +23,8 @@
   "scripts": {
     "build": "tsc",
     "watch": "tsc --watch",
-    "test": "cross-env NODE_OPTIONS=--enable-source-maps protester"
+    "test": "cross-env NODE_OPTIONS=--enable-source-maps protester",
+    "semantic-release": "semantic-release"
   },
   "bin": {
     "decharge": "decharge.js"
@@ -79,6 +80,7 @@
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.2.1",
-    "protester": "workspace:*"
+    "protester": "workspace:*",
+    "semantic-release": "^17.4.4"
   }
 }
