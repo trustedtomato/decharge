@@ -24,3 +24,9 @@ jobs:
     - name: Run decharge tests
       working-directory: ./packages/decharge
       run: pnpm run test
+    - name: Build examples/project-website for test purposes
+      working-directory: ./examples/project-website
+      run: pnpm run build
+    - name: Build examples/blog for test purposes
+      working-directory: ./examples/blog
+      run: pnpm run build
