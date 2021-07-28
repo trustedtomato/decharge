@@ -13,20 +13,5 @@ jobs:
         node-version: 16
     - name: Install pnpm
       run: npm install -g pnpm
-    - name: Install dependencies
-      run: pnpm install
-    - name: Build packages/protester
-      working-directory: ./packages/protester
-      run: pnpm run build
-    - name: Build packages/decharge
-      working-directory: ./packages/decharge
-      run: pnpm run build
-    - name: Run decharge tests
-      working-directory: ./packages/decharge
-      run: pnpm run test
-    - name: Build examples/project-website for test purposes
-      working-directory: ./examples/project-website
-      run: pnpm run build
-    - name: Build examples/blog for test purposes
-      working-directory: ./examples/blog
-      run: pnpm run build
+    - name: Run test.sh
+      run: ./test.sh
