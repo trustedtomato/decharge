@@ -1,4 +1,4 @@
-import { usePageContext } from './hooks.js'
+import { usePageContext } from '../hooks/index.js'
 
 // TODO: only enable adding this once to a page.
 export const Styles = () => {

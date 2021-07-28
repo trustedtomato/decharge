@@ -1,5 +1,5 @@
 import type { JSX } from 'preact/jsx-runtime'
-import { usePageContext } from './hooks.js'
+import { usePageContext } from '../hooks/index.js'
 import { oneLine, TemplateTag } from 'common-tags'
 
 export const css = new TemplateTag({})

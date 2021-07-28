@@ -40,12 +40,16 @@
   "main": "./dist/runtime/index.js",
   "exports": {
     ".": "./dist/runtime/index.js",
-    "./hooks": "./dist/runtime/hooks.js"
+    "./hooks": "./dist/runtime/hooks.js",
+    "./components/*": "./dist/runtime/components/*.js"
   },
   "typesVersions": {
     "*": {
       "hooks": [
         "dist/runtime/hooks.d.ts"
+      ],
+      "components/*": [
+        "dist/runtime/components/*"
       ]
     }
   },

@@ -1,9 +1,7 @@
-import render from '../common/render.js'
-import { test } from 'protester'
 import { createComplexComponent, css } from './create-complex-component.js'
+import { render, Scripts, Styles } from '../index.js'
+import { test } from 'protester'
 import type { ComponentChildren } from 'preact'
-import { Scripts } from './Scripts.js'
-import { Styles } from './Styles.js'
 
 test('`css` function works as expected', assert => {
   assert.equal(css`body{color:red;}`, 'body{color:red;}')

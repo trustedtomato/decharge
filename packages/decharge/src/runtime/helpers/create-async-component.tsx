@@ -1,5 +1,5 @@
 import type { JSX } from 'preact/jsx-runtime'
-import { useConstAsync } from './hooks.js'
+import { useConstAsync } from '../hooks/index.js'
 
 export function createAsyncComponent <T> (
   createComponent: (props: T) => Promise<() => JSX.Element>

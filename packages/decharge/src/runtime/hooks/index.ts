@@ -6,7 +6,7 @@ import {
   useCallback as pUseCallback,
   useEffect as pUseEffect
 } from 'preact/hooks'
-import { RenderingContext, PageContext } from '../common/render.js'
+import { RenderingContext, PageContext } from '../../common/render.js'
 
 /** Runs the given function only once + returns the return value of that call. */
 export const useConst = <T>(func: () => T): T => {

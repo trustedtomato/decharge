@@ -1,7 +1,7 @@
 import { render as preactRender, createContext, JSX, ComponentChildren } from 'preact'
 import globalJsdom from 'global-jsdom'
 import { useState } from 'preact/hooks'
-import { useConst } from '../runtime/hooks.js'
+import { useConst } from '../runtime/hooks/index.js'
 import { makeClassNameIterator } from './make-class-name-iterator.js'
 import transformStyle from './transform-style.js'
 import { generatedClassNamePrefix } from './config.js'

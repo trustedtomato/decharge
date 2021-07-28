@@ -1,6 +1,6 @@
 import { test } from 'protester'
-import { render } from '../common/render.js'
-import { useConst, useState, useRenderBlocker, useRerenderingRef, useConstAsync } from './hooks.js'
+import { render } from '../../common/render.jsx'
+import { useConst, useState, useRenderBlocker, useRerenderingRef, useConstAsync } from './index.js'
 import { setTimeout } from 'timers/promises'
 
 test('useState\'s setState triggers exactly one rerender + blocks rendering', async assert => {
