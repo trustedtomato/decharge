@@ -1,5 +1,5 @@
 import { test } from 'protester'
-import { render } from '../../common/render.jsx'
+import { render } from '../../common/render.js'
 import { useConst, useState, useRenderBlocker, useRerenderingRef, useConstAsync } from './index.js'
 import { setTimeout } from 'timers/promises'
 
