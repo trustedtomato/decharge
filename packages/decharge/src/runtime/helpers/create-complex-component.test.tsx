@@ -1,5 +1,5 @@
 import { createComplexComponent, css } from './create-complex-component.js'
-import { render, Scripts, Styles } from '../index.js'
+import { renderPage, Scripts, Styles } from '../index.js'
 import { test } from 'protester'
 import type { ComponentChildren } from 'preact'
 
@@ -16,7 +16,7 @@ const MyComplexComponent = createComplexComponent<{
   children: ComponentChildren
 }>({
   id: import.meta.url,
-  Component: ({ generatedClassName, children }) => <div className={generatedClassName}>{children}</div>,
+  Component: ({ generated, children }) => <div className={generated.className}>{children}</div>,
   style: css`.this{color:red;}}`,
   script
 })
@@ -24,7 +24,7 @@ const MyComplexComponent = createComplexComponent<{
 test('Scripts and Styles are not injected when there is no complexComponent', async assert => {
   assert.expectedAssertionCount = 1
 
-  const result = await render(() => <>
+  const result = await renderPage(() => <>
     <Styles />
     <body>
       <Scripts type='end-of-body' />
@@ -36,7 +36,7 @@ test('Scripts and Styles are not injected when there is no complexComponent', as
 test('correct Scripts and Styles are injected when there is a complexComponent', async assert => {
   assert.expectedAssertionCount = 1
 
-  const result = await render(() => <>
+  const result = await renderPage(() => <>
     <Styles />
     <MyComplexComponent>child</MyComplexComponent>
     <Scripts type='end-of-body' />
@@ -47,7 +47,7 @@ test('correct Scripts and Styles are injected when there is a complexComponent',
 test('only one script and style is injected per component', async assert => {
   assert.expectedAssertionCount = 1
 
-  const result = await render(() => <>
+  const result = await renderPage(() => <>
     <Styles />
     <MyComplexComponent>child</MyComplexComponent>
     <MyComplexComponent>child</MyComplexComponent>

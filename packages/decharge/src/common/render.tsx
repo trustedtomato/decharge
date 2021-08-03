@@ -1,10 +1,10 @@
-import { render as preactRender, createContext, JSX, ComponentChildren } from 'preact'
+import { render as preactRender, createContext, JSX } from 'preact'
 import globalJsdom from 'global-jsdom'
 import { useState } from 'preact/hooks'
 import { useConst } from '../runtime/hooks/index.js'
 import { makeClassNameIterator } from './make-class-name-iterator.js'
 import transformStyle from './transform-style.js'
-import { generatedClassNamePrefix } from './config.js'
+import { generatedClassNamePrefix } from './current-config.js'
 
 // TODO: make this configurable and document it!
 // (flooding the global object and not just the document property, see previous version)
@@ -12,14 +12,22 @@ globalJsdom('<!DOCTYPE html>', {
   url: 'https://example.com'
 })
 
+export interface SetupComplexComponentResult {
+  className: string
+  ownDirPath?: string
+}
+
 export interface PageContextType {
   scripts: string[],
   styles: string[],
-  setupComplexComponent: (options: {
-    id: string
-    script?: string
-    style?: string
-  }) => string
+  setupComplexComponent: (
+    options: {
+      id: string
+      script?: string
+      style?: string,
+      generateOwnDir?: boolean
+    }
+  ) => Promise<SetupComplexComponentResult>
 }
 
 export interface RenderingContextType {
@@ -47,54 +55,83 @@ function startRender (jsx: JSX.Element) {
 }
 
 /**
- * Renders a decharge component to HTML.
- * If pageContextToUse is not used, Component will be treated as a page.
+ * Renders a decharge page to HTML.
  */
-export async function render (Component: () => JSX.Element, pageContextToUse?: PageContextType) {
-  const delayerPromises: Set<Promise<unknown>> = new Set()
-
-  const RenderWrapper = ({ children }: { children: ComponentChildren }) => {
+export async function renderPage (Page: () => JSX.Element): Promise<string> {
+  const PageWithContext = () => {
     const [scripts, setScripts] = useState([] as string[])
     const [styles, setStyles] = useState([] as string[])
-    const classNames = useConst<Map<string, string>>(() => new Map())
+    const complexComponentSetups = useConst<Map<string, SetupComplexComponentResult>>(() => new Map())
     const classNameIterator = useConst(() => makeClassNameIterator())
 
-    const pageContext: PageContextType = pageContextToUse ?? {
+    const pageContext: PageContextType = {
       scripts,
       styles,
-      setupComplexComponent: ({
+      setupComplexComponent: async ({
         id,
         style,
-        script
-      }): string => {
-        if (classNames.has(id)) {
-          // @ts-ignore
-          return classNames.get(id)
+        script,
+        generateOwnDir = false
+      }) => {
+        if (complexComponentSetups.has(id)) {
+          return complexComponentSetups.get(id)!!
         }
-        const className = `${generatedClassNamePrefix}${classNameIterator.next().value}`
-        classNames.set(id, className)
+        const generatedClassName = `${generatedClassNamePrefix}${classNameIterator.next().value}`
         if (style) {
-          setStyles([...styles, transformStyle(style, className)])
+          setStyles([...styles, transformStyle(style, generatedClassName)])
         }
         if (script) {
-          setScripts([...scripts, `(${script})(${JSON.stringify(className)});`])
+          setScripts([...scripts, `(${script})(${JSON.stringify(generatedClassName)});`])
         }
-        return className
+        const result: SetupComplexComponentResult = {
+          className: generatedClassName
+        }
+        if (!process.env.TESTING) {
+          const { globalState } = await import('./render-route.worker.js')
+          const { ownDirAbsolutePath } = await globalState.setupComplexComponent({
+            id,
+            generateOwnDir
+          })
+          result.ownDirPath = ownDirAbsolutePath
+        }
+        complexComponentSetups.set(id, result)
+        return result
       }
     }
 
-    return (
-      <PageContext.Provider value={pageContext}>
-      <RenderingContext.Provider value={{
-        delayerPromises
-      }}>
-        {children}
-      </RenderingContext.Provider>
-      </PageContext.Provider>
-    )
+    return <PageContext.Provider value={pageContext}>
+      <Page />
+    </PageContext.Provider>
   }
 
-  const rendering = startRender(<RenderWrapper><Component /></RenderWrapper>)
+  return await render(() => <PageWithContext />)
+}
+
+/**
+ * Renders a decharge component - with the given page context - to HTML.
+ */
+export async function renderComponent (Component: () => JSX.Element, pageContext: PageContextType): Promise<string> {
+  return await render(() =>
+    <PageContext.Provider value={pageContext}>
+      <Component />
+    </PageContext.Provider>
+  )
+}
+
+/**
+ * Renders a decharge component to HTML.
+ */
+async function render (Component: () => JSX.Element) {
+  const delayerPromises: Set<Promise<unknown>> = new Set()
+
+  const rendering = startRender(
+    <RenderingContext.Provider value={{
+      delayerPromises
+    }}>
+      <Component />
+    </RenderingContext.Provider>
+  )
+
   do {
     const pendingDelayerPromises = [...delayerPromises]
     await Promise.all(pendingDelayerPromises)
@@ -104,5 +141,3 @@ export async function render (Component: () => JSX.Element, pageContextToUse?: P
   } while (delayerPromises.size > 0)
   return rendering.finalize()
 }
-
-export default render

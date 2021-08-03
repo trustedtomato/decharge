@@ -6,8 +6,8 @@ import Arrow from '../components/DownArrow.js'
 import TableOfContents from '../components/TableOfContents.js'
 import DechargeBanner from '../components/DechargeBanner.js'
 
-import { useConstAsync, useRerenderingRef } from 'decharge/hooks'
-import { render } from 'decharge'
+import { useConstAsync, usePageContext, useRerenderingRef } from 'decharge/hooks'
+import { renderComponent } from 'decharge'
 import MarkdownIt from 'markdown-it'
 import MarkdownItAnchor from 'markdown-it-anchor'
 import MarkdownItSidenote from '../utils/markdown-it-plugin-sidenote-parser.js'
@@ -63,6 +63,8 @@ const getSidenoteHtmlId = (index: string, options: MarkdownIt.Options, env: any)
 }
 
 export default function Index () {
+  const pageContext = usePageContext()
+
   const docs = useConstAsync(async () => {
     return await asyncRenderMarkdown({
       src: await fs.readFile(new URL('../documentation.md', import.meta.url), 'utf-8'),
@@ -75,10 +77,10 @@ export default function Index () {
             options,
             env
           )
-          return render(() => <SidenoteRef
+          return renderComponent(() => <SidenoteRef
             targetId={targetHtmlId}
             targetIndex={targetIndex}
-          />)
+          />, pageContext!!)
         },
         sidenote_start: async (tokens, idx, options, env) => {
           const index = tokens[idx].meta.index
@@ -87,10 +89,10 @@ export default function Index () {
             options,
             env
           )
-          const rendered = await render(() => <Sidenote
+          const rendered = await renderComponent(() => <Sidenote
             id={htmlId}
             index={index}
-          >?children-placeholder?</Sidenote>)
+          >?children-placeholder?</Sidenote>, pageContext!!)
           return rendered.replace(/\?children-placeholder\?[\s\S]*$/, '')
         },
         sidenote_end: async (tokens, idx, options, env) => {
@@ -100,10 +102,10 @@ export default function Index () {
             options,
             env
           )
-          const rendered = await render(() => <Sidenote
+          const rendered = await renderComponent(() => <Sidenote
             id={htmlId}
             index={index}
-          >?children-placeholder?</Sidenote>)
+          >?children-placeholder?</Sidenote>, pageContext!!)
           return rendered.replace(/^[\s\S]*\?children-placeholder\?/, '')
         }
       }

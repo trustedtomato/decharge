@@ -2,8 +2,8 @@ import fs from 'fs/promises'
 import markdownToHtml from '../patched-packages/marked/marked.js'
 import parseFrontmatter from 'gray-matter'
 import striptags from 'striptags'
-import Image from '../components/Image.js'
-import { render } from 'decharge'
+import Image from 'decharge/components/Image'
+import { renderPage } from 'decharge'
 
 export interface Post {
   metadata: Record<string, string>
@@ -17,7 +17,8 @@ export interface Post {
 markdownToHtml.use({
   renderer: {
     async image (src: string, title: string, alt: string) {
-      return await render(() => <Image src={src} title={title} alt={alt} />)
+      // TODO: this must be renderComponent to work.
+      return await renderPage(() => <Image src={src} title={title} alt={alt} />)
     }
   }
 })

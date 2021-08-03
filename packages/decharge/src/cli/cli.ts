@@ -1,6 +1,6 @@
 import yargs from 'yargs'
 import { hideBin } from 'yargs/helpers'
-import { routesDir } from '../common/config.js'
+import { routesDir } from '../common/current-config.js'
 import fs from 'fs/promises'
 import { constants as fsConstants } from 'fs'
 

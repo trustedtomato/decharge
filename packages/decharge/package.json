@@ -28,8 +28,8 @@
     "!**/*.test.js.map"
   ],
   "scripts": {
-    "build": "rm -fR dist/ && tsc",
-    "watch": "tsc --watch",
+    "build": "node scripts/build.js",
+    "watch": "node scripts/watch.js",
     "test": "cross-env NODE_OPTIONS=--enable-source-maps protester",
     "semantic-release": "semantic-release",
     "prepare": "cd ../.. && husky install packages/decharge/.husky"
@@ -62,6 +62,7 @@
     "@types/html-minifier": "^4.0.0",
     "@types/jsdom": "^16.2.12",
     "@types/mkdirp": "^1.0.1",
+    "@types/sharp": "^0.28.5",
     "@types/stylis": "^4.0.1",
     "@types/wrap-ansi": "^8.0.1",
     "@types/yargs": "^17.0.0",
@@ -70,6 +71,7 @@
     "chokidar": "^3.5.2",
     "common-tags": "^1.8.0",
     "eslint-plugin-preact": "^0.1.0",
+    "execa": "^5.1.1",
     "global-jsdom": "^8.1.0",
     "hasha": "^5.2.2",
     "jsdom": "^16.6.0",
@@ -78,8 +80,10 @@
     "preact": "^10.5.13",
     "precinct": "^8.1.0",
     "readdirp": "^3.6.0",
+    "sharp": "^0.28.3",
     "stylis": "^4.0.10",
     "typescript": "^4.3.4",
+    "worker-rpc": "^0.2.0",
     "wrap-ansi": "^8.0.0",
     "yargs": "^17.0.1"
   },
@@ -88,12 +92,15 @@
     "@commitlint/config-conventional": "^13.1.0",
     "@typescript-eslint/eslint-plugin": "^4.28.1",
     "@typescript-eslint/parser": "^4.28.1",
+    "concurrently": "^6.2.0",
+    "cpy-cli": "^3.1.1",
     "cross-env": "^7.0.3",
     "eslint": "^7.12.1",
     "eslint-config-standard": "^16.0.3",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.2.1",
+    "fs-extra": "^10.0.0",
     "husky": "^7.0.1",
     "protester": "workspace:*",
     "semantic-release": "^17.4.4"

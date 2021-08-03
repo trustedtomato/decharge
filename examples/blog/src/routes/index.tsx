@@ -1,6 +1,6 @@
 import readdirp from 'readdirp'
 import Layout from '../components/Layout.js'
-import Image from '../components/Image.js'
+import Image from 'decharge/components/Image'
 import pathToPost, { SluggedPost } from '../utils/path-to-post.js'
 
 const posts: SluggedPost[] = []

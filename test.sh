@@ -6,18 +6,17 @@
 pnpm install
 
 cd packages/protester
-pnpm run build
+npm run build
 cd ../..
 
 cd packages/decharge
-pnpm run build
-pnpm run test
+npm run build
+npm run test
 cd ../..
 
 cd examples/project-website
-pnpm run build
+npm run build
 cd ../..
 
 cd examples/blog
-pnpm run build
-cd ../..
+npm run build

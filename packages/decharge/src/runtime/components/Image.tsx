@@ -1,12 +1,10 @@
-import gm from 'gm'
 import fs from 'fs/promises'
 import { constants as fsConstants } from 'fs'
 import path from 'path'
 import mkdirp from 'mkdirp'
-import parsePath from '../utils/parse-path.js'
-import { getGmSize, gmToBuffer } from '../utils/gm-promisified.js'
-import createBlurredImageAuto from '../utils/create-blurred-image/auto.js'
-import { createAsyncComponent, createComplexComponent } from 'decharge'
+import sharp from 'sharp'
+import { createPlaceholderSvg } from '../utils/create-placeholder-svg/auto.js'
+import { createAsyncComponent, createComplexComponent } from '../index.js'
 
 interface Props {
   src: string
@@ -14,52 +12,71 @@ interface Props {
   title?: string
   widthConditions?: ([string, { maxWidth?: string, maxHeight?: string }] | [string])[]
   widthVersions?: number[]
+  maxHeight?: number
 }
-
-const maxHeight = 100
 
 export default createComplexComponent<Props>({
   id: import.meta.url,
+  generateOwnDir: true,
   Component: createAsyncComponent(async ({
     src,
     alt,
     title,
-    generatedClassName,
+    generated,
     widthConditions,
-    widthVersions = [375, 720, 800, 900, 1366, 1600, 1920, 4100]
+    widthVersions = [375, 720, 800, 900, 1366, 1600, 1920, 4100],
+    maxHeight = 1000
   }) => {
     if (!src.startsWith('/')) {
-      throw new Error('Only local images are supported, Image src should begin with a / (a slash).')
+      throw new Error('Only local images are supported, <Image/> src should begin with a / (a slash).')
     }
 
-    const srcToPath = (src: string) => path.join('./public/', src)
-    const srcToUrl = (src: string) => path.join('/', src)
+    const urlToPath = (url: string) => path.join(
+      process.cwd(),
+      'dist',
+      url.replaceAll('/', path.sep)
+    )
 
-    const imageBuffer = await fs.readFile(srcToPath(src))
-    const { width, height } = await getGmSize(gm(imageBuffer))
+    const pathToUrl = (_path: string) => '/' + path.relative(
+      path.join(process.cwd(), 'dist'),
+      _path
+    ).replaceAll(path.sep, '/')
+
+    const srcPath = urlToPath(src)
+
+    const imageBuffer = await fs.readFile(srcPath)
+    const imageBufferSharp = sharp(imageBuffer)
+    const { width, height } = await imageBufferSharp.metadata()
+
+    if (!width || !height) {
+      throw new Error('sharp cannot get the correct width/height of the image!')
+    }
+
     const downscaledWidths = widthVersions.filter(possibleDownscaledWidth =>
       possibleDownscaledWidth < width && possibleDownscaledWidth * (height / width) < maxHeight
     )
-    const parsedSrc = parsePath(src)
-    const srcMap = new Map(downscaledWidths.map(downscaledWidth => [
-      `${path.join(
-        '/generated/',
-        parsedSrc.directoryPath
-      )}${parsedSrc.name}-${downscaledWidth}${parsedSrc.extension}`,
+    const parsedSrc = path.parse(src)
+    const pathMap = new Map(downscaledWidths.map(downscaledWidth => [
+      path.join(
+        generated.ownDirPath!!,
+        parsedSrc.dir,
+        `${parsedSrc.name}-${downscaledWidth}${parsedSrc.ext}`
+      ),
       downscaledWidth
     ]))
 
     // Ensure downscaled image files exist.
-    for (const [downscaledSrc, downscaledWidth] of srcMap) {
-      const downscaledPath = srcToPath(downscaledSrc)
+    for (const [downscaledPath, downscaledWidth] of pathMap) {
       try {
         // Error if the file doesn't exist.
         await fs.access(downscaledPath, fsConstants.F_OK)
       } catch (err) {
         // Create the downscaled image file.
-        const downscaledImageBuffer = await gmToBuffer(
-          gm(imageBuffer).resize(downscaledWidth, maxHeight)
-        )
+        const downscaledImageBuffer = await imageBufferSharp
+          .resize({
+            width: downscaledWidth
+          })
+          .toBuffer()
         await mkdirp(path.dirname(downscaledPath))
         await fs.writeFile(
           downscaledPath,
@@ -68,9 +85,9 @@ export default createComplexComponent<Props>({
       }
     }
     const srcset = `${Array.from(
-      srcMap,
-      ([downscaledSrc, downscaledWidth]) => `${srcToUrl(downscaledSrc)} ${downscaledWidth}w`
-    ).join(',')},${srcToUrl(src)} ${width}w`
+      pathMap,
+      ([downscaledPath, downscaledWidth]) => `${pathToUrl(downscaledPath)} ${downscaledWidth}w`
+    ).join(',')},${src} ${width}w`
 
     const sizes = widthConditions && widthConditions
       .map(([width, { maxWidth = undefined, maxHeight = undefined } = {}]) => {
@@ -87,12 +104,12 @@ export default createComplexComponent<Props>({
       })
       .join(',')
 
-    const placeholderSvg = await createBlurredImageAuto(imageBuffer, 40)
+    const placeholderSvg = await createPlaceholderSvg(imageBuffer, 40)
 
-    return () => <div class={`image ${generatedClassName}`} style={`max-width:${width}px`}>
+    return () => <div class={`image ${generated.className}`} style={`max-width:${width}px`}>
       <div dangerouslySetInnerHTML={{ __html: placeholderSvg }} />
       <img
-        src={srcToUrl(src)}
+        src={src}
         alt={alt}
         title={title}
         srcset={srcset}

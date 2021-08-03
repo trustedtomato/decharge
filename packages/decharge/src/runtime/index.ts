@@ -1,6 +1,6 @@
 export { createAsyncComponent } from './helpers/create-async-component.js'
 export { createComplexComponent, css } from './helpers/create-complex-component.js'
-export { render } from '../common/render.js'
+export { renderPage, renderComponent } from '../common/render.js'
 export { Scripts } from './components/Scripts.js'
 export { Styles } from './components/Styles.js'
 export { SimpleRoute, DynamicRoute } from '../types/Route.js'

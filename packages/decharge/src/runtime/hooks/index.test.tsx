@@ -1,5 +1,5 @@
 import { test } from 'protester'
-import { render } from '../../common/render.js'
+import { renderPage } from '../../common/render.js'
 import { useConst, useState, useRenderBlocker, useRerenderingRef, useConstAsync } from './index.js'
 import { setTimeout } from 'timers/promises'
 
@@ -7,7 +7,7 @@ test('useState\'s setState triggers exactly one rerender + blocks rendering', as
   assert.expectedAssertionCount = 3
 
   let renderIteration = 0
-  const result = await render(() => {
+  const result = await renderPage(() => {
     const [state, setState] = useState('default-value')
     if (renderIteration === 0) {
       assert.equal(state, 'default-value')
@@ -31,7 +31,7 @@ test('useConst hook only runs once', async assert => {
   assert.expectedAssertionCount = 1
 
   let i = 0
-  const result = await render(() => {
+  const result = await renderPage(() => {
     const [, setState] = useState('default-value')
     useConst(() => {
       i++
@@ -45,7 +45,7 @@ test('useConst hook only runs once', async assert => {
 test('useRenderBlocker blocks rendering', async assert => {
   assert.expectedAssertionCount = 1
 
-  const result = await render(() => {
+  const result = await renderPage(() => {
     const [state, setState] = useState('default-value')
     const renderBlocker = useRenderBlocker()
     // Note that this is intentionally not useConstAsync,
@@ -66,7 +66,7 @@ test('useRerenderingRef really rerenders + has the expected ref', async assert =
 
   let renderIteration = 0
 
-  await render(() => {
+  await renderPage(() => {
     const ref = useRerenderingRef<HTMLDivElement>()
     if (renderIteration === 0) {
       assert.equal(ref.current, null)
@@ -88,7 +88,7 @@ test('useConstAsync works as expected', async assert => {
 
   let nthRender = 0
 
-  const result = await render(() => {
+  const result = await renderPage(() => {
     nthRender++
     const asyncValue = useConstAsync(async () => {
       await setTimeout(100)

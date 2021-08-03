@@ -1,6 +1,7 @@
 import type { JSX } from 'preact/jsx-runtime'
-import { usePageContext } from '../hooks/index.js'
+import { useConstAsync, usePageContext } from '../hooks/index.js'
 import { oneLine, TemplateTag } from 'common-tags'
+import type { SetupComplexComponentResult } from '../../common/render.js'
 
 export const css = new TemplateTag({})
 
@@ -8,10 +9,12 @@ export function createComplexComponent<T> ({
   id,
   Component,
   style,
+  generateOwnDir = false,
   script
 }: {
   id: string,
-  Component: (props: T & { generatedClassName: string }) => JSX.Element,
+  generateOwnDir?: boolean,
+  Component: (props: T & { generated: SetupComplexComponentResult }) => JSX.Element,
   style?: string,
   script?: string | Function
 }) {
@@ -46,13 +49,20 @@ export function createComplexComponent<T> ({
     if (pageContext === null) {
       throw new Error('Cannot setup complex component without a page context!')
     }
-
-    const generatedClassName = pageContext.setupComplexComponent({
-      id,
-      style,
-      script: stringScript
+    const generated = useConstAsync(() => {
+      return pageContext.setupComplexComponent({
+        id,
+        style,
+        script: stringScript,
+        generateOwnDir
+      })
     })
-    return <Component {...({ ...props, generatedClassName })} />
+
+    if (generated === null) {
+      return <></>
+    }
+
+    return <Component {...({ ...props, generated })} />
   }
   return ComplexComponent
 }

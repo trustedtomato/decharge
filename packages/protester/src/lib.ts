@@ -14,6 +14,10 @@ const baseAssert = {
 
 export const test = Object.assign(
   async (name: string, callback: (assert: typeof baseAssert) => Promise<void> | void) => {
+    if (!process.env['TESTING']) {
+      throw new Error('Cannot run test function in a non-test environment!')
+    }
+
     const assert = { ...baseAssert }
 
     const proxy = new Proxy(assert, {

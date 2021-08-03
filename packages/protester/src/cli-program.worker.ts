@@ -39,6 +39,7 @@ process.on('uncaughtExceptionMonitor', (error) => {
 })
 
 parentPort!!.once('message', async (filePath) => {
+  process.env['TESTING'] = 'true'
   test.logFailedTest = (name, error) => {
     parentPort!!.postMessage({
       type: 'log-failed-test',

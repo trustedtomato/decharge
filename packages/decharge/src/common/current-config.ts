@@ -1,33 +1,33 @@
 import { fileURLToPath } from 'url'
 import { resolve, relative, join, dirname } from 'path'
-import * as defaultConfig from './default.decharge.config.js'
+import { Config } from './Config.js'
 
-const config = await (async () => {
-  try {
-    const userConfig = await import(
-      resolve(
-        process.cwd(),
-        'decharge.config.js'
+const config = new Config(
+  await (async () => {
+    try {
+      const userConfig = await import(
+        resolve(
+          process.cwd(),
+          'decharge.config.js'
+        )
       )
-    )
-    return {
-      ...defaultConfig,
-      ...userConfig
+      return userConfig
+    } catch (err) {
+      // TODO: error handling
+      return undefined
     }
-  } catch (err) {
-    // TODO: error handling
-    return defaultConfig
-  }
-})()
+  })()
+)
 
 export const generatedClassNamePrefix = config.generatedClassNamePrefix
 
 // Make paths absolute.
 export const srcDir = resolve(process.cwd(), config.srcDir)
 export const routesDir = resolve(srcDir, config.routesDir)
-export const distDir = resolve(process.cwd(), config.distDir)
 export const tempDir = resolve(process.cwd(), config.tempDir)
 export const tempRoutesDir = resolve(tempDir, relative(srcDir, routesDir))
+export const distDir = resolve(process.cwd(), config.distDir)
+export const distGeneratedDir = resolve(distDir, config.distGeneratedDir)
 export const publicDir = resolve(process.cwd(), config.publicDir)
 
 if (!routesDir.startsWith(srcDir)) {

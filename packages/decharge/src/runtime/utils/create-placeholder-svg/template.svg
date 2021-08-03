@@ -1,0 +1,9 @@
+<svg viewBox="0 0 {{width}} {{height}}">
+  <filter id="blur" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+    <feGaussianBlur stdDeviation="1 1" edgeMode="duplicate" />
+    <feComponentTransfer>
+      <feFuncA type="discrete" tableValues="1 1" />
+    </feComponentTransfer>
+  </filter>
+  <image filter="url(#blur)" xlink:href="{{dataUri}}" x="0" y="0" height="100%" width="100%"/>
+</svg>

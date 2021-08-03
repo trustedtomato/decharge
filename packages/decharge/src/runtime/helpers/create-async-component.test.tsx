@@ -1,5 +1,5 @@
 import type { ComponentChildren } from 'preact'
-import render from '../../common/render.js'
+import { renderPage } from '../../common/render.js'
 import { test } from 'protester'
 import { createAsyncComponent } from './create-async-component.js'
 import { setTimeout } from 'timers/promises'
@@ -14,7 +14,7 @@ test('createAsyncComponent works as expected', async assert => {
     </>
   })
 
-  const result = await render(() => <AsyncComponent>Test</AsyncComponent>)
+  const result = await renderPage(() => <AsyncComponent>Test</AsyncComponent>)
 
   assert.equal(result, 'Hello Test!')
 })
