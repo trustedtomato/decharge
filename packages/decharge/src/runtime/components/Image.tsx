@@ -7,14 +7,27 @@ import { createPlaceholderSvg } from '../utils/create-placeholder-svg/auto.js'
 import { createAsyncComponent, createComplexComponent } from '../index.js'
 
 interface Props {
+  /** Only accepts local image as src, must start with a slash (/). */
   src: string
   alt: string
   title?: string
+  /**
+   * If specified, generates a [sizes](https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement/sizes)
+   * attribute based on it.
+   */
   widthConditions?: ([string, { maxWidth?: string, maxHeight?: string }] | [string])[]
+  /**
+   * The component generates scaled-down versions of the image
+   * according to the widths specified here.
+   * The scaled-down versions are saved to the component's own directory,
+   * and the paths are added to the srcset attribute.
+   */
   widthVersions?: number[]
-  maxHeight?: number
 }
 
+/**
+ * Don't forget to add <Scripts type="end-of-body" /> and <Styles /> to your page!
+ */
 export default createComplexComponent<Props>({
   id: import.meta.url,
   generateOwnDir: true,
@@ -24,8 +37,7 @@ export default createComplexComponent<Props>({
     title,
     generated,
     widthConditions,
-    widthVersions = [375, 720, 800, 900, 1366, 1600, 1920, 4100],
-    maxHeight = 1000
+    widthVersions = [375, 720, 800, 900, 1366, 1600, 1920, 4100]
   }) => {
     if (!src.startsWith('/')) {
       throw new Error('Only local images are supported, <Image/> src should begin with a / (a slash).')
@@ -53,7 +65,7 @@ export default createComplexComponent<Props>({
     }
 
     const downscaledWidths = widthVersions.filter(possibleDownscaledWidth =>
-      possibleDownscaledWidth < width && possibleDownscaledWidth * (height / width) < maxHeight
+      possibleDownscaledWidth < width
     )
     const parsedSrc = path.parse(src)
     const pathMap = new Map(downscaledWidths.map(downscaledWidth => [

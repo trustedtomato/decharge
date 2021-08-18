@@ -136,7 +136,7 @@ export default createComplexComponent<Props>({
   // 3. This function will be executed in a different context,
   // so don't reference any variable which you declared earlier in this file.
   script: function (generatedClassName) {
-    var els = document.querySelectorAll(`.${generatedClassName}`)
+    var els = document.querySelectorAll('.' + generatedClassName)
     for (var i = els.length - 1, el; el = els[i]; i--) {
       el.onclick = function () {
         alert('Bonjour!')
@@ -213,3 +213,37 @@ export default () => <>
   <AsyncComponent url="https://google.com" />
 </>
 ```
+
+### Hooks
+decharge provides hooks which play nicely with decharge's SSR.
+*DO NOT use any other hook (like Preact's), only import hooks from the decharge package!*
+See [available hooks in the source code](https://github.com/trustedtomato/decharge/blob/master/packages/decharge/src/runtime/hooks/index.ts), they are pretty well documented there.
+
+### Configuration
+Place a file called `decharge.config.js` in your project root.
+The config object should be export defaulted, like this:
+```tsx
+export default {
+  generatedClassNamePrefix: 'd-',
+  distDir: 'dist'
+}
+```
+
+You can also use the provided Config class
+to have autocompletion and instructing comments in your IDE:
+```tsx
+import { Config } from 'decharge'
+
+export default new Config({
+  generatedClassNamePrefix: 'd-',
+  distDir: 'dist'
+})
+```
+
+See the [configuration options in the source code](https://github.com/trustedtomato/decharge/blob/master/packages/decharge/src/common/Config.ts).
+
+### Built-in components
+There are some components which are very commonly needed, these are built-in.
+Each component must be imported separately, e.g. `import Image from 'decharge/components/Image'`.
+If you feel like a crucial component is missing, [open an issue](https://github.com/trustedtomato/decharge/issues).
+See the [source code of the built-in components](https://github.com/trustedtomato/decharge/blob/master/packages/decharge/src/runtime/components) for usage details, they are nicely documented.
