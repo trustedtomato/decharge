@@ -103,12 +103,22 @@ export default createComplexComponent<Props>({
   // using import.meta.url is perfect.
   id: import.meta.url,
   // Required.
-  // The "Props" gets extended here with a generatedClassName property,
+  // The "Props" gets extended here with a generated property.
+  // The generated property contains a className property,
   // which can be used to target the component for styling + scripting.
-  // The generated className is unique to the component.
-  Component: ({ generatedClassName }) => <div className={generatedClassName}>
+  // The generated className is unique to the component,
+  // NOT to the component instance!
+  Component: ({ generated }) => <div className={generated.className}>
     I am red and if you click me, I will make an alert.
   </div>,
+  // Optional, defaults to false.
+  // If it is true, a property called ownDirPath
+  // gets added to the "generated" variable mentioned above.
+  // ownDirPath is the absolute path of the directory where
+  // the component's files can be stored.
+  // This path stays the same even if the component
+  // is used by different routes.
+  generateOwnDir: false,
   // Optional.
   // ".this" will be replaced with the generated className.
   style: css`
