@@ -41,7 +41,7 @@ export async function renderRoute (path: string, baseDir: string): Promise<Map<s
 
   rpcProvider.registerRpcHandler('error', async (value: any) => {
     console.error(value)
-    worker.terminate()
+    await worker.terminate()
   })
 
   rpcProvider.registerRpcHandler('global-state/setup-complex-component', async (setupOptions: {
@@ -86,7 +86,7 @@ export async function renderRoute (path: string, baseDir: string): Promise<Map<s
       }),
       rpcProvider.rpc<any, Map<string, string>>('render-route', { path, baseDir })
     ])
-    worker.terminate()
+    worker.unref()
     return files
   } catch (error) {
     process.exitCode = 1
