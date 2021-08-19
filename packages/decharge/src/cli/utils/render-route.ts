@@ -6,6 +6,10 @@ import { distGeneratedDir } from '../../common/current-config.js'
 import pathLib from 'path'
 import { Lock } from './lock.js'
 
+// Needed for sharp to work in a Worker,
+// which is required by the Image component.
+import 'sharp'
+
 interface ComplexComponentNonCustomState {
   ownDirAbsolutePath: string | null
 }
@@ -86,7 +90,7 @@ export async function renderRoute (path: string, baseDir: string): Promise<Map<s
       }),
       rpcProvider.rpc<any, Map<string, string>>('render-route', { path, baseDir })
     ])
-    worker.unref()
+    await worker.terminate()
     return files
   } catch (error) {
     process.exitCode = 1

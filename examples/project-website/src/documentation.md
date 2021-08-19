@@ -223,21 +223,13 @@ See [available hooks in the source code](https://github.com/trustedtomato/dechar
 Place a file called `decharge.config.js` in your project root.
 The config object should be export defaulted, like this:
 ```tsx
-export default {
+/** @type {import('decharge').UserConfig} */
+const config = {
   generatedClassNamePrefix: 'd-',
   distDir: 'dist'
 }
-```
 
-You can also use the provided Config class
-to have autocompletion and instructing comments in your IDE:
-```tsx
-import { Config } from 'decharge'
-
-export default new Config({
-  generatedClassNamePrefix: 'd-',
-  distDir: 'dist'
-})
+export default config
 ```
 
 See the [configuration options in the source code](https://github.com/trustedtomato/decharge/blob/master/packages/decharge/src/common/Config.ts).
