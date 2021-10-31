@@ -32,14 +32,16 @@ jobs:
     - name: Build examples/project-website
       working-directory: ./examples/project-website
       run: BASE=decharge/ pnpm run build
+      # This is required so that semantic-release uses pnpm for publishing.
+    - name: Alias "npm" to pnpm
+      run: cp $(which pnpm) $(which npm)
     - name: Deploy website
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: ./examples/project-website/dist
     - name: Semantic versioning
-      working-directory: ./packages/decharge
-      run: pnpm run semantic-release
+      run: pnpm run multi-semantic-release
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

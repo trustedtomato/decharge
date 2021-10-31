@@ -30,9 +30,7 @@
   "scripts": {
     "build": "node scripts/build.js",
     "watch": "node scripts/watch.js",
-    "test": "cross-env NODE_OPTIONS=--enable-source-maps protester",
-    "semantic-release": "semantic-release",
-    "prepare": "cd ../.. && husky install packages/decharge/.husky"
+    "test": "cross-env NODE_OPTIONS=--enable-source-maps protester"
   },
   "bin": {
     "decharge": "decharge.js"
@@ -88,8 +86,6 @@
     "yargs": "^17.0.1"
   },
   "devDependencies": {
-    "@commitlint/cli": "^13.1.0",
-    "@commitlint/config-conventional": "^13.1.0",
     "@typescript-eslint/eslint-plugin": "^4.28.1",
     "@typescript-eslint/parser": "^4.28.1",
     "concurrently": "^6.2.0",
@@ -101,7 +97,6 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.2.1",
     "fs-extra": "^10.0.0",
-    "husky": "^7.0.1",
     "protester": "workspace:*",
     "semantic-release": "^17.4.4"
   }
