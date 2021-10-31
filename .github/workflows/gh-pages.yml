@@ -32,9 +32,6 @@ jobs:
     - name: Build examples/project-website
       working-directory: ./examples/project-website
       run: BASE=decharge/ pnpm run build
-      # This is required so that semantic-release uses pnpm for publishing.
-    - name: Alias "npm" to pnpm
-      run: cp $(which pnpm) $(which npm)
     - name: Deploy website
       uses: peaceiris/actions-gh-pages@v3
       with:
