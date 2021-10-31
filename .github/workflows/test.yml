@@ -15,3 +15,38 @@ jobs:
       run: npm install -g pnpm
     - name: Run test.sh
       run: ./test.sh
+  
+  deploy:
+    needs: [test]
+    if: github.ref == 'refs/heads/master' && github.event_name == 'push'
+
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install Node.js 16
+      uses: actions/setup-node@v1
+      with:
+        node-version: 16
+    - name: Install pnpm
+      run: npm install -g pnpm
+    - name: Install dependencies
+      run: pnpm install
+    - name: Build packages/protester
+      working-directory: ./packages/protester
+      run: pnpm run build
+    - name: Build packages/decharge
+      working-directory: ./packages/decharge
+      run: pnpm run build
+    - name: Build examples/project-website
+      working-directory: ./examples/project-website
+      run: BASE=decharge/ pnpm run build
+    - name: Deploy website
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./examples/project-website/dist
+    - name: Semantic versioning
+      run: pnpm run multi-semantic-release
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
