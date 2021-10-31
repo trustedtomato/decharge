@@ -1,0 +1,43 @@
+{
+  "name": "decharge-blog",
+  "private": true,
+  "version": "0.0.1",
+  "description": "",
+  "type": "module",
+  "author": "Tamás Halasi",
+  "scripts": {
+    "build": "decharge build && node minify-dist.js",
+    "watch": "decharge watch",
+    "dev-serve": "browser-sync dist/ --config browser-sync.config.cjs --watch"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "@types/gm": "^1.18.9",
+    "@types/node-fetch": "^2.5.10",
+    "browser-sync": "^2.27.7",
+    "clean-css": "^5.1.3",
+    "decharge": "workspace:*",
+    "gm": "^1.23.1",
+    "gray-matter": "^4.0.3",
+    "html-minifier-terser": "^5.1.1",
+    "mkdirp": "^1.0.4",
+    "node-fetch": "^2.6.1",
+    "p-event": "^4.2.0",
+    "preact": "^10.5.13",
+    "precinct": "^8.1.0",
+    "readdirp": "^3.6.0",
+    "striptags": "^3.2.0",
+    "typescript": "^4.3.4",
+    "uglify-js": "^3.13.10"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.28.1",
+    "@typescript-eslint/parser": "^4.28.1",
+    "eslint": "^7.12.1",
+    "eslint-config-preact": "^1.1.4",
+    "eslint-config-standard": "^16.0.3",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1"
+  }
+}
