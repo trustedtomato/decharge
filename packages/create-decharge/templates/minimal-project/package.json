@@ -1,16 +1,14 @@
 {
-  "name": "decharge-blog",
+  "name": "TEMPLATE_PLACEHOLDER(projectName)",
   "private": true,
   "version": "0.0.1",
-  "description": "",
+  "description": "TEMPLATE_PLACEHOLDER(projectDescription)",
   "type": "module",
-  "author": "Tamás Halasi",
   "scripts": {
     "build": "decharge build && node minify-dist.js",
     "watch": "decharge watch",
     "dev-serve": "browser-sync dist/ --config browser-sync.config.cjs --watch"
   },
-  "license": "ISC",
   "dependencies": {
     "@types/gm": "^1.18.9",
     "@types/node-fetch": "^2.5.10",
