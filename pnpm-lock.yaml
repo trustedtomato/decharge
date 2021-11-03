@@ -163,7 +163,7 @@ importers:
       readdirp: 3.6.0
       sentence-case: 3.0.4
 
-  packages/create-decharge/templates/hello-world:
+  packages/create-decharge/templates/minimal-project:
     specifiers:
       '@types/gm': ^1.18.9
       '@types/node-fetch': ^2.5.10
@@ -5410,7 +5410,7 @@ packages:
       depd: 1.1.2
       inherits: 2.0.3
       setprototypeof: 1.1.0
-      statuses: 1.4.0
+      statuses: 1.5.0
     dev: false
 
   /http-errors/1.7.3:
