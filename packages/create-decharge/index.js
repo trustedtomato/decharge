@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import pathLib from 'path'
 import fs from 'fs-extra'
 import { sentenceCase } from 'sentence-case'
@@ -10,7 +12,7 @@ import { fatalError } from './utils/fatal-error.js'
 // Error if directory is empty.
 const isDirectoryEmpty = (await fs.readdir('.')).length === 0
 if (!isDirectoryEmpty) {
-  fatalError('Error: The directory in which you initalise the project should be empty, aborting.')
+  fatalError('The directory in which you initalise the project should be empty, aborting.')
 }
 
 const createDechargeMetadata = await fs.readJSON(new URL('./package.json', import.meta.url), 'utf8')
@@ -26,11 +28,6 @@ const { template } = await prompt({
     value: template
   }))
 })
-
-if (!template) {
-  console.error('Error: Template ')
-  process.exit(1)
-}
 
 const templateDirUrl = new URL(
   `./templates/${template}/`,
