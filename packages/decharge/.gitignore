@@ -1,2 +1,5 @@
-_temp/
-decharge-*.tgz
+/node_modules
+/.pnpm-debug.log
+/dist
+/_temp
+/decharge-*.tgz
