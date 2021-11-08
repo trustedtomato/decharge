@@ -11,6 +11,16 @@
   "bin": {
     "protester": "protester.js"
   },
+  "engines": {
+    "node": ">=16"
+  },
+  "files": [
+    "dist/",
+    "protester.js",
+    "!**/*.test.js",
+    "!**/*.test.d.ts",
+    "!**/*.test.js.map"
+  ],
   "keywords": [
     "test",
     "node.js",
