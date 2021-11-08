@@ -5,14 +5,24 @@ import fs from 'fs-extra'
 import { sentenceCase } from 'sentence-case'
 import { globby } from 'globby'
 import minimatch from 'minimatch'
+import execa from 'execa'
 import { chdirTemp } from './utils/chdir-temp.js'
 import { prompt } from './utils/prompt.js'
 import { fatalError } from './utils/fatal-error.js'
 
-// Error if directory is empty.
+// Error if directory is not empty.
 const isDirectoryEmpty = (await fs.readdir('.')).length === 0
 if (!isDirectoryEmpty) {
   fatalError('The directory in which you initalise the project should be empty, aborting.')
+}
+
+// Error if pnpm is not installed.
+const { exitCode } = await execa('pnpm', ['-v'], {
+  stdout: 'ignore',
+  stderr: 'inherit'
+})
+if (exitCode !== 0) {
+  console.error('Something is wrong with the pnpm installation, aborting.')
 }
 
 const createDechargeMetadata = await fs.readJSON(new URL('./package.json', import.meta.url), 'utf8')
@@ -103,7 +113,10 @@ for (const { path, fullPath } of templateFiles) {
       const content = JSON.parse(rawContent)
       for (const [name, version] of Object.entries(content.dependencies)) {
         if (version === 'workspace:*') {
-          content.dependencies[name] = createDechargeMetadata.dependencies[name]
+          const nonWorkspaceVersion = createDechargeMetadata.dependencies[name]
+          content.dependencies[name] = /^[0-9]/.test(nonWorkspaceVersion)
+            ? `^${nonWorkspaceVersion}`
+            : nonWorkspaceVersion
         }
       }
       return JSON.stringify(content, null, 2)
@@ -117,3 +130,8 @@ for (const { path, fullPath } of templateFiles) {
     await fs.outputFile(path, modifiedContent)
   }
 }
+
+await execa('pnpm', ['i'], {
+  stderr: 'inherit',
+  stdout: 'inherit'
+})
