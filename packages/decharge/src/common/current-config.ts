@@ -1,17 +1,7 @@
 import { fileURLToPath } from 'url'
 import { resolve, relative, join, dirname } from 'path'
 import { Config } from './Config.js'
-import fs from 'fs/promises'
-import { constants as fsConstants } from 'fs'
-
-const doesFileExist = async (path: string): Promise<boolean> => {
-  try {
-    await fs.access(path, fsConstants.F_OK)
-    return true
-  } catch {
-    return false
-  }
-}
+import fs from 'fs-extra'
 
 const config = new Config(
   await (async () => {
@@ -19,7 +9,7 @@ const config = new Config(
       process.cwd(),
       'decharge.config.js'
     )
-    if (await doesFileExist(userConfigPath)) {
+    if (await fs.pathExists(userConfigPath)) {
       return (await import(userConfigPath)).default
     }
     return undefined

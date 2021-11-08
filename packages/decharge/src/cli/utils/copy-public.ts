@@ -1,6 +1,5 @@
 import pathLib from 'path'
-import mkdirp from 'mkdirp'
-import { copyFile } from 'fs/promises'
+import { copy } from 'fs-extra'
 
 import { publicDir, distDir } from '../../common/current-config.js'
 
@@ -12,8 +11,7 @@ import { publicDir, distDir } from '../../common/current-config.js'
 export async function copyPublic (srcPath: string): Promise<void> {
   const relativeSrcPath = pathLib.relative(publicDir, srcPath)
   const targetPath = pathLib.join(distDir, relativeSrcPath)
-  await mkdirp(pathLib.dirname(targetPath))
-  await copyFile(srcPath, targetPath)
+  await copy(srcPath, targetPath)
 }
 
 export default copyPublic

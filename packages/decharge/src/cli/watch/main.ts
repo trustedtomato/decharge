@@ -1,18 +1,16 @@
 import pathLib from 'path'
-import { promisify } from 'util'
-import { writeFile, readFile } from 'fs/promises'
+import fs from 'fs-extra'
 import { watch } from 'chokidar'
-import mkdirp from 'mkdirp'
 import hasha from 'hasha'
 import waitFor from 'p-event'
-import tsc from './tsc.js'
+import tsc from '../utils/tsc.js'
 import { renderRoute } from '../utils/render-route.js'
 import copyToTemp from '../utils/copy-to-temp.js'
 import parseDependencies from '../utils/parse-dependencies.js'
 import Debouncer from '../utils/debouncer.js'
 import { tempDir, srcDir, distDir, tempRoutesDir, publicDir } from '../../common/current-config.js'
 import copyPublic from '../utils/copy-public.js'
-const delay = promisify(setTimeout)
+import { delay } from '../utils/delay.js'
 
 const tempJsGlob = pathLib.join(tempDir, '**/*.js')
 
@@ -54,8 +52,7 @@ async function mightWriteFile (absolutePath: string, content: string): Promise<b
   const contentHash = hasha(content)
   if (lastWriteContentHash.get(absolutePath) !== contentHash) {
     lastWriteContentHash.set(absolutePath, contentHash)
-    await mkdirp(pathLib.dirname(absolutePath))
-    await writeFile(absolutePath, content)
+    await fs.outputFile(absolutePath, content)
     return true
   }
   return false
@@ -65,7 +62,7 @@ async function renderRoutesOnPathChanges (paths: string[]) {
   // TODO: parallelize!
   for (const path of paths) {
     if (path.endsWith('.js')) {
-      const content = await readFile(path, 'utf-8')
+      const content = await fs.readFile(path, 'utf-8')
 
       dependencySets.set(
         path,
@@ -118,7 +115,9 @@ async function renderRoutesOnPathChanges (paths: string[]) {
 const renderRoutesOnPathChangesDebouncer = new Debouncer(renderRoutesOnPathChanges)
 
 // Continuously compile /src/**/*.([jt]sx?) to _temp.
-tsc(tempDir)
+tsc(tempDir, {
+  watch: true
+})
 
 // Continuously copy everything from src to _temp,
 // except the *.([jt]sx?) files
@@ -142,7 +141,12 @@ const srcCopier = watch(srcDir, {
 const initialTempDirReady = waitFor(srcCopier, 'ready')
 renderRoutesOnPathChangesDebouncer.addDebouncingPromise(initialTempDirReady)
 
-initialTempDirReady.then(() => {
+// For some reason, chokidar doesn't work if the target directory
+// is not created yet.
+const tempDirCreated = fs.mkdirp(tempDir)
+renderRoutesOnPathChangesDebouncer.addDebouncingPromise(tempDirCreated)
+
+renderRoutesOnPathChangesDebouncer.startDebouncing().then(async () => {
   // Continuously render routes in _temp to dist/.
   async function onTempJsChange (path: string) {
     renderRoutesOnPathChangesDebouncer.addDebouncingPromise(delay(100))

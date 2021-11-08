@@ -1,6 +1,5 @@
 import pathLib from 'path'
-import mkdirp from 'mkdirp'
-import { copyFile } from 'fs/promises'
+import { copy } from 'fs-extra'
 
 import { tempDir, srcDir } from '../../common/current-config.js'
 
@@ -10,8 +9,7 @@ import { tempDir, srcDir } from '../../common/current-config.js'
 export async function copyToTemp (srcPath: string): Promise<void> {
   const relativeSrcPath = pathLib.relative(srcDir, srcPath)
   const targetPath = pathLib.join(tempDir, relativeSrcPath)
-  await mkdirp(pathLib.dirname(targetPath))
-  await copyFile(srcPath, targetPath)
+  await copy(srcPath, targetPath)
 }
 
 export default copyToTemp

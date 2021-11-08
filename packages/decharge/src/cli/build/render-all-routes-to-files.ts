@@ -1,10 +1,8 @@
-import { writeFile } from 'fs/promises'
-import mkdirp from 'mkdirp'
+import fs from 'fs-extra'
 import pathLib from 'path'
 import readdirp from 'readdirp'
+import { id } from '../utils/id.js'
 import renderRoute from '../utils/render-route.js'
-
-const id = <T>(x: T): T => x
 
 /**
  * Renders all routes in the routesDir to targetDir.
@@ -34,8 +32,7 @@ export async function renderAllRoutesToFiles ({
       }
       pathCreatorRoutePaths.set(path, routePath)
       const absolutePath = pathLib.join(targetDir, path)
-      await mkdirp(pathLib.dirname(absolutePath))
-      await writeFile(absolutePath, transform(content))
+      await fs.outputFile(absolutePath, transform(content))
     }
   }
 }

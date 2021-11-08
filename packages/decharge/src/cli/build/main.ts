@@ -1,5 +1,5 @@
 import { renderAllRoutesToFiles } from './render-all-routes-to-files.js'
-import tsc from './tsc.js'
+import tsc from '../utils/tsc.js'
 import readdirp from 'readdirp'
 import copyToTemp from '../utils/copy-to-temp.js'
 import { tempDir, srcDir, distDir, tempRoutesDir, publicDir } from '../../common/current-config.js'

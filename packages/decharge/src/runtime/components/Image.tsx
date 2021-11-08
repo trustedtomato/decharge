@@ -1,7 +1,6 @@
-import fs from 'fs/promises'
+import fs from 'fs-extra'
 import { constants as fsConstants } from 'fs'
 import path from 'path'
-import mkdirp from 'mkdirp'
 import sharp from 'sharp'
 import { createPlaceholderSvg } from '../utils/create-placeholder-svg/auto.js'
 import { createAsyncComponent, createComplexComponent } from '../index.js'
@@ -89,8 +88,7 @@ export default createComplexComponent<Props>({
             width: downscaledWidth
           })
           .toBuffer()
-        await mkdirp(path.dirname(downscaledPath))
-        await fs.writeFile(
+        await fs.outputFile(
           downscaledPath,
           downscaledImageBuffer
         )
