@@ -26,13 +26,14 @@ but using tsx is the easiest way to define one.
 For absolute type safety, you can annotate your route with
 `SimpleRoute`, which can imported from the decharge package.
 
-#### Dynamic routing = routes outputting multiple pages
+#### Dynamic routes
+Dynamic routes are routes which output multiple pages.
 You can have route paths like `about/[author].tsx` or even
 `about/[author]/posts/[postSlug]/appendix-[appendixNumber].tsx`
-(this should be familiar to Next.js users).
+^[This should be familiar to Next.js users.].
 So, when there are [square bracketed] parts in the route's path
 (relative to the routes directory), you can replace those
-by default exporting a dataList along with your page component
+by default exporting a `dataList` along with your page component
 like this:
 ```tsx
 // src/routes/about/[authorSlug]/posts/[postSlug]/footnotes-[footnoteNumber].tsx
@@ -70,20 +71,19 @@ Pushkin burnt most of the tenth chapter. Very little of it survived in Pushkin's
     footnoteNumber: 13,
     content: `He played the beginning on the piano, then stopped and said, \
 'And this is where the opera section comes in!' Then we went out to eat dinner.`
-  }]
+  }],
+  Page: ({ data: { authorSlug, postSlug, footnoteNumber, content }, index }) => <>
+    The index of this data object in the dataList array is {index}.
+    In {authorSlug}'s post called {postSlug},
+    footnote number {footnoteNumber} refers to: {content}
+  </>
 }
-
-export default ({ data: { authorSlug, postSlug, footnoteNumber, content }, index }) => <>
-  The index of this data object in the dataList array is {index}.
-  In {authorSlug}'s post called {postSlug},
-  footnote number {footnoteNumber} refers to: {content}
-</>
 ```
 
 ### Components
 A component can be any Preact component as you might have guessed.
 The thing is that you can't really use `styled-jsx` or a similar library,
-because they are bloaty or don't work in a purely SSR enviroment
+because they are bloaty or don't work in a purely SSR environment
 (if you find anything that works, please [open an issue](https://github.com/trustedtomato/decharge/issues)), so decharge
 provides a way to add styles and client-side scripts
 (preferably just for progressive enhancement) to a component.
@@ -236,6 +236,9 @@ See the [configuration options in the source code](https://github.com/trustedtom
 
 ### Built-in components
 There are some components which are very commonly needed, these are built-in.
-Each component must be imported separately, e.g. `import Image from 'decharge/components/Image'`.
+Each component must be imported separately, e.g.: 
+```tsx
+import Image from 'decharge/components/Image'
+```
 If you feel like a crucial component is missing, [open an issue](https://github.com/trustedtomato/decharge/issues).
 See the [source code of the built-in components](https://github.com/trustedtomato/decharge/blob/master/packages/decharge/src/runtime/components) for usage details, they are nicely documented.
