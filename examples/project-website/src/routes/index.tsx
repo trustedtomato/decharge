@@ -84,26 +84,14 @@ export default function Index () {
         },
         sidenote_start: async (tokens, idx, options, env) => {
           const index = tokens[idx].meta.index
-          const htmlId = getSidenoteHtmlId(
-            index,
-            options,
-            env
-          )
           const rendered = await renderComponent(() => <Sidenote
-            id={htmlId}
             index={index}
           >?children-placeholder?</Sidenote>, pageContext!!)
           return rendered.replace(/\?children-placeholder\?[\s\S]*$/, '')
         },
         sidenote_end: async (tokens, idx, options, env) => {
           const index = tokens[idx].meta.index
-          const htmlId = getSidenoteHtmlId(
-            index,
-            options,
-            env
-          )
           const rendered = await renderComponent(() => <Sidenote
-            id={htmlId}
             index={index}
           >?children-placeholder?</Sidenote>, pageContext!!)
           return rendered.replace(/^[\s\S]*\?children-placeholder\?/, '')
@@ -132,22 +120,21 @@ export default function Index () {
             It features a <em>routing system similar to Next.js’</em> and
             uses <em><a href="https://www.typescriptlang.org/docs/handbook/jsx.html">TSX</a> as
             its templating system</em> so the framework can leverage <em>the amazing
-            IDE support of React</em><SidenoteFull index={1} id="int-sn1">
+            IDE support of React</em>. <SidenoteFull index={1} id="int-sn1">
               decharge uses Preact under the hood though, but that shouldn’t really matter.
-            </SidenoteFull>.
+            </SidenoteFull>
           </p>
           <p>
             It has a component system and a rendering engine
-            which was designed to <em>output as little code as possible</em> on build<SidenoteFull index={2} id="int-sn2">
+            which was designed to <em>output as little code as possible</em> on build. <SidenoteFull index={2} id="int-sn2">
               except for trivial minifaction, which should be done
               using html-minifier or similar after building the project.
-            </SidenoteFull>.
-            As an example, the size of this page’s HTML-CSS-JS code is 2.32 kB combined
+            </SidenoteFull> As an example, the size of this page’s HTML-CSS-JS code is 2.32 kB combined
             (1.5 kB if gzipped).
           </p>
           <p>
             If you found these two paragraphs interesting,
-            consider checking out the <a href="#getting-started">Getting started</a> guide below
+            consider checking out the <a href="#docs-getting-started">Getting started</a> guide below
             or the <a href="https://github.com/trustedtomato/decharge">GitHub page</a> of
             the project.
           </p>
@@ -155,13 +142,19 @@ export default function Index () {
       </section>
       <Arrow length={7} />
       <section class="docs">
-        <div class="docs__table-of-contents">
-          <h2>Table of contents</h2>
+        <div class="docs__table-of-contents full-text">
+          <h2 class="body-text">Table of contents</h2>
           <TableOfContents basedOn={docsContentRef.current} />
         </div>
         <div class="docs__content full-text" ref={docsContentRef}>
           <div class="body-text" dangerouslySetInnerHTML={{ __html: docs }} />
         </div>
       </section>
+      <footer class="footer full-text">
+        <div class="footer__content">
+          Created with ❤ by <a href="https://github.com/trustedtomato/">Tamás Halasi</a>.
+          See the <a href="https://github.com/trustedtomato/decharge">project's source code on GitHub</a>.
+        </div>
+      </footer>
     </Layout>
 }

@@ -9,7 +9,7 @@ interface Props {
 }
 
 export default ({ index, children, id }: Props): JSX.Element => <>
-  <SidenoteRef targetIndex={index} targetId={id} /><Sidenote index={index} id={id}>
+  <SidenoteRef targetIndex={index} targetId={id} /><Sidenote index={index}>
     {children}
   </Sidenote>
 </>

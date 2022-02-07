@@ -16,16 +16,20 @@ a {
 }
 
 .sidenote__sup {
+  user-select: none;
   vertical-align: super;
   font-size: .6em;
   line-height: 0;
+  border: 0;
+  padding: 0;
+  font-family: inherit;
 }
 
 .sidenote {
   float: right;
   clear: both;
   margin-right: -27rem;
-  margin-top: 0.7rem;
+  margin-top: 0.6rem;
   width: 24rem;
   line-height: 2rem;
   font-size: 1.4rem;
@@ -33,36 +37,24 @@ a {
 }
 
 .full-text {
-  width: 84rem;
+  max-width: 84rem;
 }
 
 .body-text {
-  width: 57rem;
+  max-width: 57rem;
+}
+
+.hidden {
+  display: none !important;
 }
 
 /* general rules for the alignment to the baseline grid */
-h1 {
-  line-height: 9rem;
-  padding-top: .4rem;
-  padding-bottom: .1rem;
-}
-
 h2 {
-  padding-top: .6rem;
-  padding-bottom: 3.4rem;
+  padding-top: 0.7rem;
+  padding-bottom: calc(2.3rem - 1px);
   line-height: 4rem;
   font-size: 3.4rem;
-  position: relative;
-}
-
-h2::after {
-  content: '';
-  display: block;
-  position: absolute;
-  width: 100%;
-  bottom: 1rem;
-  background-color: #B6C4C7;
-  height: 1px;
+  border-bottom: #B6C4C7 solid 1px;
 }
 
 h3 {
@@ -91,6 +83,17 @@ p {
   padding-bottom: .2rem;
 }
 
+ul {
+  margin: 0;
+  padding-top: .8rem;
+  padding-bottom: .2rem;
+}
+
+/* We already configured the parent list according to the baseline grid. */
+li > ul {
+  padding: 0;
+}
+
 .arrow {
   height: 12.2rem;
   padding-bottom: .8rem;
@@ -104,9 +107,14 @@ p {
 /* welcome screen, introduction */
 header h1 {
   margin-top: 23rem;
-  font-size: 9rem;
+  display: flex;
+  justify-content: center;
   text-align: center;
   margin-bottom: 0;
+}
+
+header svg {
+  height: 9rem;
 }
 
 header p {
@@ -126,15 +134,31 @@ section {
   margin: auto;
   display: block;
   margin-top: 17rem;
-  margin-bottom: 11rem;
+  margin-bottom: 10rem;
 }
 
 /* documentation */
-.docs {
+.footer {
+  padding-top: calc(1.6rem - 1px);
+  padding-bottom: 1.3rem;
   margin: auto;
-  width: 114rem;
+  max-width: 116rem;
+  border-top: 1px solid #B6C4C7;
+}
+
+.footer__content, .docs {
+  margin: auto;
+  max-width: 114rem;
+}
+
+.docs {
+  margin-bottom: 3rem;
   display: flex;
   flex-direction: row-reverse;
+}
+
+.docs__content {
+  width: 84rem;
 }
 
 .docs__table-of-contents {
@@ -146,7 +170,6 @@ section {
 }
 
 .docs__table-of-contents ul {
-  margin: 0;
   font-size: 1.4rem;
   padding-left: 2rem;
   line-height: 2rem;
@@ -185,18 +208,18 @@ h4 a:focus {
 }
 
 h2 {
-  margin-top: 3rem;
+  margin-top: 4rem;
   margin-bottom: 1rem;
 }
 
 h3 {
   margin-top: 3rem;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 }
 
 h4 {
   margin-top: 3rem;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 }
 
 code {
@@ -219,8 +242,9 @@ code {
   background: #f1f4f5;
   font-size: 1.4rem;
   box-sizing: border-box;
+  max-width: 100%;
 
-  white-space: pre;
+  white-space: pre-wrap;
 	word-spacing: normal;
 	word-break: normal;
 	word-wrap: break-word;
@@ -238,6 +262,7 @@ pre {
 }
 
 pre code {
+  white-space: pre;
   display: block;
   line-height: 2rem;
   padding: 1.5rem 1.5rem;
@@ -323,4 +348,84 @@ pre code {
 
 .token.entity {
 	cursor: help;
+}
+
+@media screen and (max-width: 1200px) {
+  html {
+    font-size: 8.8888px; /* This will make the body font 16px. */
+  }
+}
+
+@media screen and (max-width: 1080px) {
+  .footer {
+    max-width: 84rem;
+  }
+  .docs {
+    flex-direction: column;
+    align-items: center;
+    width: auto;
+  }
+  .docs__table-of-contents {
+    position: relative;
+    width: 100%;
+    margin: 0;
+    height: auto;
+  }
+}
+
+@media screen and (max-width: 810px) {
+  .docs {
+    width: 100%;
+  }
+
+  .full-text, .docs {
+    max-width: 54rem;
+  }
+
+  .docs__content {
+    width: auto;
+  }
+
+  .sidenote {
+    float: left;
+    width: 100%;
+    margin: .6rem 0 .4rem 0;
+    display: none;
+  }
+  
+  .sidenote__sup--button {
+    position: relative;
+    cursor: pointer;
+  }
+
+  .sidenote__sup--button::after {
+    content: '';
+    border: 1px solid #5E514655;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+  }
+
+  .sidenote__show:checked ~ .sidenote {
+    display: block;
+  }
+
+  pre {
+    width: auto;
+  }
+}
+
+@media screen and (max-width: 520px) {
+  body {
+    margin: 0 2rem;
+    position: relative;
+  }
+
+  .full-text, .docs {
+    max-width: 100%;
+  }
 }

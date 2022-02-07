@@ -1,3 +1,14 @@
+## Getting started
+### Prerequisites
+- [Node.js](https://nodejs.org/en/) and npm
+- [pnpm](https://pnpm.io/)
+
+### Creating a project
+Make a new directory, `cd` into it, then run:
+```bash
+pnpm init decharge
+```
+
 ## Usage
 By default, your static files live in `public/`
 and everything else in `src/`. Your routes should
